@@ -67,7 +67,7 @@ function LoginDialogContent(props) {
 
   return (
     <div>
-      <img style={{ width: "100%" }} src="/login_art.jpg"></img>
+      <img style={{ width: "100%" }} src="/ninjacoders_banner_art.jpg"></img>
       {progressVisible ? (
         <LinearProgress variant="query" color="secondary" />
       ) : null}

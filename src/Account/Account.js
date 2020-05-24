@@ -17,6 +17,7 @@ import { startRemoveUserLocal } from "../Redux/Selectors/userSelector";
 
 const useStyles = makeStyles((theme) => ({
   containerDesktop: {
+    marginTop: theme.spacing(4),
     display: "none",
     [theme.breakpoints.up("md")]: {
       display: "flex",

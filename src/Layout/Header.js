@@ -2,23 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Button,
-  Badge,
-  MenuItem,
-  Menu,
-  Avatar,
-  Link,
-} from "@material-ui/core";
-import {
-  AccountCircle,
-  ShoppingCart,
-  Notifications,
-  MoreIcon,
-} from "@material-ui/icons";
+import { AppBar, Toolbar, Button, Avatar, Link } from "@material-ui/core";
 
 import logo from "../logo.svg";
 
@@ -26,12 +10,12 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     backgroundColor: "transparent",
     boxShadow: "none",
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(2),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
   },
   logoDesktop: {
-    width: theme.spacing(22),
-    marginLeft: theme.spacing(6),
+    width: theme.spacing(32),
+    marginLeft: theme.spacing(12),
   },
   logoMobile: {
     width: theme.spacing(20),
@@ -165,7 +149,11 @@ const Header = (props) => {
         <div className={classes.sectionMobile}>
           <Toolbar className={classes.Toolbar}>
             <Link href="/">
-              <img src={logo} className={classes.logoMobile} alt="logo" />
+              <img
+                src="/ninjacoders_h_logo.png"
+                className={classes.logoMobile}
+                alt="logo"
+              />
             </Link>
             <div className={classes.grow} />
             {props._id != "" ? signComponentMobile : notSignComponentMobile}
@@ -183,7 +171,11 @@ const Header = (props) => {
         <div className={classes.sectionDesktop}>
           <Toolbar className={classes.Toolbar}>
             <Link href="/">
-              <img src={logo} className={classes.logoDesktop} alt="logo" />
+              <img
+                src="/ninjacoders_h_logo.png"
+                className={classes.logoDesktop}
+                alt="logo"
+              />
             </Link>
             <div className={classes.grow} />
             {props._id != "" ? signComponent : notSignComponent}

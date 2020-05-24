@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla&family=Lato:wght@700&display=swap');
 
 .App {
-  background-image: url(./background.jpg);
+  background-image: url(./ninjacoders_background.jpg);
   background-position: center;
   /* Center the image */
   background-repeat: no-repeat;

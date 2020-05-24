@@ -20,10 +20,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "tarnsparent",
   },
   Footer: {
-    backgroundColor: "#eff1fe",
+    marginTop: theme.spacing(4),
+    backgroundColor: "tarnsparent",
   },
   logo: {
-    width: "30%",
+    width: theme.spacing(20),
   },
   inlineIcon: {
     verticalAlign: "bottom",
@@ -51,7 +52,7 @@ export default function Footer(props) {
           <Grid item sm={4}>
             <img
               style={{ marginTop: "20px" }}
-              src={logo}
+              src="/ninjacoders_h_logo.png"
               className={classes.logo}
               alt="logo"
             />
@@ -60,8 +61,9 @@ export default function Footer(props) {
               variant="body1"
               gutterBottom
             >
-              Hi! We are the energetic and passinoate team creates next
-              generation AI based text tools.
+              NinjaCoders Boğaziçi Üniversitesi mezunlarının bir girişimidir.
+              Ekibimiz kodlama ve robotik eğitimleri üzerine çalışan mühendis ve
+              öğretmenlerden oluşur.
             </Typography>
           </Grid>
           <Grid item sm={4} className={classes.grow} />
@@ -71,8 +73,8 @@ export default function Footer(props) {
               variant="body1"
               gutterBottom
             >
-              <Link href="mailto:hello@kiraz.io?subject=I have a message">
-                hello@kiraz.io
+              <Link href="mailto:merhaba@ninjacoders.co?subject=Size bir mesajım var.">
+                merhaba@ninjacoders.co
               </Link>
             </Typography>
             <Typography
