@@ -1,0 +1,12 @@
+/* Load in your font */
+@import url('https://fonts.googleapis.com/css2?family=Karla&family=Lato:wght@700&display=swap');
+
+.App {
+  background-image: url(./background.jpg);
+  background-position: center;
+  /* Center the image */
+  background-repeat: no-repeat;
+  /* Do not repeat the image */
+  background-size: cover;
+  /* Resize the background image to cover the entire container */
+}
