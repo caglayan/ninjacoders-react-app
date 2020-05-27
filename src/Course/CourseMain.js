@@ -5,30 +5,30 @@ import CourseSection3 from "./CourseSection3";
 import { startCreatePublicCourse } from "../Redux/Selectors/courseSelector";
 import { connect } from "react-redux";
 
-class CourseContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log("course with ", props.match.params.id);
+const CourseContainer = (props) => {
+  const downloadCourse = () => {
+    console.log("course_id ", props.match.params.id);
+    console.log("user_id ", props._id);
     props
       .dispatch(startCreatePublicCourse(props.match.params.id, props._id))
       .then((course) => {})
       .catch((err) => {
-        props.showMessages(1, "Bir problem var.");
+        props.showMessages(2, "Bir problem var.");
       });
-  }
+  };
 
-  componentDidMount() {}
+  React.useEffect(() => {
+    downloadCourse();
+  }, [props._id]);
 
-  render() {
-    return (
-      <div>
-        <CourseSection1></CourseSection1>
-        <CourseSection2></CourseSection2>
-        <CourseSection3></CourseSection3>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <CourseSection1></CourseSection1>
+      <CourseSection2></CourseSection2>
+      <CourseSection3></CourseSection3>
+    </div>
+  );
+};
 
 const CourseContainerCon = connect((state) => {
   return {

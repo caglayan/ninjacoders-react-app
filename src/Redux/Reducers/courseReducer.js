@@ -1,7 +1,7 @@
 const courseDefaultState = {
   _id: "",
   name: "",
-  isBelongMiuul: false
+  isBelongNinja: false,
 };
 
 const courseReducer = (state = courseDefaultState, action) => {
@@ -9,11 +9,11 @@ const courseReducer = (state = courseDefaultState, action) => {
     case "UPDATE_COURSE":
       return {
         ...state,
-        ...action.course
+        ...action.course,
       };
     case "REMOVE_COURSE":
       return {
-        ...courseDefaultState
+        ...courseDefaultState,
       };
     default:
       return state;

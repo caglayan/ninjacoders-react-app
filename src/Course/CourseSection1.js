@@ -4,7 +4,6 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import ReactResizeDetector from "react-resize-detector";
 import Chip from "@material-ui/core/Chip";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -44,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   courseType: {
-    borderLeft: "0.05em solid white",
+    borderLeft: "0.05em solid black",
     paddingInlineStart: "10px",
     display: "inline-flex",
     marginBottom: "0px",
@@ -178,7 +177,7 @@ const CourseVideoContent = (props) => {
         <Box className={classes.courseName} fontWeight="fontWeightBold">
           {props.title}
         </Box>
-        {props.isBelongMiuul == true ? (
+        {props.isBelongNinja == true ? (
           <Box className={classes.courseType} fontWeight="fontWeightBold">
             Original
           </Box>
@@ -274,7 +273,7 @@ const CourseVideoContent = (props) => {
                                   );
                                 }}
                               >
-                                {section.isPublic === true ? (
+                                {section.video !== "" ? (
                                   <ListItemIcon className={classes.icon}>
                                     {playerState.isPlaying === true &&
                                     state.selChapter === indexChap &&
@@ -327,7 +326,7 @@ const CourseVideoContentCon = connect((state) => {
   return {
     _id: state.courseReducer._id,
     title: state.courseReducer.title,
-    isBelongMiuul: state.courseReducer.isBelongMiuul,
+    isBelongNinja: state.courseReducer.isBelongNinja,
     instructor: state.courseReducer.instructor,
     description: state.courseReducer.description,
     duration: state.courseReducer.duration,

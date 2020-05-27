@@ -13,9 +13,9 @@ export const updateCourse = ({
   createdAt = "",
   updatedAt = "",
   duration = 0,
-  isBelongMiuul = false,
+  isBelongNinja = false,
   numberOfSections = 0,
-  __v = 0
+  __v = 0,
 } = {}) => ({
   type: "UPDATE_COURSE",
   course: {
@@ -33,9 +33,9 @@ export const updateCourse = ({
     createdAt,
     updatedAt,
     duration,
-    isBelongMiuul,
-    numberOfSections
-  }
+    isBelongNinja,
+    numberOfSections,
+  },
 });
 
 export const removeCourse = () => ({
@@ -43,6 +43,6 @@ export const removeCourse = () => ({
   course: {
     _id: "",
     name: "",
-    isBelongMiuul: false
-  }
+    isBelongNinja: false,
+  },
 });

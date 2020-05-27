@@ -172,7 +172,7 @@ const CourseSection2Con = connect((state) => {
   return {
     _id: state.courseReducer._id,
     title: state.courseReducer.title,
-    isBelongMiuul: state.courseReducer.isBelongMiuul,
+    isBelongNinja: state.courseReducer.isBelongNinja,
     instructor: state.courseReducer.instructor,
     description: state.courseReducer.description,
     duration: state.courseReducer.duration,
