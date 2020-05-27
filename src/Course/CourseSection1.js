@@ -27,8 +27,10 @@ range         |   xs   |   sm   |   md   |   lg   |   xl
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    marginTop: theme.spacing(6),
+    marginTop: theme.spacing(3),
     marginBottom: theme.spacing(4),
+    paddingLeft: "0px",
+    paddingRight: "0px",
     [theme.breakpoints.down("sm")]: {
       marginTop: theme.spacing(3),
     },
@@ -174,13 +176,9 @@ const CourseVideoContent = (props) => {
   return (
     <Container className={classes.container} maxWidth="lg">
       <Typography variant="h5" component="h1">
-        <Box className={classes.courseName} fontWeight="fontWeightBold">
-          {props.title}
-        </Box>
+        <Box className={classes.courseName}>{props.title}</Box>
         {props.isBelongNinja == true ? (
-          <Box className={classes.courseType} fontWeight="fontWeightBold">
-            Original
-          </Box>
+          <Box className={classes.courseType}>Original</Box>
         ) : null}
       </Typography>
       <Typography variant="subtitle1" component="h1">
@@ -302,7 +300,7 @@ const CourseVideoContent = (props) => {
           </List>
         </Grid>
       </Grid>
-      <Grid container spacing={2}>
+      <Grid container style={{ marginTop: "10px" }} spacing={2}>
         <Grid item>
           Bu eğitimdeki yetenekler:
           <Chip style={{ marginLeft: 8 }} label="#Python" variant="outlined" />

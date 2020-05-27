@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   logoDesktop: {
     width: theme.spacing(32),
-    marginLeft: theme.spacing(12),
+    marginLeft: theme.spacing(6),
   },
   logoMobile: {
     width: theme.spacing(20),

@@ -6,7 +6,8 @@ export const updateUser = ({
   familyName = "",
   token = "",
   avatarImage = "",
-  shoppingCart = []
+  premium = false,
+  shoppingCart = [],
 } = {}) => ({
   type: "UPDATE_USER",
   user: {
@@ -17,8 +18,9 @@ export const updateUser = ({
     familyName,
     token,
     avatarImage,
-    shoppingCart
-  }
+    shoppingCart,
+    premium,
+  },
 });
 
 export const removeUser = () => ({
@@ -26,6 +28,6 @@ export const removeUser = () => ({
   user: {
     _id: "",
     email: "",
-    password: ""
-  }
+    password: "",
+  },
 });

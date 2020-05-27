@@ -6,25 +6,27 @@ import Typography from "@material-ui/core/Typography";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import { ThumbUp } from "@material-ui/icons";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   paper: {
+    marginTop: theme.spacing(2),
     padding: theme.spacing(2),
     margin: "0",
-    maxWidth: "100%"
+    maxWidth: "100%",
+    backgroundColor: theme.palette.grey[100],
   },
   image: {
-    width: 90,
-    height: 90
+    width: 50,
+    height: 50,
   },
   img: {
     margin: "auto",
     display: "block",
     maxWidth: "100%",
-    maxHeight: "100%"
-  }
+    maxHeight: "100%",
+  },
 }));
 
 export default function Comment() {
@@ -32,7 +34,7 @@ export default function Comment() {
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.paper}>
+      <Paper elevation={0} className={classes.paper}>
         <Grid container spacing={2}>
           <Grid item>
             <ButtonBase className={classes.image}>

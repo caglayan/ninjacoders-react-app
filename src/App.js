@@ -44,32 +44,34 @@ store.subscribe(() => {
 const theme = createMuiTheme({
   palette: {
     type: "light",
-    secondary: {
-      main: "#ec407a",
-    },
     primary: {
       main: "#437eeb",
+    },
+    secondary: {
+      main: "#ec407a",
     },
   },
   typography: {
     button: {
       textTransform: "none",
     },
-    fontFamily: ["Karla", "sans-serif"].join(","),
+    fontFamily: ["gt-walsheim pro regular"].join(","),
     h5: {
-      fontFamily: ["Lato", "sans-serif"].join(","),
+      fontFamily: ["gt-walsheim pro bold"].join(","),
+      fontSize: "1.2rem",
+      "@media (min-width:600px)": { fontSize: "1.7rem" },
     },
     h4: {
-      fontFamily: ["Lato", "sans-serif"].join(","),
+      fontFamily: ["gt-walsheim pro black", "sans-serif"].join(","),
     },
     h3: {
-      fontFamily: ["Lato", "sans-serif"].join(","),
+      fontFamily: ["gt-walsheim pro black", "sans-serif"].join(","),
     },
     h2: {
-      fontFamily: ["Lato", "sans-serif"].join(","),
+      fontFamily: ["gt-walsheim pro black", "sans-serif"].join(","),
     },
     h1: {
-      fontFamily: ["Lato", "sans-serif"].join(","),
+      fontFamily: ["gt-walsheim pro black", "sans-serif"].join(","),
     },
   },
 });

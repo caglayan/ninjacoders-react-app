@@ -7,6 +7,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@font-face {
+  font-family: 'gt-walsheim pro regular';
+  src: local('GTWalsheimPro-Regular'), url(./fonts/GTWalsheimPro-Regular.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'gt-walsheim pro black';
+  src: local('GTWalsheimPro-Black'), url(./fonts/GTWalsheimPro-Black.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'gt-walsheim pro bold';
+  src: local('GTWalsheimPro-Bold'), url(./fonts/GTWalsheimPro-Bold.woff) format('woff');
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
