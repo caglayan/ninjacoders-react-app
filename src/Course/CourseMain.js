@@ -6,6 +6,7 @@ import { startCreatePublicCourse } from "../Redux/Selectors/courseSelector";
 import { connect } from "react-redux";
 
 const CourseContainer = (props) => {
+  console.log(props);
   const downloadCourse = () => {
     console.log("course_id ", props.match.params.id);
     console.log("user_id ", props._id);
@@ -18,7 +19,7 @@ const CourseContainer = (props) => {
   };
 
   React.useEffect(() => {
-    downloadCourse();
+    if (props._id) downloadCourse();
   }, [props._id]);
 
   return (

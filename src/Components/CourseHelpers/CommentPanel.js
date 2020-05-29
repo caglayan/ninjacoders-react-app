@@ -3,10 +3,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import ButtonBase from "@material-ui/core/ButtonBase";
+import Avatar from "@material-ui/core/Avatar";
 import Rater from "react-rater";
 import "react-rater/lib/react-rater.css";
-import "./index.css";
+import TimeAgo from "react-timeago";
+import frenchStrings from "react-timeago/lib/language-strings/tr";
+import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,7 +45,8 @@ const Star = ({ willBeActive, isActive, style }) => {
   );
 };
 
-export default function Comment() {
+export default function Comment(props) {
+  const formatter = buildFormatter(frenchStrings);
   const classes = useStyles();
 
   return (
@@ -51,32 +54,34 @@ export default function Comment() {
       <Paper elevation={0} className={classes.paper}>
         <Grid container spacing={2}>
           <Grid item>
-            <ButtonBase className={classes.image}>
-              <img
-                className={classes.img}
-                alt="complex"
-                src="https://experience.sap.com/fiori-design-web/wp-content/uploads/sites/5/2017/02/Avatar-Sizes-Custom-1.png"
-              />
-            </ButtonBase>
+            <Avatar
+              onClick={props.sideMenuOpen}
+              className={classes.Avatar}
+              alt={props.givenName + " " + props.familyName}
+              src={props.avatarImage ? props.avatarImage.dataUri : null}
+            >
+              {props.givenName ? props.givenName.charAt(0).toUpperCase() : null}
+              {props.familyName
+                ? props.familyName.charAt(0).toUpperCase()
+                : null}
+            </Avatar>
           </Grid>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={1}>
               <Grid item xs>
-                <Typography variant="subtitle1">Betül Akıncı</Typography>
+                <Typography variant="subtitle1">
+                  {props.givenName} {props.familyName}
+                </Typography>
                 <Typography variant="body2" gutterBottom color="textSecondary">
-                  3 gün önce
+                  <TimeAgo date={props.updatedAt} formatter={formatter} />
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  1500'lerden beri kullanılmakta olan standard Lorem Ipsum
-                  metinleri ilgilenenler için yeniden üretilmiştir. Çiçero
-                  tarafından yazılan 1.10.32 ve 1.10.33 bölümleri de 1914 H.
-                  Rackham çevirisinden alınan İngilizce sürümleri eşliğinde
-                  özgün biçiminden yeniden üretilmiştir.
+                  {props.body}
                 </Typography>
               </Grid>
             </Grid>
             <Grid item>
-              <Rater total={5} rating={2} interactive={false}>
+              <Rater total={5} rating={props.star} interactive={false}>
                 <Star />
               </Rater>
             </Grid>

@@ -39,6 +39,8 @@ function BodyArea(propsGeneral) {
               <CoursePage
                 {...props}
                 questionOpen={propsGeneral.questionOpen}
+                makeCommentOpen={propsGeneral.makeCommentOpen}
+                updateCommentOpen={propsGeneral.updateCommentOpen}
                 showMessages={propsGeneral.showMessages}
               />
             );

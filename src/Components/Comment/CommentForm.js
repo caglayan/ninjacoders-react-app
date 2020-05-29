@@ -13,19 +13,11 @@ const Basic = (props) => {
   const classes = useStyles();
   return (
     <Formik
-      initialValues={{ givenName: "", familyName: "", email: "", password: "" }}
+      initialValues={{ email: props.body }}
       validate={(values) => {
         const errors = {};
         if (!values.email) {
           errors.email = "Email is required.";
-        } else if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-        ) {
-          errors.email = "Incorrect email.";
-        }
-
-        if (!values.password) {
-          errors.password = "Password is required.";
         }
 
         return errors;

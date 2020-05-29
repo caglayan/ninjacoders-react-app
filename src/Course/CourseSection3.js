@@ -4,7 +4,7 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
-import Comment from "../Components/CourseHelpers/Comment";
+import Comment from "../Components/CourseHelpers/CommentPanel";
 
 const useStyles = makeStyles((theme) => ({
   container: {

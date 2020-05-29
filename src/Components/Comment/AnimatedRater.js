@@ -23,11 +23,11 @@ Star.propTypes = {
 };
 
 export default class AnimatedRater extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
-      shouldStart: false,
-      rating: 3,
+      shouldStart: props.shouldStart,
+      rating: props.rating,
       defaultStyles: [{ x: 0 }, { x: 0 }, { x: 0 }, { x: 0 }, { x: 0 }],
     };
   }

@@ -22,6 +22,7 @@ import SnackBar from "./Components/SnackBar/SnackBar";
 import SignInDialog from "./Layout/Dialogs/SignInDialog";
 import SignUpDialog from "./Layout/Dialogs/SignUpDialog";
 import QuestionDialog from "./Layout/Dialogs/QuestionDialog";
+import CommentDialog from "./Layout/Dialogs/CommentDialog";
 import configureStore from "./Redux/Store/configStore";
 import {
   startCreateUserLocal,
@@ -95,12 +96,16 @@ export default function App() {
   const [questionDialogIsActive, setQuestionDialogIsActive] = React.useState(
     false
   );
+  const [commentDialogIsActive, setCommentDialogIsActive] = React.useState(
+    false
+  );
 
   const closeDialogs = () => {
     console.log("Close all Dialogs");
     setSigninDialogIsActive(false);
     setSignupDialogIsActive(false);
     setQuestionDialogIsActive(false);
+    setCommentDialogIsActive(false);
   };
 
   const openSignInDialog = () => {
@@ -111,7 +116,7 @@ export default function App() {
 
   const openSignUpDialog = () => {
     closeDialogs();
-    console.log("Sign Un Button is clicked");
+    console.log("Sign Up Button is clicked");
     setSignupDialogIsActive(true);
   };
 
@@ -119,6 +124,12 @@ export default function App() {
     closeDialogs();
     console.log("Question Button is clicked");
     setQuestionDialogIsActive(true);
+  };
+
+  const openCommentDialog = () => {
+    closeDialogs();
+    console.log("Comment Button is clicked");
+    setCommentDialogIsActive(true);
   };
   // ********************** ERROR HANDLING ********************** //
 
@@ -175,6 +186,8 @@ export default function App() {
             />
             <BodyArea
               questionOpen={openQuestionDialog}
+              makeCommentOpen={openCommentDialog}
+              updateCommentOpen={openCommentDialog}
               showMessages={showMessages}
             />
             <Footer />
@@ -192,6 +205,11 @@ export default function App() {
             />
             <QuestionDialog
               isActive={questionDialogIsActive}
+              closeDialog={closeDialogs}
+              showMessages={showMessages}
+            />
+            <CommentDialog
+              isActive={commentDialogIsActive}
               closeDialog={closeDialogs}
               showMessages={showMessages}
             />

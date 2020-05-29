@@ -11,11 +11,13 @@ import { Divider, Avatar } from "@material-ui/core";
 import { connect } from "react-redux";
 import { updateUserWebApi } from "../Redux/Selectors/userSelector";
 import { useHistory } from "react-router-dom";
-import Comment from "../Components/CourseHelpers/Comment";
+
 import TabPanel from "../Components/CourseHelpers/TabPanel";
 import InstStat from "../Components/CourseHelpers/InstStat";
 import { AppBar, Toolbar, IconButton } from "@material-ui/core";
-import { Menu } from "@material-ui/icons";
+import Panel1 from "./Panel1";
+import Panel2 from "./Panel2";
+import Panel3 from "./Panel3";
 
 const useStyles = makeStyles((theme) => {
   //console.log(theme);
@@ -50,10 +52,10 @@ const useStyles = makeStyles((theme) => {
 const CourseSection2 = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  const [valuea, setValuea] = React.useState(0);
+  const [panelIndex, setPanelIndex] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValuea(newValue);
+  const handleChange = (event, panelIndex) => {
+    setPanelIndex(panelIndex);
   };
 
   const addItemToBasket = (itemId) => {
@@ -87,7 +89,7 @@ const CourseSection2 = (props) => {
       <Grid container className={classes.container}>
         <AppBar position="sticky" className={classes.menuAppBar}>
           <Tabs
-            value={valuea}
+            value={panelIndex}
             onChange={handleChange}
             aria-label="simple tabs example"
             variant="fullWidth"
@@ -100,120 +102,9 @@ const CourseSection2 = (props) => {
           </Tabs>
         </AppBar>
         <Container className={classes.tabContainer} maxWidth="lg">
-          <TabPanel value={valuea} index={0}>
-            <Grid container spacing={0}>
-              <Grid item sm={8}>
-                <Typography variant="body1" component="h1">
-                  <Box fontWeight="fontWeightMedium">
-                    Python ile Veri Bilimi ve Makine Öğrenimi
-                  </Box>
-                </Typography>
-                <Typography variant="body2" component="h1">
-                  Yaygın inancın tersine, Lorem Ipsum rastgele sözcüklerden
-                  oluşmaz. Kökleri M.Ö. 45 tarihinden bu yana klasik Latin
-                  edebiyatına kadar uzanan 2000 yıllık bir geçmişi vardır.
-                  Virginia'daki Hampden-Sydney College'dan Latince profesörü
-                  Richard McClintock, bir Lorem Ipsum pasajında geçen ve
-                  anlaşılması en güç sözcüklerden biri olan 'consectetur'
-                  sözcüğünün klasik edebiyattaki örneklerini incelediğinde kesin
-                  bir kaynağa ulaşmıştır. Lorm Ipsum, Çiçero tarafından M.Ö. 45
-                  tarihinde kaleme alınan "de Finibus Bonorum et Malorum" (İyi
-                  ve Kötünün Uç Sınırları) eserinin 1.10.32 ve 1.10.33 sayılı
-                  bölümlerinden gelmektedir. Bu kitap, ahlak kuramı üzerine bir
-                  tezdir ve Rönesans döneminde çok popüler olmuştur. Lorem Ipsum
-                  pasajının ilk satırı olan "Lorem ipsum dolor sit amet" 1.10.32
-                  sayılı bölümdeki bir satırdan gelmektedir.
-                  <Box style={{ marginTop: "10px" }}>
-                    1500'lerden beri kullanılmakta olan standard Lorem Ipsum
-                    metinleri ilgilenenler için yeniden üretilmiştir. Çiçero
-                    tarafından yazılan 1.10.32 ve 1.10.33 bölümleri de 1914 H.
-                    Rackham çevirisinden alınan İngilizce sürümleri eşliğinde
-                    özgün biçiminden yeniden üretilmiştir.
-                  </Box>
-                </Typography>
-              </Grid>
-              <Grid item sm={4}>
-                <Grid
-                  container
-                  justify="center"
-                  alignItems="center"
-                  spacing={0}
-                >
-                  <Grid
-                    container
-                    justify="center"
-                    spacing={1}
-                    style={{ marginTop: "30px" }}
-                  >
-                    <Grid style={{ height: "50px" }} item sm={3} xs={12}>
-                      <InstStat></InstStat>
-                    </Grid>
-                    <Grid style={{ height: "50px" }} item sm={3} xs={12}>
-                      <InstStat></InstStat>
-                    </Grid>
-                    <Grid style={{ height: "50px" }} item sm={3} xs={12}>
-                      <InstStat></InstStat>
-                    </Grid>
-                  </Grid>
-                  <Divider style={{ marginTop: "30px" }} variant="middle" />
-                  <Grid item>
-                    <Avatar
-                      alt="Remy Sharp"
-                      className={classes.bigAvatar}
-                      src="https://experience.sap.com/fiori-design-web/wp-content/uploads/sites/5/2017/02/Avatar-Sizes-Custom-1.png"
-                    />
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="body2">Mehmet Vahit Keskin</Typography>
-                    <Typography variant="body2">Data Scientist</Typography>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Box mx={4} my={1}>
-                      1500'lerden beri kullanılmakta olan standard Lorem Ipsum
-                      metinleri ilgilenenler için yeniden üretilmiştir. Çiçero
-                      tarafından yazılan 1.10.32 ve 1.10.33 bölümleri de 1914 H.
-                      Rackham çevirisinden alınan İngilizce sürümleri eşliğinde
-                      özgün biçiminden yeniden üretilmiştir.
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </TabPanel>
-          <TabPanel value={valuea} index={1}>
-            <Button
-              onClick={() => addItemToBasket(props._id)}
-              style={{}}
-              variant="contained"
-              color="secondary"
-              className={classes.button}
-            >
-              Yorum yap
-            </Button>
-            <Comment
-              style={{ marginTop: "120px" }}
-              className={classes.commentContainer}
-            ></Comment>
-            <Comment className={classes.commentContainer}></Comment>
-            <Comment className={classes.commentContainer}></Comment>
-            <Comment className={classes.commentContainer}></Comment>
-          </TabPanel>
-          <TabPanel value={valuea} index={2}>
-            <Button
-              onClick={props.questionOpen}
-              variant="contained"
-              color="secondary"
-            >
-              Soru Sor
-            </Button>
-            <Comment
-              style={{ marginTop: "120px" }}
-              className={classes.commentContainer}
-            ></Comment>
-            <Comment className={classes.commentContainer}></Comment>
-            <Comment className={classes.commentContainer}></Comment>
-            <Comment className={classes.commentContainer}></Comment>
-          </TabPanel>
+          <Panel1 {...props} index={panelIndex}></Panel1>
+          <Panel2 {...props} index={panelIndex}></Panel2>
+          <Panel3 {...props} index={panelIndex}></Panel3>
         </Container>
       </Grid>
     </div>
