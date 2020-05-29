@@ -50,10 +50,10 @@ const useStyles = makeStyles((theme) => {
 const CourseSection2 = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  const [value, setValue] = React.useState(0);
+  const [valuea, setValuea] = React.useState(0);
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setValuea(newValue);
   };
 
   const addItemToBasket = (itemId) => {
@@ -69,6 +69,7 @@ const CourseSection2 = (props) => {
     const shoppingCartSend = {
       shoppingCart: [item],
     };
+
     props
       .dispatch(updateUserWebApi(shoppingCartSend, props.token))
       .then((user) => {
@@ -86,13 +87,12 @@ const CourseSection2 = (props) => {
       <Grid container className={classes.container}>
         <AppBar position="sticky" className={classes.menuAppBar}>
           <Tabs
-            value={value}
+            value={valuea}
             onChange={handleChange}
             aria-label="simple tabs example"
             variant="fullWidth"
             indicatorColor="primary"
             textColor="primary"
-            r
           >
             <Tab label="Bölüm Açıklaması" />
             <Tab label="Yorumlar" />
@@ -100,7 +100,7 @@ const CourseSection2 = (props) => {
           </Tabs>
         </AppBar>
         <Container className={classes.tabContainer} maxWidth="lg">
-          <TabPanel value={value} index={0}>
+          <TabPanel value={valuea} index={0}>
             <Grid container spacing={0}>
               <Grid item sm={8}>
                 <Typography variant="body1" component="h1">
@@ -180,7 +180,7 @@ const CourseSection2 = (props) => {
               </Grid>
             </Grid>
           </TabPanel>
-          <TabPanel value={value} index={1}>
+          <TabPanel value={valuea} index={1}>
             <Button
               onClick={() => addItemToBasket(props._id)}
               style={{}}
@@ -198,13 +198,11 @@ const CourseSection2 = (props) => {
             <Comment className={classes.commentContainer}></Comment>
             <Comment className={classes.commentContainer}></Comment>
           </TabPanel>
-          <TabPanel value={value} index={2}>
+          <TabPanel value={valuea} index={2}>
             <Button
-              onClick={() => addItemToBasket(props._id)}
-              style={{}}
+              onClick={props.questionOpen}
               variant="contained"
               color="secondary"
-              className={classes.button}
             >
               Soru Sor
             </Button>
@@ -225,23 +223,6 @@ const CourseSection2 = (props) => {
     // </Container>
   );
 };
-
-const CourseSection2Con = connect((state) => {
-  return {
-    _id: state.courseReducer._id,
-    title: state.courseReducer.title,
-    isBelongNinja: state.courseReducer.isBelongNinja,
-    instructor: state.courseReducer.instructor,
-    description: state.courseReducer.description,
-    duration: state.courseReducer.duration,
-    numberOfSections: state.courseReducer.numberOfSections,
-    chapters: state.courseReducer.chapters,
-    shoppingCart: state.userReducer.shoppingCart,
-    token: state.userReducer.token,
-  };
-})(CourseSection2);
-
-export default CourseSection2Con;
 
 {
   /* <Grid container spacing={1}>
@@ -349,3 +330,18 @@ export default CourseSection2Con;
 </Grid>
 </Grid> */
 }
+
+const CourseSection2Con = connect((state) => ({
+  _id: state.courseReducer._id,
+  title: state.courseReducer.title,
+  isBelongNinja: state.courseReducer.isBelongNinja,
+  instructor: state.courseReducer.instructor,
+  description: state.courseReducer.description,
+  duration: state.courseReducer.duration,
+  numberOfSections: state.courseReducer.numberOfSections,
+  chapters: state.courseReducer.chapters,
+  shoppingCart: state.userReducer.shoppingCart,
+  token: state.userReducer.token,
+}))(CourseSection2);
+
+export default CourseSection2Con;

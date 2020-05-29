@@ -23,9 +23,9 @@ const CourseContainer = (props) => {
 
   return (
     <div>
-      <CourseSection1></CourseSection1>
-      <CourseSection2></CourseSection2>
-      <CourseSection3></CourseSection3>
+      <CourseSection1 {...props}></CourseSection1>
+      <CourseSection2 {...props}></CourseSection2>
+      <CourseSection3 {...props}></CourseSection3>
     </div>
   );
 };

@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import NotFoundPage from "./NotFoundPage";
 import SignInPage from "./Pages/SignInPage";
 import SignUpPage from "./Pages/SignUpPage";
+import QuestionPage from "./Pages/QuestionPage";
+import CommentPage from "./Pages/CommentPage";
 import ResetPassPage from "./Pages/ResetPassPage";
 import CreatePassPage from "./Pages/CreatePassPage";
 import AccountPage from "../Account/Account";
@@ -32,9 +34,15 @@ function BodyArea(propsGeneral) {
       <Switch>
         <Route
           path="/course/:id"
-          render={(props) => (
-            <CoursePage {...props} showMessages={propsGeneral.showMessages} />
-          )}
+          render={(props) => {
+            return (
+              <CoursePage
+                {...props}
+                questionOpen={propsGeneral.questionOpen}
+                showMessages={propsGeneral.showMessages}
+              />
+            );
+          }}
         />
         <Route
           path="/user/"
@@ -70,6 +78,20 @@ function BodyArea(propsGeneral) {
           exact={true}
           render={(props) => (
             <SignUpPage {...props} showMessages={propsGeneral.showMessages} />
+          )}
+        />
+        <Route
+          path="/askquestion"
+          exact={true}
+          render={(props) => (
+            <QuestionPage {...props} showMessages={propsGeneral.showMessages} />
+          )}
+        />
+        <Route
+          path="/makecomment"
+          exact={true}
+          render={(props) => (
+            <CommentPage {...props} showMessages={propsGeneral.showMessages} />
           )}
         />
         <Route

@@ -21,6 +21,7 @@ import SideMenu from "./Layout/SideMenu";
 import SnackBar from "./Components/SnackBar/SnackBar";
 import SignInDialog from "./Layout/Dialogs/SignInDialog";
 import SignUpDialog from "./Layout/Dialogs/SignUpDialog";
+import QuestionDialog from "./Layout/Dialogs/QuestionDialog";
 import configureStore from "./Redux/Store/configStore";
 import {
   startCreateUserLocal,
@@ -91,11 +92,15 @@ export default function App() {
   // ********************** DIALOGS ********************** //
   const [signinDialogIsActive, setSigninDialogIsActive] = React.useState(false);
   const [signupDialogIsActive, setSignupDialogIsActive] = React.useState(false);
+  const [questionDialogIsActive, setQuestionDialogIsActive] = React.useState(
+    false
+  );
 
   const closeDialogs = () => {
     console.log("Close all Dialogs");
     setSigninDialogIsActive(false);
     setSignupDialogIsActive(false);
+    setQuestionDialogIsActive(false);
   };
 
   const openSignInDialog = () => {
@@ -108,6 +113,12 @@ export default function App() {
     closeDialogs();
     console.log("Sign Un Button is clicked");
     setSignupDialogIsActive(true);
+  };
+
+  const openQuestionDialog = () => {
+    closeDialogs();
+    console.log("Question Button is clicked");
+    setQuestionDialogIsActive(true);
   };
   // ********************** ERROR HANDLING ********************** //
 
@@ -162,7 +173,10 @@ export default function App() {
               signupOpen={openSignUpDialog}
               sideMenuOpen={handleOpenSideMenu}
             />
-            <BodyArea showMessages={showMessages} />
+            <BodyArea
+              questionOpen={openQuestionDialog}
+              showMessages={showMessages}
+            />
             <Footer />
             <SignInDialog
               isActive={signinDialogIsActive}
@@ -173,6 +187,11 @@ export default function App() {
             <SignUpDialog
               isActive={signupDialogIsActive}
               signInOpen={openSignInDialog}
+              closeDialog={closeDialogs}
+              showMessages={showMessages}
+            />
+            <QuestionDialog
+              isActive={questionDialogIsActive}
               closeDialog={closeDialogs}
               showMessages={showMessages}
             />

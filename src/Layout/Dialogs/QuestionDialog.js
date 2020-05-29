@@ -2,14 +2,17 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Dialog, DialogTitle, IconButton } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import SignInComp from "../../Components/SignIn/SignIn";
+import QuestionComp from "../../Components/Question/Question";
 
 const useStyles = makeStyles((theme) => ({
   closeButton: {
     position: "absolute",
     right: theme.spacing(1),
-    top: theme.spacing(1),
+    top: theme.spacing(0),
     color: theme.palette.grey[500],
+  },
+  dialog: {
+    backgroundColor: theme.palette.grey[100],
   },
 }));
 
@@ -19,13 +22,18 @@ export default function QuestionDialogComp(props) {
   return (
     <div>
       <Dialog
+        fullWidth={true}
+        maxWidth={"sm"}
         open={isActive}
         onClose={closeDialog}
-        aria-labelledby="SignInDialog"
-        aria-describedby="SignIn Dialog"
-        className={classes.Dialog}
+        aria-labelledby="QuestionDialoh"
+        aria-describedby="Question Dialog"
       >
-        <DialogTitle id="customized-dialog-title" onClose={closeDialog}>
+        <DialogTitle
+          className={classes.dialog}
+          id="customized-dialog-title"
+          onClose={closeDialog}
+        >
           <IconButton
             aria-label="close"
             className={classes.closeButton}
@@ -34,10 +42,10 @@ export default function QuestionDialogComp(props) {
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <SignInComp
+        <QuestionComp
           closeDialog={props.closeDialog}
           {...propsChild}
-        ></SignInComp>
+        ></QuestionComp>
       </Dialog>
     </div>
   );
