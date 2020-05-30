@@ -44,15 +44,6 @@ const CommentTab = (props) => {
       .catch((err) => {
         console.log(err);
       });
-
-    // findComment(props.token)
-    //   .then((comment) => {
-    //     console.log(comment);
-    //     setPersonalComment(comment);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   };
 
   React.useEffect(() => {
