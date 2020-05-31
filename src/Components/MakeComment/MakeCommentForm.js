@@ -1,6 +1,12 @@
 import React from "react";
 import { Formik } from "formik";
-import { Box, Button, TextField, Grid, Link } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  TextField,
+  Grid,
+  CircularProgress,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -9,20 +15,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Basic = (props) => {
+const MakeCommentForm = (props) => {
   const classes = useStyles();
   return (
     <Formik
-      initialValues={{ email: props.body }}
+      initialValues={{ body: props.body }}
       validate={(values) => {
         const errors = {};
-        if (!values.email) {
-          errors.email = "Email is required.";
-        }
-
+        // if (!values.body) {
+        //   errors.body = "Yorum bölümü gereklidir.";
+        // }
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
+        console.log("onSubmit:", values);
         props.onSubmit(values);
       }}
     >
@@ -40,19 +46,19 @@ const Basic = (props) => {
           <Grid container justify="center" spacing={2}>
             <Grid item xs={12}>
               <TextField
-                error={errors.email != null && touched.email}
+                error={errors.body != null && touched.body}
                 label="Gelişmemize yardım et! Ders için güzel bir yorum yaz."
                 fullWidth
                 multiline
                 rows={6}
-                id="email"
-                helperText={errors.email && touched.email && errors.email}
+                id="body"
+                helperText={errors.body && touched.body && errors.body}
                 margin="dense"
                 variant="outlined"
                 style={{ color: "white" }}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.email}
+                value={values.body}
                 InputProps={{
                   className: classes.input,
                 }}
@@ -66,15 +72,10 @@ const Basic = (props) => {
                   variant="contained"
                   color="primary"
                   type="submit"
-                  disabled={
-                    errors.password
-                      ? true
-                      : false || errors.email
-                      ? true
-                      : false
-                  }
+                  disabled={errors.body ? true : false}
                 >
-                  Gönder
+                  {isSubmitting && <CircularProgress size={18} />}
+                  {!isSubmitting && "Gönder"}
                 </Button>
               </Box>
             </Grid>

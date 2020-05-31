@@ -13,11 +13,11 @@ import {
   startCreateUserLoginGoogle,
   startCreateUserLoginWebApi,
 } from "../../Redux/Selectors/userSelector";
-import CommentForm from "./CommentForm";
+import CommentForm from "./MakeCommentForm";
 import AnimatedRater from "./AnimatedRater";
 import "react-rater/lib/react-rater.css";
-import { findComment } from "../../Api/commentApi";
 import { updatePersonalComment } from "../../Redux/Selectors/commentSelector";
+import { makeComment, updateComment } from "../../Api/commentApi";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,61 +40,66 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CommentContent(props) {
+function MakeCommentContent(props) {
   const [progressVisible, setProgressVisible] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [rating, setRating] = React.useState(3);
+  const [rating, setRating] = React.useState(5);
   const [comment, setComment] = React.useState();
   const classes = useStyles();
   const history = useHistory();
 
-  const onSubmit = (formValues) => {
-    //setProgressVisible(true);
-    console.log("hello");
+  const onSubmitMake = (formValues) => {
+    setProgressVisible(true);
+    console.log(formValues);
+    makeComment(
+      props.token,
+      props.course_id,
+      "from website",
+      formValues.body,
+      rating
+    )
+      .then((comment) => {
+        console.log(comment);
+        props.dispatch(updatePersonalComment({ ...comment, isUpdating: true }));
+        setProgressVisible(false);
+        if (props.closeDialog) {
+          props.closeDialog();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-    props.dispatch(
-      updatePersonalComment({ ...props.comment, isUpdating: true })
-    );
-
-    // props
-    //   .dispatch(startCreateUserLoginWebApi(formValues))
-    //   .then((user) => {
-    //     if (props.closeDialog) {
-    //       props.closeDialog();
-    //     }
-    //     setProgressVisible(false);
-    //     history.push(`/`);
-    //   })
-    //   .catch((err) => {
-    //     setProgressVisible(false);
-    //     props.showMessages(2, err);
-    //   });
+  const onSubmitUpdate = (formValues) => {
+    setProgressVisible(true);
+    console.log(formValues);
+    updateComment(
+      props.token,
+      props.comment_id,
+      "from website",
+      formValues.body,
+      rating
+    )
+      .then((comment) => {
+        console.log(comment);
+        props.dispatch(updatePersonalComment({ ...comment, isUpdating: true }));
+        setProgressVisible(false);
+        if (props.closeDialog) {
+          props.closeDialog();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const changeRating = (newRating) => {
     console.log(newRating);
+    setRating(newRating);
   };
 
-  const findCommentAdd = () => {
-    findComment(props.token)
-      .then((comment) => {
-        console.log(comment);
-        setComment(comment);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoading(false);
-      });
-  };
-
-  // React.useEffect(() => {
-  //   console.log("started");
-  //   setIsLoading(true);
-  //   findCommentAdd();
-  // }, []);
-
-  const updateComment = (
+  const updateCommentPan = (
     <Paper elevation={0} className={classes.paper}>
       {progressVisible ? (
         <LinearProgress variant="query" color="secondary" />
@@ -117,13 +122,13 @@ function CommentContent(props) {
           />
         </Grid>
         <Grid item xs={12}>
-          <CommentForm {...props.comment} onSubmit={onSubmit} />
+          <CommentForm {...props.comment} onSubmit={onSubmitUpdate} />
         </Grid>
       </Grid>
     </Paper>
   );
 
-  const makeComment = (
+  const makeCommentPan = (
     <Paper elevation={0} className={classes.paper}>
       {progressVisible ? (
         <LinearProgress variant="query" color="secondary" />
@@ -146,14 +151,20 @@ function CommentContent(props) {
           />
         </Grid>
         <Grid item xs={12}>
-          <CommentForm onSubmit={onSubmit} />
+          <CommentForm onSubmit={onSubmitMake} />
         </Grid>
       </Grid>
     </Paper>
   );
 
   return (
-    <div>{isLoading ? null : props.comment ? updateComment : makeComment}</div>
+    <div>
+      {isLoading
+        ? null
+        : props.comment_id !== ""
+        ? updateCommentPan
+        : makeCommentPan}
+    </div>
   );
 }
 
@@ -161,6 +172,8 @@ export default connect((state) => {
   return {
     _id: state.userReducer._id,
     token: state.userReducer.token,
+    course_id: state.courseReducer._id,
+    comment_id: state.commentReducer._id,
     comment: state.commentReducer,
   };
-})(CommentContent);
+})(MakeCommentContent);

@@ -1,6 +1,6 @@
-import { findComment } from "../../Api/commentApi";
+import { findComment, makeComment } from "../../Api/commentApi";
 
-import { updateComment, removeComment } from "../Actions/commentActions";
+import { updateComment } from "../Actions/commentActions";
 
 export const createPersonalComment = (token) => {
   return (dispatch) => {
@@ -11,7 +11,21 @@ export const createPersonalComment = (token) => {
           resolve(comment);
         })
         .catch((err) => {
-          console.log(err);
+          reject(err);
+        });
+    });
+  };
+};
+
+export const makePersonalComment = (token, course, title, body, star) => {
+  return (dispatch) => {
+    return new Promise(function (resolve, reject) {
+      makeComment(token, course, title, body, star)
+        .then((comment) => {
+          dispatch(updateComment(comment));
+          resolve(comment);
+        })
+        .catch((err) => {
           reject(err);
         });
     });

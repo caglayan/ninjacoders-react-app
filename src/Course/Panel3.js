@@ -83,6 +83,7 @@ const QuestionTab = (props) => {
           <QuestionPanel
             {...question}
             className={classes.questionContainer}
+            key={index}
           ></QuestionPanel>
         );
       })}

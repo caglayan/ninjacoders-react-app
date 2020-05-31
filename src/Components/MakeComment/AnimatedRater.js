@@ -26,7 +26,7 @@ export default class AnimatedRater extends Component {
   constructor(props) {
     super();
     this.state = {
-      shouldStart: props.shouldStart,
+      shouldStart: true,
       rating: props.rating,
       defaultStyles: [{ x: 0 }, { x: 0 }, { x: 0 }, { x: 0 }, { x: 0 }],
     };

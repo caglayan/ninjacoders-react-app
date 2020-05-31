@@ -1,32 +1,30 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import { Divider, Avatar } from "@material-ui/core";
+import { Button, Box, Grid, Divider } from "@material-ui/core/";
 import { connect } from "react-redux";
 import TabPanel from "../Components/CourseHelpers/TabPanel";
-import InstStat from "../Components/CourseHelpers/InstStat";
-import CommentPanel from "../Components/CourseHelpers/CommentPanel";
+import CommentPanel from "../Components/CommentHelpers/CommentPanel";
+import PersonalCommentPanel from "../Components/CommentHelpers/PersonalCommentPanel";
 import { pullComments, findComment } from "../Api/commentApi";
 import { createPersonalComment } from "../Redux/Selectors/commentSelector";
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+  divider: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 const CommentTab = (props) => {
+  const classes = useStyles();
   const [comments, setComments] = React.useState([]);
   const [isMoreActive, setIsMoreActive] = React.useState(true);
-  const [personalComment, setPersonalComment] = React.useState();
 
   const pullCommentsAdd = () => {
-    pullComments(comments.length, 5, props.course_id) // skip limit
+    pullComments(comments.length, 4, props.course_id) // skip limit
       .then((commentsi) => {
         if (commentsi.length === 0) setIsMoreActive(false);
         var newArray = comments.concat(commentsi);
+        console.log("pulled Comments:", newArray);
         setComments(newArray);
       })
       .catch((err) => {
@@ -34,62 +32,54 @@ const CommentTab = (props) => {
       });
   };
 
-  const findCommentAdd = () => {
-    props
-      .dispatch(createPersonalComment(props.token))
-      .then((comment) => {
-        console.log(comment);
-        setPersonalComment(comment);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   React.useEffect(() => {
-    console.log("changed");
     if (props.course_id) pullCommentsAdd();
-    if (props.course_id) findCommentAdd();
   }, [props.course_id]);
 
   React.useEffect(() => {
-    console.log("changed comment");
-    if (props.isUpdating) findCommentAdd();
+    if (props.isUpdating == true) setComments([]);
   }, [props.isUpdating]);
 
-  const classes = useStyles();
+  React.useEffect(() => {
+    if (props.isUpdating == true && comments.length == 0) pullCommentsAdd();
+  }, [comments]);
+
   return (
     <TabPanel value={props.index} index={1}>
-      {personalComment ? (
-        <Button
-          onClick={props.updateCommentOpen}
-          variant="contained"
-          color="primary"
-        >
-          Yorumunu Güncelle
-        </Button>
-      ) : (
-        <Button
-          onClick={props.makeCommentOpen}
-          variant="contained"
-          color="secondary"
-        >
-          Yorum Yap
-        </Button>
-      )}
+      <PersonalCommentPanel {...props}></PersonalCommentPanel>
+      <Grid
+        container
+        className={classes.divider}
+        direction="row"
+        justify="center"
+        alignItems="center"
+      >
+        <Grid item xs={5}>
+          <Divider />
+        </Grid>
+        <Grid item xs={2}>
+          <Box textAlign="center" m={1}>
+            Son Yorumlar
+          </Box>
+        </Grid>
+        <Grid item xs={5}>
+          <Divider />
+        </Grid>
+      </Grid>
 
       {comments.map((comment, index) => {
         return (
           <CommentPanel
             {...comment}
             className={classes.commentContainer}
+            key={index}
           ></CommentPanel>
         );
       })}
       {isMoreActive ? (
         <Box textAlign="center" m={1}>
           <Button onClick={pullCommentsAdd} variant="contained" color="primary">
-            Diğer Yorumlar
+            Daha Fazla Yükle
           </Button>
         </Box>
       ) : null}

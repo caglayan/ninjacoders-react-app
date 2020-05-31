@@ -37,6 +37,48 @@ export const findComment = (token) => {
         resolve(res.data.comment);
       })
       .catch((err) => {
+        reject(err.response);
+      });
+  });
+};
+
+export const makeComment = (token, course, title, body, star) => {
+  console.log("Make Comment Api");
+  const apiString = url + "/api/comment/auth/add";
+  return new Promise((resolve, reject) => {
+    axios
+      .post(
+        apiString,
+        { course, title, body, star },
+        {
+          headers: { "x-api-key": token },
+        }
+      )
+      .then((res) => {
+        resolve(res.data.comment);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
+export const updateComment = (token, comment, title, body, star) => {
+  console.log("Update Comment Api");
+  const apiString = url + "/api/comment/auth/update";
+  return new Promise((resolve, reject) => {
+    axios
+      .post(
+        apiString,
+        { comment, title, body, star },
+        {
+          headers: { "x-api-key": token },
+        }
+      )
+      .then((res) => {
+        resolve(res.data.comment);
+      })
+      .catch((err) => {
         reject(err);
       });
   });
