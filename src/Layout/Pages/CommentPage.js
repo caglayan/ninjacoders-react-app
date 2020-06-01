@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container } from "@material-ui/core";
-import Comment from "../../Components/Comment/Comment";
+import Comment from "../../Components/MakeComment/MakeComment";
 
 const useStyles = makeStyles((theme) => ({
   Container: {

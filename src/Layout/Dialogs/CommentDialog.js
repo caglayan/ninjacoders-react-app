@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Dialog, DialogTitle, IconButton } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import CommentComp from "../../Components/Comment/Comment";
+import CommentComp from "../../Components/MakeComment/MakeComment";
 
 const useStyles = makeStyles((theme) => ({
   closeButton: {

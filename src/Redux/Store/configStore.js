@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import userReducer from "../Reducers/userReducer";
 import courseReducer from "../Reducers/courseReducer";
 import commentReducer from "../Reducers/commentReducer";
+import questionReducer from "../Reducers/questionReducer";
 import thunk from "redux-thunk";
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -12,6 +13,7 @@ export default () => {
       userReducer,
       courseReducer,
       commentReducer,
+      questionReducer,
     }),
     composeEnhancer(applyMiddleware(thunk))
   );

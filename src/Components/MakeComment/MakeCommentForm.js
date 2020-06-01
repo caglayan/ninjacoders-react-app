@@ -86,4 +86,4 @@ const MakeCommentForm = (props) => {
   );
 };
 
-export default Basic;
+export default MakeCommentForm;

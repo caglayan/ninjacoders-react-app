@@ -41,6 +41,7 @@ function BodyArea(propsGeneral) {
                 questionOpen={propsGeneral.questionOpen}
                 makeCommentOpen={propsGeneral.makeCommentOpen}
                 updateCommentOpen={propsGeneral.updateCommentOpen}
+                askQuestionOpen={propsGeneral.askQuestionOpen}
                 showMessages={propsGeneral.showMessages}
               />
             );

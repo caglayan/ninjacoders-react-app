@@ -185,7 +185,7 @@ export default function App() {
               sideMenuOpen={handleOpenSideMenu}
             />
             <BodyArea
-              questionOpen={openQuestionDialog}
+              askQuestionOpen={openQuestionDialog}
               makeCommentOpen={openCommentDialog}
               updateCommentOpen={openCommentDialog}
               showMessages={showMessages}

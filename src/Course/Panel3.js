@@ -11,19 +11,28 @@ import { Divider, Avatar } from "@material-ui/core";
 import { connect } from "react-redux";
 import TabPanel from "../Components/CourseHelpers/TabPanel";
 import InstStat from "../Components/CourseHelpers/InstStat";
-import QuestionPanel from "../Components/CourseHelpers/QuestionPanel";
+import QuestionPanel from "../Components/QuestionHelpers/QuestionPanel";
+import GiveAnswerPanel from "../Components/QuestionHelpers/GiveAnswerPanel";
+import AnswerPanel from "../Components/QuestionHelpers/AnswerPanel";
 import { pullQuestions, findQuestion } from "../Api/questionApi";
-//import { createPersonalQuestion } from "../Redux/Selectors/questionSelector";
+import { updatePersonalQuestion } from "../Redux/Selectors/questionSelector";
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+  askQuestionButton: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
+}));
 
 const QuestionTab = (props) => {
   const [questions, setQuestions] = React.useState([]);
   const [isMoreActive, setIsMoreActive] = React.useState(true);
+  const classes = useStyles();
+
   const [personalQuestion, setPersonalQuestion] = React.useState();
 
   const pullQuestionsAdd = () => {
-    pullQuestions(questions.length, 5, props.course_id) // skip limit
+    pullQuestions(questions.length, 3, props.course_id) // skip limit
       .then((questionsi) => {
         if (questionsi.length === 0) setIsMoreActive(false);
         var newArray = questions.concat(questionsi);
@@ -34,62 +43,75 @@ const QuestionTab = (props) => {
       });
   };
 
-  // const findQuestionAdd = () => {
-  //   props
-  //     .dispatch(createPersonalQuestion(props.token))
-  //     .then((question) => {
-  //       console.log(question);
-  //       setPersonalQuestion(question);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
   React.useEffect(() => {
-    console.log("changed");
     if (props.course_id) pullQuestionsAdd();
-    // if (props.course_id) findQuestionAdd();
   }, [props.course_id]);
 
   React.useEffect(() => {
-    console.log("changed question");
-    //if (props.isUpdating) findQuestionAdd();
+    if (props.isUpdating == true) {
+      setQuestions([]);
+    }
   }, [props.isUpdating]);
 
-  const classes = useStyles();
+  React.useEffect(() => {
+    if (props.isUpdating == true && questions.length == 0) {
+      pullQuestionsAdd();
+      props.dispatch(updatePersonalQuestion({ isUpdating: false }));
+    }
+  }, [questions]);
+
   return (
     <TabPanel value={props.index} index={2}>
-      {personalQuestion ? (
-        <Button
-          onClick={props.updateQuestionOpen}
-          variant="contained"
-          color="primary"
-        >
-          Yorumunu Güncelle
-        </Button>
-      ) : (
-        <Button
-          onClick={props.makeQuestionOpen}
-          variant="contained"
-          color="secondary"
-        >
-          Soru sor
-        </Button>
-      )}
+      <Button
+        onClick={() => {
+          props.dispatch(updatePersonalQuestion({ isUpdating: false }));
+          props.askQuestionOpen();
+        }}
+        variant="contained"
+        color="secondary"
+        className={classes.askQuestionButton}
+      >
+        Soru sor
+      </Button>
 
       {questions.map((question, index) => {
         return (
-          <QuestionPanel
-            {...question}
-            className={classes.questionContainer}
-            key={index}
-          ></QuestionPanel>
+          <div key={index}>
+            <Divider></Divider>
+            <QuestionPanel
+              {...question}
+              fromUser={props._id === question.sender}
+              askQuestionOpen={() => {
+                props.dispatch(updatePersonalQuestion(question));
+                props.askQuestionOpen();
+              }}
+              className={classes.questionContainer}
+            ></QuestionPanel>
+            {question.answers.map((answer, index) => {
+              return (
+                <AnswerPanel
+                  {...answer}
+                  fromUser={props._id === answer.sender}
+                  question_id={question._id}
+                  showMessages={props.showMessages}
+                  token={props.token}
+                  dispatch={props.dispatch}
+                  avatarImage={props.avatarImage}
+                  className={classes.questionContainer}
+                  key={index}
+                ></AnswerPanel>
+              );
+            })}
+            <GiveAnswerPanel
+              showMessages={props.showMessages}
+              token={props.token}
+              question_id={question._id}
+              className={classes.questionContainer}
+            ></GiveAnswerPanel>
+          </div>
         );
       })}
-      <QuestionPanel className={classes.questionContainer}></QuestionPanel>
-      <QuestionPanel className={classes.questionContainer}></QuestionPanel>
-      <QuestionPanel className={classes.questionContainer}></QuestionPanel>
+
       {isMoreActive ? (
         <Box textAlign="center" m={1}>
           <Button
@@ -106,8 +128,11 @@ const QuestionTab = (props) => {
 };
 
 const QuestionTabCon = connect((state) => ({
+  _id: state.userReducer._id,
+  token: state.userReducer.token,
+  avatarImage: state.userReducer.avatarImage,
   course_id: state.courseReducer._id,
-  //isUpdating: state.questionReducer.isUpdating,
+  isUpdating: state.questionReducer.isUpdating,
 }))(QuestionTab);
 
 export default QuestionTabCon;

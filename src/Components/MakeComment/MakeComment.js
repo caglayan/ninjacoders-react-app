@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 function MakeCommentContent(props) {
   const [progressVisible, setProgressVisible] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [rating, setRating] = React.useState(5);
+  const [rating, setRating] = React.useState(props.comment.star);
   const [comment, setComment] = React.useState();
   const classes = useStyles();
   const history = useHistory();
@@ -68,12 +68,16 @@ function MakeCommentContent(props) {
       })
       .catch((err) => {
         console.log(err);
+        setProgressVisible(false);
+        props.showMessages(2, err.Message);
       });
   };
 
   const onSubmitUpdate = (formValues) => {
-    setProgressVisible(true);
+    //setProgressVisible(true);
     console.log(formValues);
+    console.log("rating", rating);
+
     updateComment(
       props.token,
       props.comment_id,
@@ -91,6 +95,8 @@ function MakeCommentContent(props) {
       })
       .catch((err) => {
         console.log(err);
+        setProgressVisible(false);
+        props.showMessages(2, err.Message);
       });
   };
 
@@ -114,7 +120,7 @@ function MakeCommentContent(props) {
         </Grid>
         <Grid item>
           <AnimatedRater
-            rating={props.comment.star}
+            rating={rating}
             changeRating={changeRating}
             numberOfStars={5}
             starDimension="30px"

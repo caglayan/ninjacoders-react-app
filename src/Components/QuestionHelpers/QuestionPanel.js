@@ -1,9 +1,17 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Avatar, Grid, Paper, Button, Typography } from "@material-ui/core/";
+import {
+  Avatar,
+  Grid,
+  Paper,
+  Button,
+  Typography,
+  Divider,
+} from "@material-ui/core/";
 import TimeAgo from "react-timeago";
 import turkishStrings from "react-timeago/lib/language-strings/tr";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
+import AnswerPanel from "./AnswerPanel";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     margin: "0",
     maxWidth: "100%",
-    backgroundColor: theme.palette.grey[100],
+    backgroundColor: "transparent",
   },
   image: {
     width: 50,
@@ -27,18 +35,6 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: "100%",
   },
 }));
-
-const Star = ({ willBeActive, isActive, style }) => {
-  const fill = isActive ? "#fc6" : willBeActive ? "#ffdd99" : "#e3e3e3";
-  return (
-    <svg viewBox="0 0 19.481 19.481" width="20" height="20" style={style}>
-      <path
-        fill={fill}
-        d="m10.201,.758l2.478,5.865 6.344,.545c0.44,0.038 0.619,0.587 0.285,0.876l-4.812,4.169 1.442,6.202c0.1,0.431-0.367,0.77-0.745,0.541l-5.452-3.288-5.452,3.288c-0.379,0.228-0.845-0.111-0.745-0.541l1.442-6.202-4.813-4.17c-0.334-0.289-0.156-0.838 0.285-0.876l6.344-.545 2.478-5.864c0.172-0.408 0.749-0.408 0.921,0z"
-      />
-    </svg>
-  );
-};
 
 export default function Question(props) {
   const formatter = buildFormatter(turkishStrings);
@@ -70,16 +66,18 @@ export default function Question(props) {
                 <Typography variant="body2" gutterBottom color="textSecondary">
                   <TimeAgo date={props.updatedAt} formatter={formatter} />
                 </Typography>
-                <Typography variant="body2" gutterBottom>
+                <Typography style={{ whiteSpace: "pre" }} variant="body2">
                   {props.body}
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item>
-              <Button onClick={props.makeQuestionOpen} color="primary">
-                Düzenle
-              </Button>
-            </Grid>
+            {props.fromUser ? (
+              <Grid item>
+                <Button onClick={props.askQuestionOpen} color="primary">
+                  Düzenle
+                </Button>
+              </Grid>
+            ) : null}
           </Grid>
         </Grid>
       </Paper>
