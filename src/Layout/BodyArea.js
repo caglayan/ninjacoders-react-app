@@ -5,13 +5,15 @@ import { connect } from "react-redux";
 import NotFoundPage from "./NotFoundPage";
 import SignInPage from "./Pages/SignInPage";
 import SignUpPage from "./Pages/SignUpPage";
-import QuestionPage from "./Pages/QuestionPage";
-import CommentPage from "./Pages/CommentPage";
+import AskQuestionPage from "./Pages/QuestionPage";
+import MakeCommentPage from "./Pages/CommentPage";
 import ResetPassPage from "./Pages/ResetPassPage";
 import CreatePassPage from "./Pages/CreatePassPage";
-import AccountPage from "../Account/Account";
-import CoursePage from "../Course/CourseMain";
-import { startCreateUserLocal } from "./../Redux/Selectors/userSelector";
+import AccountPage from "../USER/Account/Account";
+import QuestionsPage from "../USER/Questions/Questions";
+import CoursePage from "../COURSE/CourseMain";
+import MyCoursesPage from "../USER/Courses/Courses";
+import { startCreateUserLocal } from "../Redux/Selectors/userSelector";
 
 function BodyArea(propsGeneral) {
   var checkLogin = () => {
@@ -46,6 +48,34 @@ function BodyArea(propsGeneral) {
               />
             );
           }}
+        />
+        <Route
+          path="/user/questions"
+          exact={true}
+          render={(props) => (
+            <QuestionsPage
+              {...props}
+              questionOpen={propsGeneral.questionOpen}
+              makeCommentOpen={propsGeneral.makeCommentOpen}
+              updateCommentOpen={propsGeneral.updateCommentOpen}
+              askQuestionOpen={propsGeneral.askQuestionOpen}
+              showMessages={propsGeneral.showMessages}
+            />
+          )}
+        />
+        <Route
+          path="/user/courses"
+          exact={true}
+          render={(props) => (
+            <MyCoursesPage
+              {...props}
+              questionOpen={propsGeneral.questionOpen}
+              makeCommentOpen={propsGeneral.makeCommentOpen}
+              updateCommentOpen={propsGeneral.updateCommentOpen}
+              askQuestionOpen={propsGeneral.askQuestionOpen}
+              showMessages={propsGeneral.showMessages}
+            />
+          )}
         />
         <Route
           path="/user/"
@@ -87,14 +117,20 @@ function BodyArea(propsGeneral) {
           path="/askquestion"
           exact={true}
           render={(props) => (
-            <QuestionPage {...props} showMessages={propsGeneral.showMessages} />
+            <AskQuestionPage
+              {...props}
+              showMessages={propsGeneral.showMessages}
+            />
           )}
         />
         <Route
           path="/makecomment"
           exact={true}
           render={(props) => (
-            <CommentPage {...props} showMessages={propsGeneral.showMessages} />
+            <MakeCommentPage
+              {...props}
+              showMessages={propsGeneral.showMessages}
+            />
           )}
         />
         <Route
@@ -114,6 +150,7 @@ function BodyArea(propsGeneral) {
             <SignInPage {...props} showMessages={propsGeneral.showMessages} />
           )}
         />
+
         <Route component={NotFoundPage} />
       </Switch>
     </div>

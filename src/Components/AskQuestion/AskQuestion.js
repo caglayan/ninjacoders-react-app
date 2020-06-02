@@ -44,7 +44,13 @@ function AskQuestionContent(props) {
 
   const onSubmitAsk = (formValues) => {
     setProgressVisible(true);
-    askQuestion(props.token, props.course_id, "from website", formValues.body)
+    askQuestion(
+      props.token,
+      props.course_id,
+      "from website",
+      formValues.body,
+      props.courseName
+    )
       .then((question) => {
         console.log(question);
         props.dispatch(
@@ -193,6 +199,7 @@ export default connect((state) => {
     _id: state.userReducer._id,
     token: state.userReducer.token,
     avatarImage: state.userReducer.avatarImage,
+    courseName: state.courseReducer.title,
     givenName: state.userReducer.givenName,
     familyName: state.userReducer.familyName,
     token: state.userReducer.token,

@@ -15,14 +15,38 @@ export const courseRemoveLocal = (course) => {
   return ls.remove("course");
 };
 
-export const findPublicCourseWithId = (course_id, user_id) => {
-  console.log("Find Course Api");
+export const findUserCourseWithId = (token, course_id, user_id) => {
+  console.log("Find User Course Api");
+  const apiString = url + "/api/course/auth/find";
+  return new Promise((resolve, reject) => {
+    axios
+      .post(
+        apiString,
+        {
+          course_id,
+          user_id,
+        },
+        {
+          headers: { "x-api-key": token },
+        }
+      )
+      .then((res) => {
+        console.log(res.data.course);
+        resolve(res.data.course);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
+export const findPublicCourseWithId = (course_id) => {
+  console.log("Find Public Course Api");
   const apiString = url + "/api/course/unauth/find";
   return new Promise((resolve, reject) => {
     axios
       .post(apiString, {
         course_id,
-        user_id,
       })
       .then((res) => {
         console.log(res.data.course);

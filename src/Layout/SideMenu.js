@@ -114,17 +114,23 @@ const SideMenu = (props) => {
         />
       </ListItem>
       <ListItem component={NavLink} to="/user/account" button key="13">
-        <ListItemText primary="Account Settings" />
+        <ListItemText primary="Hesap Ayarları" />
       </ListItem>
-      <ListItem component={NavLink} to="/premium" button key="12">
-        <ListItemText primary="Buy Premium" />
+      <ListItem component={NavLink} to="/user/questions" button key="12">
+        <ListItemText primary="Sorularım" />
+      </ListItem>
+      <ListItem component={NavLink} to="/user/courses" button key="12">
+        <ListItemText primary="İzlediğim Dersler" />
+      </ListItem>
+      <ListItem component={NavLink} to="/premium" button key="16">
+        <ListItemText primary="Premium Ol" />
       </ListItem>
       <Divider />
       <ListItem component={NavLink} to="/help" button key="14">
-        <ListItemText primary="Help" />
+        <ListItemText primary="Yardım" />
       </ListItem>
       <ListItem onClick={props.logoutUser} button key="15">
-        <ListItemText primary="Sign out" />
+        <ListItemText primary="Çıkış" />
       </ListItem>
     </List>
   );

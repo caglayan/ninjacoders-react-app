@@ -45,15 +45,19 @@ const AnswerPanel = (props) => {
   const classes = useStyles();
   const formatter = buildFormatter(turkishStrings);
   const [isGiveAnswer, setIsGiveAnswer] = React.useState(true);
+  const [isRemoving, setIsRemoving] = React.useState(false);
 
   const remove = () => {
+    setIsRemoving(true);
     removeAnswer(props.token, props.question_id, props._id)
-      .then((response) => {
-        console.log(response);
-        props.dispatch(updatePersonalQuestion({ isUpdating: true }));
+      .then((question) => {
+        props.updateQuestion(question);
+        // props.dispatch(updatePersonalQuestion({ isUpdating: true }));
+        setIsRemoving(false);
       })
       .catch((err) => {
         console.log(err);
+        setIsRemoving(false);
         props.showMessages(2, err.Message);
       });
   };
@@ -114,12 +118,15 @@ const AnswerPanel = (props) => {
           "from website",
           values.body
         )
-          .then((response) => {
-            console.log(response);
-            props.dispatch(updatePersonalQuestion({ isUpdating: true }));
+          .then((question) => {
+            console.log("back", question);
+            props.updateQuestion(question);
+            setIsGiveAnswer(true);
+            //props.dispatch(updatePersonalQuestion({ isUpdating: true }));
             setSubmitting(false);
           })
           .catch((err) => {
+            setIsGiveAnswer(true);
             console.log(err);
             props.showMessages(2, err.Message);
             setSubmitting(false);
@@ -202,7 +209,10 @@ const AnswerPanel = (props) => {
                             color="secondary"
                             style={{ marginLeft: "30px" }}
                           >
-                            Cevabı Sil
+                            {isRemoving && (
+                              <CircularProgress color="secondary" size={18} />
+                            )}
+                            {!isRemoving && " Cevabı Sil"}
                           </Button>
                         </Box>
                       </Grid>

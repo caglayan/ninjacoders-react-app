@@ -2,7 +2,7 @@ import React from "react";
 import { Formik } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { updateUserPasswordWebApi } from "../Redux/Selectors/userSelector";
+import { updateUserPasswordWebApi } from "../../Redux/Selectors/userSelector";
 import LensIcon from "@material-ui/icons/Lens";
 import {
   TextField,

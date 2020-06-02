@@ -1,19 +1,22 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Chip from "@material-ui/core/Chip";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Collapse from "@material-ui/core/Collapse";
+import {
+  Typography,
+  CircularProgress,
+  Box,
+  Container,
+  Grid,
+  Chip,
+  List,
+  ListItem,
+  ListItemText,
+  Collapse,
+  ListItemIcon,
+} from "@material-ui/core";
+import { connect } from "react-redux";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import { connect } from "react-redux";
 import PlayCircleOutlineOutlined from "@material-ui/icons/PlayCircleOutlineOutlined";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import LockOutlined from "@material-ui/icons/LockOutlined";
 import PauseCircleOutlineOutlined from "@material-ui/icons/PauseCircleOutlineOutlined";
 import VideoPlayer from "../Components/CourseHelpers/VideoPlayer";
@@ -94,69 +97,63 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.dark,
     minWidth: "36px",
   },
+  noVideo: {
+    width: "100%",
+    height: "100%",
+  },
 }));
 
 const CourseVideoContent = (props) => {
   const classes = useStyles();
-  const [state, setState] = React.useState({
+  const [courseState, setCourseState] = React.useState({
     selChapter: 0,
     selSection: 0,
     shownChapters: { 0: true },
   });
-  const [playerState, setPlayerState] = React.useState({
-    source: null,
-    isPlaying: false,
-  });
+  const [isWorking, setIsWorking] = React.useState(true);
+  const [playerState, setPlayerState] = React.useState(false);
+  const [playerVideo, setPlayerVideo] = React.useState("422209484");
 
   const expandChapters = (index) => {
-    setState({
+    setCourseState({
       shownChapters: {
-        ...state.shownChapters,
-        [index]: !state.shownChapters[index],
+        ...courseState.shownChapters,
+        [index]: !courseState.shownChapters[index],
       },
     });
   };
 
-  const playSource = (url, chapter, section) => {
-    setState((prevState) => {
+  const playVideo = (videoId, chapter, section) => {
+    console.log("update", chapter, " ", section);
+    setCourseState((prevState) => {
       return {
         ...prevState,
         selChapter: chapter,
         selSection: section,
       };
     });
-    setPlayerState((prevState) => {
-      return {
-        ...prevState,
-        source: {
-          type: "video",
-          sources: [
-            {
-              src: url,
-              type: "video/mp4",
-              size: 720,
-            },
-          ],
-        },
-      };
-    });
+    setPlayerVideo(videoId);
   };
 
-  React.useEffect(() => {
-    if (props.chapters) {
-      console.log("initilize video");
-      playSource(props.chapters[0].sections[0].video, 0, 0);
+  const playNextVideo = () => {
+    console.log(props.chapters.length);
+    console.log("chap", courseState.selChapter);
+    console.log("sec", courseState.selSection);
+    const newSelSection = courseState.selSection + 1;
+    if (
+      props.chapters[courseState.selChapter].sections.length > newSelSection
+    ) {
+      setCourseState((prevState) => {
+        return {
+          ...prevState,
+          selChapter: courseState.selChapter,
+          selSection: newSelSection,
+        };
+      });
+      setPlayerVideo(
+        props.chapters[courseState.selChapter].sections[newSelSection].video
+      );
     }
-  }, [props.chapters]);
-
-  const subscribeVideoPlayer = (state) => {
-    //console.log(state.currentTime / state.duration);
-    setPlayerState((prevState) => {
-      return {
-        ...prevState,
-        isPlaying: !state.paused,
-      };
-    });
   };
 
   const msToTime = (duration) => {
@@ -173,149 +170,189 @@ const CourseVideoContent = (props) => {
     return str;
   };
 
+  React.useEffect(() => {
+    if (props.title) {
+      console.log("Course is ready");
+      setIsWorking(false);
+    }
+  }, [props.title]);
+
   return (
     <Container className={classes.container} maxWidth="lg">
-      <Typography variant="h5" component="h1">
-        <Box className={classes.courseName}>{props.title}</Box>
-        {props.isBelongNinja == true ? (
-          <Box className={classes.courseType}>Original</Box>
-        ) : null}
-      </Typography>
-      <Typography variant="subtitle1" component="h1">
-        <Box className={classes.CourseInstName} fontWeight="fontWeightLight">
-          {props.instructor
-            ? props.instructor.givenName + " " + props.instructor.familyName
-            : null}
-        </Box>
-        <Box className={classes.followButton} fontWeight="fontWeightBold"></Box>
-      </Typography>
-      <Grid container className={classes.grid} spacing={1}>
-        <Grid
-          id="video"
-          style={{ height: "100%", overflow: "hidden", whiteSpace: "nowrap" }}
-          item
-          sm={8}
-          xs={12}
-        >
-          {props.chapters ? (
-            <VideoPlayer
-              subscription={subscribeVideoPlayer}
-              source={playerState.source}
-            ></VideoPlayer>
-          ) : null}
+      {isWorking ? (
+        <Grid container direction="row" justify="center" alignItems="center">
+          <Grid item>
+            <CircularProgress
+              style={{ marginTop: "5vh", marginBottom: "5vh" }}
+              color="primary"
+              size={40}
+            />
+          </Grid>
         </Grid>
-        <Grid
-          className={classes.gridChild}
-          style={{
-            height: props.height + "px",
-            overflow: "auto",
-            whiteSpace: "nowrap",
-          }}
-          item
-          sm={4}
-          xs={12}
-        >
-          <List>
-            <ListItem key="112233">
-              <Box
-                className={classes.CourseInstName}
-                fontWeight="fontWeightLight"
-              >
-                <Typography variant="subtitle1">
-                  {props.numberOfSections} Ders {msToTime(props.duration)}
-                </Typography>
-              </Box>
-            </ListItem>
-            {props.chapters
-              ? props.chapters.map((chapter, indexChap) => {
-                  return (
-                    <div key={indexChap}>
-                      <ListItem
-                        button
-                        onClick={() => {
-                          return expandChapters(indexChap);
-                        }}
-                      >
-                        <ListItemText
-                          secondary={indexChap + 1 + ". " + chapter.title}
-                        />
-                        {state.shownChapters[indexChap] ? (
-                          <ExpandLess />
-                        ) : (
-                          <ExpandMore />
-                        )}
-                      </ListItem>
-                      <Collapse
-                        in={state.shownChapters[indexChap]}
-                        timeout="auto"
-                        unmountOnExit
-                      >
-                        <List component="div" disablePadding>
-                          {chapter.sections.map((section, indexSec) => {
-                            return (
-                              <ListItem
-                                button
-                                key={section._id}
-                                className={classes.nested}
-                                selected={
-                                  state.selChapter === indexChap &&
-                                  state.selSection === indexSec
-                                    ? true
-                                    : false
-                                }
-                                onClick={() => {
-                                  return playSource(
-                                    section.video,
-                                    indexChap,
-                                    indexSec
-                                  );
-                                }}
-                              >
-                                {section.video !== "" ? (
-                                  <ListItemIcon className={classes.icon}>
-                                    {playerState.isPlaying === true &&
-                                    state.selChapter === indexChap &&
-                                    state.selSection === indexSec ? (
-                                      <PauseCircleOutlineOutlined />
+      ) : (
+        <div>
+          <Typography variant="h5" component="h1">
+            <Box className={classes.courseName}>{props.title}</Box>
+            {props.isBelongNinja == true ? (
+              <Box className={classes.courseType}>Original</Box>
+            ) : null}
+          </Typography>
+          <Typography variant="subtitle1" component="h1">
+            <Box
+              className={classes.CourseInstName}
+              fontWeight="fontWeightLight"
+            >
+              {props.instructor
+                ? props.instructor.givenName + " " + props.instructor.familyName
+                : null}
+            </Box>
+            <Box
+              className={classes.followButton}
+              fontWeight="fontWeightBold"
+            ></Box>
+          </Typography>
+          <Grid container className={classes.grid} spacing={1}>
+            <Grid
+              id="video"
+              style={{
+                height: "auto",
+                width: "100%",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                backgroundColor: "rgba(0, 0, 0, 0.3)",
+              }}
+              item
+              sm={8}
+              xs={12}
+            >
+              {playerVideo != "" ? (
+                <VideoPlayer
+                  playNextVideo={playNextVideo}
+                  video={playerVideo}
+                ></VideoPlayer>
+              ) : (
+                <div className={classes.noVideo}>asdasd</div>
+              )}
+            </Grid>
+            <Grid
+              className={classes.gridChild}
+              style={{
+                height: props.height + "px",
+                overflow: "auto",
+                whiteSpace: "nowrap",
+              }}
+              item
+              sm={4}
+              xs={12}
+            >
+              <List>
+                <ListItem key="112233">
+                  <Box
+                    className={classes.CourseInstName}
+                    fontWeight="fontWeightLight"
+                  >
+                    <Typography variant="subtitle1">
+                      {props.numberOfSections} Ders {msToTime(props.duration)}
+                    </Typography>
+                  </Box>
+                </ListItem>
+                {props.chapters
+                  ? props.chapters.map((chapter, indexChap) => {
+                      return (
+                        <div key={indexChap}>
+                          <ListItem
+                            button
+                            onClick={() => {
+                              return expandChapters(indexChap);
+                            }}
+                          >
+                            <ListItemText
+                              secondary={indexChap + 1 + ". " + chapter.title}
+                            />
+                            {courseState.shownChapters[indexChap] ? (
+                              <ExpandLess />
+                            ) : (
+                              <ExpandMore />
+                            )}
+                          </ListItem>
+                          <Collapse
+                            in={courseState.shownChapters[indexChap]}
+                            timeout="auto"
+                            unmountOnExit
+                          >
+                            <List component="div" disablePadding>
+                              {chapter.sections.map((section, indexSec) => {
+                                return (
+                                  <ListItem
+                                    button
+                                    key={section._id}
+                                    className={classes.nested}
+                                    selected={
+                                      courseState.selChapter === indexChap &&
+                                      courseState.selSection === indexSec
+                                        ? true
+                                        : false
+                                    }
+                                    onClick={() => {
+                                      console.log("sec", section.video);
+                                      playVideo(
+                                        section.video,
+                                        indexChap,
+                                        indexSec
+                                      );
+                                    }}
+                                  >
+                                    {section.video !== "" ? (
+                                      <ListItemIcon className={classes.icon}>
+                                        {playerState.isPlaying === true &&
+                                        courseState.selChapter === indexChap &&
+                                        courseState.selSection === indexSec ? (
+                                          <PauseCircleOutlineOutlined />
+                                        ) : (
+                                          <PlayCircleOutlineOutlined />
+                                        )}
+                                      </ListItemIcon>
                                     ) : (
-                                      <PlayCircleOutlineOutlined />
+                                      <ListItemIcon className={classes.icon}>
+                                        <LockOutlined />
+                                      </ListItemIcon>
                                     )}
-                                  </ListItemIcon>
-                                ) : (
-                                  <ListItemIcon className={classes.icon}>
-                                    <LockOutlined />
-                                  </ListItemIcon>
-                                )}
 
-                                <ListItemText secondary={section.title} />
-                              </ListItem>
-                            );
-                          })}
-                        </List>
-                      </Collapse>
-                    </div>
-                  );
-                })
-              : null}
-          </List>
-        </Grid>
-      </Grid>
-      <Grid container style={{ marginTop: "10px" }} spacing={2}>
-        <Grid item>
-          Bu eğitimdeki yetenekler:
-          <Chip style={{ marginLeft: 8 }} label="#Python" variant="outlined" />
-          <Chip
-            style={{ marginLeft: 8 }}
-            label="#Veri Görselleştirme"
-            variant="outlined"
-          />
-          <Chip
-            style={{ marginLeft: 8 }}
-            label="#Metin Madenciliği"
-            variant="outlined"
-          />
-        </Grid>
-      </Grid>
+                                    <ListItemText secondary={section.title} />
+                                  </ListItem>
+                                );
+                              })}
+                            </List>
+                          </Collapse>
+                        </div>
+                      );
+                    })
+                  : null}
+              </List>
+            </Grid>
+          </Grid>
+          <Grid container style={{ marginTop: "10px" }} spacing={2}>
+            <Grid item>
+              Bu eğitimdeki yetenekler:
+              <Chip
+                style={{ marginLeft: 8 }}
+                label="#Python"
+                variant="outlined"
+              />
+              <Chip
+                style={{ marginLeft: 8 }}
+                label="#Veri Görselleştirme"
+                variant="outlined"
+              />
+              <Chip
+                style={{ marginLeft: 8 }}
+                label="#Metin Madenciliği"
+                variant="outlined"
+              />
+            </Grid>
+          </Grid>
+        </div>
+      )}
     </Container>
   );
 };

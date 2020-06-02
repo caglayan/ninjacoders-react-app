@@ -1,7 +1,7 @@
 /* 
 TODO:
 * Change Name of SideBar 
-* Add this side bar to Layout
+* Add this side bar to LAYOUT
 * Make logout function
 * Make login jsx
 * https://themeforest.net/item/xamin-data-science-analytics-html-template/25267587
@@ -14,15 +14,15 @@ import "./App.css";
 import { createMuiTheme, ThemeProvider, CssBaseline } from "@material-ui/core";
 import { BrowserRouter, Redirect } from "react-router-dom";
 import { Provider } from "react-redux";
-import BodyArea from "./Layout/BodyArea";
-import Header from "./Layout/Header";
-import Footer from "./Layout/Footer";
-import SideMenu from "./Layout/SideMenu";
+import BodyArea from "./LAYOUT/BodyArea";
+import Header from "./LAYOUT/Header";
+import Footer from "./LAYOUT/Footer";
+import SideMenu from "./LAYOUT/SideMenu";
 import SnackBar from "./Components/SnackBar/SnackBar";
-import SignInDialog from "./Layout/Dialogs/SignInDialog";
-import SignUpDialog from "./Layout/Dialogs/SignUpDialog";
-import QuestionDialog from "./Layout/Dialogs/QuestionDialog";
-import CommentDialog from "./Layout/Dialogs/CommentDialog";
+import SignInDialog from "./LAYOUT/Dialogs/SignInDialog";
+import SignUpDialog from "./LAYOUT/Dialogs/SignUpDialog";
+import QuestionDialog from "./LAYOUT/Dialogs/QuestionDialog";
+import CommentDialog from "./LAYOUT/Dialogs/CommentDialog";
 import configureStore from "./Redux/Store/configStore";
 import {
   startCreateUserLocal,

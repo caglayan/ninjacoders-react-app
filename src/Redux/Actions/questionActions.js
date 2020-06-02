@@ -3,6 +3,7 @@ export const updateQuestion = ({
   course = "",
   sender = "",
   avatarImage = null,
+  courseName = "",
   givenName = "",
   familyName = "",
   senderTitle = "",
@@ -18,6 +19,7 @@ export const updateQuestion = ({
   question: {
     _id,
     course,
+    courseName,
     sender,
     avatarImage,
     givenName,

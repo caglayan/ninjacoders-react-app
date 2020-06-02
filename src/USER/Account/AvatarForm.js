@@ -12,7 +12,7 @@ import {
   CircularProgress,
   InputAdornment,
 } from "@material-ui/core";
-import { updateUserImageWebApi } from "../Redux/Selectors/userSelector";
+import { updateUserImageWebApi } from "../../Redux/Selectors/userSelector";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 

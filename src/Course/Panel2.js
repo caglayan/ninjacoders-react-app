@@ -1,6 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, Box, Grid, Divider } from "@material-ui/core/";
+import {
+  Button,
+  Box,
+  Grid,
+  Divider,
+  CircularProgress,
+} from "@material-ui/core/";
 import { connect } from "react-redux";
 import TabPanel from "../Components/CourseHelpers/TabPanel";
 import CommentPanel from "../Components/CommentHelpers/CommentPanel";
@@ -18,6 +24,7 @@ const CommentTab = (props) => {
   const classes = useStyles();
   const [comments, setComments] = React.useState([]);
   const [isMoreActive, setIsMoreActive] = React.useState(true);
+  const [isWorking, setIsWorking] = React.useState(true);
 
   const pullCommentsAdd = () => {
     pullComments(comments.length, 4, props.course_id) // skip limit
@@ -26,6 +33,7 @@ const CommentTab = (props) => {
         var newArray = comments.concat(commentsi);
         console.log("pulled Comments:", newArray);
         setComments(newArray);
+        setIsWorking(false);
       })
       .catch((err) => {
         console.log(err);
@@ -46,43 +54,65 @@ const CommentTab = (props) => {
 
   return (
     <TabPanel value={props.index} index={1}>
-      <PersonalCommentPanel {...props}></PersonalCommentPanel>
-      <Grid
-        container
-        className={classes.divider}
-        direction="row"
-        justify="center"
-        alignItems="center"
-      >
-        <Grid item xs={5}>
-          <Divider />
-        </Grid>
-        <Grid item xs={2}>
-          <Box textAlign="center" m={1}>
-            Son Yorumlar
-          </Box>
-        </Grid>
-        <Grid item xs={5}>
-          <Divider />
-        </Grid>
-      </Grid>
+      {isWorking ? (
+        <Grid container direction="row" justify="center" alignItems="center">
+          <Grid item>
+            <CircularProgress
+              style={{ marginTop: "5vh", marginBottom: "5vh" }}
+              color="primary"
+              size={40}
+            />
+          </Grid>
 
-      {comments.map((comment, index) => {
-        return (
-          <CommentPanel
-            {...comment}
-            className={classes.commentContainer}
-            key={index}
-          ></CommentPanel>
-        );
-      })}
-      {isMoreActive ? (
-        <Box textAlign="center" m={1}>
-          <Button onClick={pullCommentsAdd} variant="contained" color="primary">
-            Daha Fazla Yükle
-          </Button>
-        </Box>
-      ) : null}
+          <Grid item xs={12}>
+            <CommentPanel className={classes.commentContainer}></CommentPanel>
+          </Grid>
+        </Grid>
+      ) : (
+        <div>
+          <PersonalCommentPanel {...props}></PersonalCommentPanel>
+          <Grid
+            container
+            className={classes.divider}
+            direction="row"
+            justify="center"
+            alignItems="center"
+          >
+            <Grid item xs={5}>
+              <Divider />
+            </Grid>
+            <Grid item xs={2}>
+              <Box textAlign="center" m={1}>
+                Son Yorumlar
+              </Box>
+            </Grid>
+            <Grid item xs={5}>
+              <Divider />
+            </Grid>
+          </Grid>
+
+          {comments.map((comment, index) => {
+            return (
+              <CommentPanel
+                {...comment}
+                className={classes.commentContainer}
+                key={index}
+              ></CommentPanel>
+            );
+          })}
+          {isMoreActive ? (
+            <Box textAlign="center" m={1}>
+              <Button
+                onClick={pullCommentsAdd}
+                variant="contained"
+                color="primary"
+              >
+                Daha Fazla Yükle
+              </Button>
+            </Box>
+          ) : null}
+        </div>
+      )}
     </TabPanel>
   );
 };

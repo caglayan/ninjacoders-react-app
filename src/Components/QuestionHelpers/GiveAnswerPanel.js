@@ -15,6 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import "react-rater/lib/react-rater.css";
 import { answerQuestion } from "../../Api/questionApi";
 import { updatePersonalQuestion } from "../../Redux/Selectors/questionSelector";
+import Questions from "../../USER/Questions/Questions";
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -67,7 +68,8 @@ const GiveAnswerPanel = (props) => {
         )
           .then((question) => {
             console.log(question);
-            props.dispatch(updatePersonalQuestion({ isUpdating: true }));
+            props.updateQuestion(question);
+            //props.dispatch(updatePersonalQuestion({ isUpdating: true }));
             setSubmitting(false);
           })
           .catch((err) => {

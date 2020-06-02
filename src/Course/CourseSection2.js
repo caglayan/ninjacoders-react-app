@@ -1,20 +1,30 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import { Divider, Avatar } from "@material-ui/core";
+import {
+  Button,
+  Box,
+  Grid,
+  Divider,
+  CircularProgress,
+  Typography,
+  Container,
+  Avatar,
+  Toolbar,
+  IconButton,
+  AppBar,
+  Tabs,
+  Tab,
+} from "@material-ui/core/";
 import { connect } from "react-redux";
+import TabPanel from "../Components/CourseHelpers/TabPanel";
+import CommentPanel from "../Components/CommentHelpers/CommentPanel";
+import PersonalCommentPanel from "../Components/CommentHelpers/PersonalCommentPanel";
+import { pullComments, findComment } from "../Api/commentApi";
+import { createPersonalComment } from "../Redux/Selectors/commentSelector";
 import { updateUserWebApi } from "../Redux/Selectors/userSelector";
 import { useHistory } from "react-router-dom";
-
-import TabPanel from "../Components/CourseHelpers/TabPanel";
 import InstStat from "../Components/CourseHelpers/InstStat";
-import { AppBar, Toolbar, IconButton } from "@material-ui/core";
+
 import Panel1 from "./Panel1";
 import Panel2 from "./Panel2";
 import Panel3 from "./Panel3";

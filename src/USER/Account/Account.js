@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import AccountForm from "./AccountForm";
 import AvatarForm from "./AvatarForm";
 import PasswordForm from "./PasswordForm";
-import { startRemoveUserLocal } from "../Redux/Selectors/userSelector";
+import { startRemoveUserLocal } from "../../Redux/Selectors/userSelector";
 
 const useStyles = makeStyles((theme) => ({
   containerDesktop: {

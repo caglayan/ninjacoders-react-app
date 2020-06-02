@@ -2,24 +2,38 @@ import React from "react";
 import CourseSection1 from "./CourseSection1";
 import CourseSection2 from "./CourseSection2";
 import CourseSection3 from "./CourseSection3";
-import { startCreatePublicCourse } from "../Redux/Selectors/courseSelector";
+import {
+  startCreatePublicCourse,
+  startCreateUserCourse,
+  startCreatePublicCourseLocal,
+} from "../Redux/Selectors/courseSelector";
 import { connect } from "react-redux";
 
 const CourseContainer = (props) => {
-  console.log(props);
   const downloadCourse = () => {
     console.log("course_id ", props.match.params.id);
     console.log("user_id ", props._id);
-    props
-      .dispatch(startCreatePublicCourse(props.match.params.id, props._id))
-      .then((course) => {})
-      .catch((err) => {
-        props.showMessages(2, "Bir problem var.");
-      });
+    if (props._id) {
+      props
+        .dispatch(
+          startCreateUserCourse(props.token, props.match.params.id, props._id)
+        )
+        .then((course) => {})
+        .catch((err) => {
+          props.showMessages(2, "Bir problem var.");
+        });
+    } else {
+      props
+        .dispatch(startCreatePublicCourse(props.match.params.id))
+        .then((course) => {})
+        .catch((err) => {
+          props.showMessages(2, "Bir problem var.");
+        });
+    }
   };
 
   React.useEffect(() => {
-    if (props._id) downloadCourse();
+    downloadCourse();
   }, [props._id]);
 
   return (
@@ -34,6 +48,7 @@ const CourseContainer = (props) => {
 const CourseContainerCon = connect((state) => {
   return {
     _id: state.userReducer._id,
+    token: state.userReducer.token,
   };
 })(CourseContainer);
 
