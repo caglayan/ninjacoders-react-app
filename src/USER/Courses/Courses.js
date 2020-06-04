@@ -106,12 +106,11 @@ const QuestionsCont = (props) => {
         alignItems="center"
         spacing={2}
       >
-        <Grid item>
-          <CourseCard></CourseCard>
-        </Grid>
-        <Grid item>
-          <CourseCard></CourseCard>
-        </Grid>
+        {props.registeredCourses.map((registeredCourse, index) => (
+          <Grid item>
+            <CourseCard {...registeredCourse}></CourseCard>
+          </Grid>
+        ))}
       </Grid>
     </Container>
   );
@@ -124,5 +123,6 @@ export default connect((state) => {
     avatarImage: state.userReducer.avatarImage,
     course_id: state.courseReducer._id,
     isUpdating: state.questionReducer.isUpdating,
+    registeredCourses: state.userReducer.registeredCourses,
   };
 })(QuestionsCont);
