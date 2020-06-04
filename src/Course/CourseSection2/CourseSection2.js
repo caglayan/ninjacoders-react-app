@@ -16,14 +16,14 @@ import {
   Tab,
 } from "@material-ui/core/";
 import { connect } from "react-redux";
-import TabPanel from "../Components/CourseHelpers/TabPanel";
-import CommentPanel from "../Components/CommentHelpers/CommentPanel";
-import PersonalCommentPanel from "../Components/CommentHelpers/PersonalCommentPanel";
-import { pullComments, findComment } from "../Api/commentApi";
-import { createPersonalComment } from "../Redux/Selectors/commentSelector";
-import { updateUserWebApi } from "../Redux/Selectors/userSelector";
+import TabPanel from "../../Components/CourseHelpers/TabPanel";
+import CommentPanel from "../../Components/CommentHelpers/CommentPanel";
+import PersonalCommentPanel from "../../Components/CommentHelpers/PersonalCommentPanel";
+import { pullComments, findComment } from "../../Api/commentApi";
+import { createPersonalComment } from "../../Redux/Selectors/commentSelector";
+import { updateUserWebApi } from "../../Redux/Selectors/userSelector";
 import { useHistory } from "react-router-dom";
-import InstStat from "../Components/CourseHelpers/InstStat";
+import InstStat from "../../Components/CourseHelpers/InstStat";
 
 import Panel1 from "./Panel1";
 import Panel2 from "./Panel2";

@@ -6,14 +6,15 @@ import {
   Box,
   Divider,
   Grid,
+  Tooltip,
 } from "@material-ui/core/";
 import { connect } from "react-redux";
-import QuestionPanel from "../Components/QuestionHelpers/QuestionPanel";
-import GiveAnswerPanel from "../Components/QuestionHelpers/GiveAnswerPanel";
-import AnswerPanel from "../Components/QuestionHelpers/AnswerPanel";
-import { pullQuestions, findQuestion } from "../Api/questionApi";
-import { updatePersonalQuestion } from "../Redux/Selectors/questionSelector";
-import TabPanel from "../Components/CourseHelpers/TabPanel";
+import QuestionPanel from "../../Components/QuestionHelpers/QuestionPanel";
+import GiveAnswerPanel from "../../Components/QuestionHelpers/GiveAnswerPanel";
+import AnswerPanel from "../../Components/QuestionHelpers/AnswerPanel";
+import { pullQuestions, findQuestion } from "../../Api/questionApi";
+import { updatePersonalQuestion } from "../../Redux/Selectors/questionSelector";
+import TabPanel from "../../Components/CourseHelpers/TabPanel";
 
 const useStyles = makeStyles((theme) => ({
   askQuestionButton: {
@@ -84,21 +85,50 @@ const QuestionTab = (props) => {
         </Grid>
       ) : (
         <div>
-          <Button
-            onClick={() => {
-              props.dispatch(updatePersonalQuestion({ isUpdating: false }));
-              props.askQuestionOpen();
-            }}
-            variant="contained"
-            color="secondary"
-            className={classes.askQuestionButton}
+          <Tooltip
+            title={
+              props.premium
+                ? ""
+                : "Soru sorabilmek için dersin öğrencisi olmanız gerekmektedir."
+            }
           >
-            Soru sor
-          </Button>
+            <span>
+              <Button
+                onClick={() => {
+                  props.dispatch(updatePersonalQuestion({ isUpdating: false }));
+                  props.askQuestionOpen();
+                }}
+                variant="contained"
+                color="secondary"
+                className={classes.askQuestionButton}
+                disabled={props._id == "" || !props.premium}
+              >
+                Soru sor
+              </Button>
+            </span>
+          </Tooltip>
+          <Grid
+            container
+            className={classes.divider}
+            direction="row"
+            justify="center"
+            alignItems="center"
+          >
+            <Grid item xs={5}>
+              <Divider />
+            </Grid>
+            <Grid item xs={2}>
+              <Box textAlign="center" m={1}>
+                Son Sorular
+              </Box>
+            </Grid>
+            <Grid item xs={5}>
+              <Divider />
+            </Grid>
+          </Grid>
           {questions.map((question, index) => {
             return (
               <div key={question._id}>
-                <Divider></Divider>
                 <QuestionPanel
                   {...question}
                   fromUser={props._id === question.sender}
@@ -124,13 +154,16 @@ const QuestionTab = (props) => {
                     ></AnswerPanel>
                   );
                 })}
-                <GiveAnswerPanel
-                  showMessages={props.showMessages}
-                  updateQuestion={updateQuestion}
-                  token={props.token}
-                  question_id={question._id}
-                  className={classes.questionContainer}
-                ></GiveAnswerPanel>
+                {props.premium ? (
+                  <GiveAnswerPanel
+                    showMessages={props.showMessages}
+                    updateQuestion={updateQuestion}
+                    token={props.token}
+                    question_id={question._id}
+                    className={classes.questionContainer}
+                  ></GiveAnswerPanel>
+                ) : null}
+                <Divider></Divider>
               </div>
             );
           })}
@@ -153,11 +186,13 @@ const QuestionTab = (props) => {
 };
 
 const QuestionTabCon = connect((state) => ({
+  premium: state.userReducer.premium,
   _id: state.userReducer._id,
   token: state.userReducer.token,
   avatarImage: state.userReducer.avatarImage,
   course_id: state.courseReducer._id,
   isUpdating: state.questionReducer.isUpdating,
+  premium: state.userReducer.premium,
 }))(QuestionTab);
 
 export default QuestionTabCon;

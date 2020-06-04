@@ -202,3 +202,33 @@ export const SendPasswordMailApi = (email) => {
       });
   });
 };
+
+export const finishWatchVideoApi = (token, course_id, video_id) => {
+  console.log("finish watching video api");
+  const apiString = url + "/api/user/auth/finish-video";
+  return new Promise((resolve, reject) => {
+    axios
+      .post(
+        apiString,
+        {
+          course_id,
+          video_id,
+        },
+        {
+          headers: { "x-api-key": token },
+        }
+      )
+      .then((res) => {
+        console.log(res.data.user);
+        resolve(res.data.user);
+      })
+      .catch((err) => {
+        err.response
+          ? reject(err.response.data.Message)
+          : reject("No connection to our machines");
+        err.response
+          ? console.log("Error Code:", err.response.data.Code)
+          : console.log("No internet connection or database problem");
+      });
+  });
+};

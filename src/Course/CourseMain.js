@@ -1,6 +1,6 @@
 import React from "react";
-import CourseSection1 from "./CourseSection1";
-import CourseSection2 from "./CourseSection2";
+import CourseSection1 from "./CourseSection1/CourseSection1";
+import CourseSection2 from "./CourseSection2/CourseSection2";
 import CourseSection3 from "./CourseSection3";
 import {
   startCreatePublicCourse,
@@ -12,11 +12,15 @@ import { connect } from "react-redux";
 const CourseContainer = (props) => {
   const downloadCourse = () => {
     console.log("course_id ", props.match.params.id);
-    console.log("user_id ", props._id);
-    if (props._id) {
+    console.log("user_id ", props.user_id);
+    if (props.user_id) {
       props
         .dispatch(
-          startCreateUserCourse(props.token, props.match.params.id, props._id)
+          startCreateUserCourse(
+            props.token,
+            props.match.params.id,
+            props.user_id
+          )
         )
         .then((course) => {})
         .catch((err) => {
@@ -34,7 +38,7 @@ const CourseContainer = (props) => {
 
   React.useEffect(() => {
     downloadCourse();
-  }, [props._id]);
+  }, [props.user_id]);
 
   return (
     <div>
@@ -47,7 +51,7 @@ const CourseContainer = (props) => {
 
 const CourseContainerCon = connect((state) => {
   return {
-    _id: state.userReducer._id,
+    user_id: state.userReducer._id,
     token: state.userReducer.token,
   };
 })(CourseContainer);

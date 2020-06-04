@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import { connect } from "react-redux";
+import { Button, Tooltip } from "@material-ui/core";
 import CommentPanel from "./CommentPanel";
 import { createPersonalComment } from "../../Redux/Selectors/commentSelector";
 
@@ -23,7 +22,7 @@ const PersonalCommentPanel = (props) => {
   };
 
   React.useEffect(() => {
-    if (props.course_id) findCommentAdd();
+    if (props.premium & props.course_id) findCommentAdd();
   }, [props.course_id]);
 
   React.useEffect(() => {
@@ -48,21 +47,27 @@ const PersonalCommentPanel = (props) => {
           ></CommentPanel>
         </div>
       ) : (
-        <Button
-          onClick={props.makeCommentOpen}
-          variant="contained"
-          color="secondary"
+        <Tooltip
+          title={
+            props.premium
+              ? ""
+              : "Yorum yapabilmek için en az 5 dersi izlemiş olmanız gerekmektedir."
+          }
         >
-          Yorum Yap
-        </Button>
+          <span>
+            <Button
+              onClick={props.makeCommentOpen}
+              variant="contained"
+              color="secondary"
+              disabled={!props.premium}
+            >
+              Yorum Yap
+            </Button>
+          </span>
+        </Tooltip>
       )}
     </div>
   );
 };
 
-const PersonalCommentPanelCon = connect((state) => ({
-  course_id: state.courseReducer._id,
-  isUpdating: state.commentReducer.isUpdating,
-}))(PersonalCommentPanel);
-
-export default PersonalCommentPanelCon;
+export default PersonalCommentPanel;

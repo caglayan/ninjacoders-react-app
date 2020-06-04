@@ -9,8 +9,8 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { Divider, Avatar } from "@material-ui/core";
 import { connect } from "react-redux";
-import TabPanel from "../Components/CourseHelpers/TabPanel";
-import InstStat from "../Components/CourseHelpers/InstStat";
+import TabPanel from "../../Components/CourseHelpers/TabPanel";
+import InstStat from "../../Components/CourseHelpers/InstStat";
 
 const useStyles = makeStyles((theme) => ({}));
 

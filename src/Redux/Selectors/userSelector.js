@@ -9,6 +9,7 @@ import {
   UpdateUserImageApi,
   UpdateUserPasswordApi,
   LoginGoogleApi,
+  finishWatchVideoApi,
 } from "../../Api/userApi";
 import jwtDecode from "jwt-decode";
 
@@ -142,6 +143,23 @@ export const updateUserPasswordWebApi = (password, token) => {
   return (dispatch) => {
     return new Promise(function (resolve, reject) {
       UpdateUserPasswordApi(password, token)
+        .then((user) => {
+          dispatch(updateUser(user));
+          userSaveLocal(user);
+          resolve(user);
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  };
+};
+
+export const updateUserWatchedVideo = (token, courseId, videoId) => {
+  return (dispatch) => {
+    return new Promise(function (resolve, reject) {
+      finishWatchVideoApi(token, courseId, videoId)
         .then((user) => {
           dispatch(updateUser(user));
           userSaveLocal(user);

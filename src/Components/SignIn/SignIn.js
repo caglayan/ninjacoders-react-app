@@ -40,7 +40,7 @@ function LoginDialogContent(props) {
           props.closeDialog();
         }
         setProgressVisible(false);
-        history.push(`/`);
+        //history.push(`/`);
       })
       .catch((err) => {
         setProgressVisible(false);
@@ -57,7 +57,7 @@ function LoginDialogContent(props) {
           props.closeDialog();
         }
         setProgressVisible(false);
-        history.push(`/`);
+        //history.push(`/`);
       })
       .catch((err) => {
         setProgressVisible(false);

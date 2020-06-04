@@ -8,6 +8,7 @@ export const updateUser = ({
   avatarImage = "",
   premium = false,
   shoppingCart = [],
+  registeredCourses = [],
 } = {}) => ({
   type: "UPDATE_USER",
   user: {
@@ -20,6 +21,7 @@ export const updateUser = ({
     avatarImage,
     shoppingCart,
     premium,
+    registeredCourses,
   },
 });
 
@@ -27,7 +29,7 @@ export const removeUser = () => ({
   type: "REMOVE_USER",
   user: {
     _id: "",
-    email: "",
-    password: "",
+    premium: false,
+    registeredCourses: [],
   },
 });

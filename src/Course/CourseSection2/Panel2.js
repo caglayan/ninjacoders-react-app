@@ -8,11 +8,11 @@ import {
   CircularProgress,
 } from "@material-ui/core/";
 import { connect } from "react-redux";
-import TabPanel from "../Components/CourseHelpers/TabPanel";
-import CommentPanel from "../Components/CommentHelpers/CommentPanel";
-import PersonalCommentPanel from "../Components/CommentHelpers/PersonalCommentPanel";
-import { pullComments, findComment } from "../Api/commentApi";
-import { createPersonalComment } from "../Redux/Selectors/commentSelector";
+import TabPanel from "../../Components/CourseHelpers/TabPanel";
+import CommentPanel from "../../Components/CommentHelpers/CommentPanel";
+import PersonalCommentPanel from "../../Components/CommentHelpers/PersonalCommentPanel";
+import { pullComments, findComment } from "../../Api/commentApi";
+import { createPersonalComment } from "../../Redux/Selectors/commentSelector";
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -63,14 +63,15 @@ const CommentTab = (props) => {
               size={40}
             />
           </Grid>
-
           <Grid item xs={12}>
             <CommentPanel className={classes.commentContainer}></CommentPanel>
           </Grid>
         </Grid>
       ) : (
         <div>
-          <PersonalCommentPanel {...props}></PersonalCommentPanel>
+          {props._id != "" ? (
+            <PersonalCommentPanel {...props}></PersonalCommentPanel>
+          ) : null}
           <Grid
             container
             className={classes.divider}
@@ -120,6 +121,7 @@ const CommentTab = (props) => {
 const CommentTabCon = connect((state) => ({
   course_id: state.courseReducer._id,
   isUpdating: state.commentReducer.isUpdating,
+  premium: state.userReducer.premium,
 }))(CommentTab);
 
 export default CommentTabCon;

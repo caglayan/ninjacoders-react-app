@@ -1,7 +1,7 @@
 const userDefaultState = {
   _id: "",
-  email: "",
-  password: ""
+  premium: false,
+  registeredCourses: [],
 };
 
 const userReducer = (state = userDefaultState, action) => {
@@ -9,11 +9,11 @@ const userReducer = (state = userDefaultState, action) => {
     case "UPDATE_USER":
       return {
         ...state,
-        ...action.user
+        ...action.user,
       };
     case "REMOVE_USER":
       return {
-        ...action.user
+        ...action.user,
       };
     default:
       return state;
