@@ -21,6 +21,7 @@ import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { Box } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,7 +61,7 @@ const Star = ({ willBeActive, isActive, style }) => {
 
 export default function RecipeReviewCard(props) {
   const classes = useStyles();
-
+  const history = useHistory();
   console.log(props);
 
   const msToTime = (duration) => {
@@ -78,7 +79,12 @@ export default function RecipeReviewCard(props) {
   };
 
   return (
-    <Card className={classes.root}>
+    <Card
+      onClick={() => {
+        history.push(`/course/5df92c57ea9f59862aabd1ab`);
+      }}
+      className={classes.root}
+    >
       <Grid
         container
         style={{ marginTop: 5, marginBottom: 5 }}

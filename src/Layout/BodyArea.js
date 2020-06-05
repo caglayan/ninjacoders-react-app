@@ -12,6 +12,7 @@ import CreatePassPage from "./Pages/CreatePassPage";
 import AccountPage from "../USER/Account/Account";
 import QuestionsPage from "../USER/Questions/Questions";
 import CoursePage from "../COURSE/CourseMain";
+import MainPage from "../MAIN/Main";
 import MyCoursesPage from "../USER/Courses/Courses";
 import { startCreateUserLocal } from "../Redux/Selectors/userSelector";
 
@@ -147,7 +148,7 @@ function BodyArea(propsGeneral) {
           path="/"
           exact={true}
           render={(props) => (
-            <SignInPage {...props} showMessages={propsGeneral.showMessages} />
+            <MainPage {...props} showMessages={propsGeneral.showMessages} />
           )}
         />
 

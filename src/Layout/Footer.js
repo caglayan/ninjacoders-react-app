@@ -82,6 +82,14 @@ export default function Footer(props) {
               variant="body1"
               gutterBottom
             >
+              Boğaziçi Üniversitesi Kuzey Kampüs Teknopark No:206 Bebek/
+              Beşiktaş/ ISTANBUL
+            </Typography>
+            <Typography
+              style={{ marginTop: "20px" }}
+              variant="body1"
+              gutterBottom
+            >
               I{" "}
               <FavoriteIcon className={classes.inlineIcon} color="secondary" />{" "}
               Istanbul
