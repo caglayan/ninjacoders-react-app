@@ -32,6 +32,11 @@ const useStyles = makeStyles((theme) => ({
 const SideMenu = (props) => {
   const classes = useStyles();
   const history = useHistory();
+  const [selectedItem, setSelectedItem] = React.useState(0);
+
+  const selectItem = (index) => {
+    setSelectedItem(index);
+  };
 
   const toggleDrawer = (side, open) => (event) => {
     if (
@@ -113,20 +118,83 @@ const SideMenu = (props) => {
           secondary={props.email ? props.email : "Problem"}
         />
       </ListItem>
-      <ListItem component={NavLink} to="/user/account" button key="13">
+      <ListItem
+        selected={selectedItem == 0}
+        onClick={() => {
+          console.log(selectedItem);
+          selectItem(0);
+        }}
+        component={NavLink}
+        to="/user/account"
+        button
+        key="13"
+      >
         <ListItemText primary="Hesap Ayarları" />
       </ListItem>
-      <ListItem component={NavLink} to="/user/questions" button key="12">
+      <ListItem
+        selected={selectedItem == 1}
+        onClick={() => {
+          console.log(selectedItem);
+          selectItem(1);
+        }}
+        component={NavLink}
+        to="/user/questions"
+        button
+        key="12"
+      >
         <ListItemText primary="Sorularım" />
       </ListItem>
-      <ListItem component={NavLink} to="/user/courses" button key="12">
+      <ListItem
+        selected={selectedItem == 2}
+        onClick={() => {
+          console.log(selectedItem);
+          selectItem(2);
+        }}
+        component={NavLink}
+        to="/user/courses"
+        button
+        key="12"
+      >
         <ListItemText primary="İzlediğim Dersler" />
       </ListItem>
-      <ListItem component={NavLink} to="/premium" button key="16">
+      <ListItem
+        selected={selectedItem == 3}
+        onClick={() => {
+          console.log(selectedItem);
+          selectItem(3);
+        }}
+        component={NavLink}
+        to="/user/coursemap"
+        button
+        key="12"
+      >
+        <ListItemText primary="Sertifikalar" />
+      </ListItem>
+      <ListItem
+        selected={selectedItem == 4}
+        onClick={() => {
+          console.log(selectedItem);
+          selectItem(4);
+        }}
+        component={NavLink}
+        to="/premium"
+        button
+        key="16"
+      >
         <ListItemText primary="Premium Ol" />
       </ListItem>
       <Divider />
-      <ListItem component={NavLink} to="/help" button key="14">
+      <ListItem
+        selected={selectedItem == 5}
+        onClick={() => {
+          console.log(selectedItem);
+          selectItem(5);
+        }}
+        component={NavLink}
+        to="/help"
+        button
+        key="14"
+      >
         <ListItemText primary="Yardım" />
       </ListItem>
       <ListItem onClick={props.logoutUser} button key="15">

@@ -6,6 +6,7 @@ import TextArea from "./TextArea";
 import Supporters from "./Supporters";
 import CourseArea from "./Courses";
 import Comments from "./Comments";
+import { findApplication } from "../Api/applicationApi";
 
 /*
 value         |0px     600px    960px    1280px   1920px
@@ -20,17 +21,57 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Main(props) {
   const classes = useStyles();
+  const [isWorking, setIsWorking] = React.useState(true);
+  const [application, setApplication] = React.useState();
+
+  const findApp = () => {
+    findApplication("5edb4b1bb4965a757aa6d7a1") // skip limit
+      .then((app) => {
+        setApplication(app);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  React.useEffect(() => {
+    console.log(application);
+    if (!application) {
+      findApp();
+    } else {
+      setIsWorking(false);
+    }
+  }, [application]);
+
   return (
     <Container
       className={classes.container}
       disableGutters={true}
       maxWidth={false}
     >
-      <Slider></Slider>
-      <TextArea></TextArea>
-      <CourseArea></CourseArea>
-      <Comments></Comments>
-      <Supporters></Supporters>
+      {isWorking ? (
+        <Grid container direction="row" justify="center" alignItems="center">
+          <Grid item>
+            <CircularProgress
+              style={{ marginTop: "5vh", marginBottom: "5vh" }}
+              color="primary"
+              size={40}
+            />
+          </Grid>
+        </Grid>
+      ) : (
+        <div>
+          <Slider></Slider>
+          <TextArea></TextArea>
+          {application.courseGroups.map((courseGroup, index) => {
+            return (
+              <CourseArea {...courseGroup} key={courseGroup._id}></CourseArea>
+            );
+          })}
+          <Comments></Comments>
+          <Supporters></Supporters>
+        </div>
+      )}
     </Container>
   );
 }

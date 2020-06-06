@@ -11,9 +11,13 @@ import ResetPassPage from "./Pages/ResetPassPage";
 import CreatePassPage from "./Pages/CreatePassPage";
 import AccountPage from "../USER/Account/Account";
 import QuestionsPage from "../USER/Questions/Questions";
+import CourseMapUserPage from "../USER/CourseMap/CourseMap";
 import CoursePage from "../COURSE/CourseMain";
 import MainPage from "../MAIN/Main";
 import MyCoursesPage from "../USER/Courses/Courses";
+import CourseMapPage from "../COURSEMAP/CourseMap";
+import CheckoutPage from "../CHECKOUT/Checkout";
+
 import { startCreateUserLocal } from "../Redux/Selectors/userSelector";
 
 function BodyArea(propsGeneral) {
@@ -79,6 +83,16 @@ function BodyArea(propsGeneral) {
           )}
         />
         <Route
+          path="/user/coursemap"
+          exact={true}
+          render={(props) => (
+            <CourseMapUserPage
+              {...props}
+              showMessages={propsGeneral.showMessages}
+            />
+          )}
+        />
+        <Route
           path="/user/"
           render={(props) =>
             checkLogin() ? (
@@ -100,6 +114,7 @@ function BodyArea(propsGeneral) {
             />
           )}
         />
+
         <Route
           path="/signin"
           exact={true}
@@ -142,6 +157,23 @@ function BodyArea(propsGeneral) {
               {...props}
               showMessages={propsGeneral.showMessages}
             />
+          )}
+        />
+        <Route
+          path="/coursemap/:id"
+          exact={true}
+          render={(props) => (
+            <CourseMapPage
+              {...props}
+              showMessages={propsGeneral.showMessages}
+            />
+          )}
+        />
+        <Route
+          path="/checkout"
+          exact={true}
+          render={(props) => (
+            <CheckoutPage {...props} showMessages={propsGeneral.showMessages} />
           )}
         />
         <Route

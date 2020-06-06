@@ -1,6 +1,7 @@
 import React from "react";
 import { Fade, Slide, Grid, Typography, Button } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SimpleSlide() {
   const classes = useStyles();
+  const history = useHistory();
   const [checked, setChecked] = React.useState(false);
   const [direction, setDirection] = React.useState("left");
 
@@ -55,7 +57,7 @@ export default function SimpleSlide() {
           return "right";
         }
       });
-    }, 4000);
+    }, 6000);
   }, []);
 
   const handleChange = () => {};
@@ -120,6 +122,9 @@ export default function SimpleSlide() {
                   className={classes.PremiumButton}
                   variant="contained"
                   color="secondary"
+                  onClick={() => {
+                    history.push(`/checkout`);
+                  }}
                 >
                   Öğrencimiz olun: 12,99₺
                 </Button>
@@ -167,6 +172,9 @@ export default function SimpleSlide() {
                   className={classes.PremiumButton}
                   variant="contained"
                   color="secondary"
+                  onClick={() => {
+                    history.push(`/checkout`);
+                  }}
                 >
                   Öğrencimiz olun: 12,99₺
                 </Button>

@@ -12,54 +12,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TextArea() {
+export default function CourseCrousel(props) {
   const classes = useStyles();
   const history = useHistory();
+  console.log(props);
 
   return (
     <Container className={classes.container} maxWidth="lg">
-      <Grid
-        container
-        direction="row"
-        justify="space-between"
-        alignItems="center"
-        style={{ paddingRight: "5%", paddingLeft: "5%" }}
-      >
-        <Grid item>
-          <Typography
-            className={classes.text1}
-            variant="h6"
-            component="h6"
-            align="left"
-          >
-            Kodlama Dersleri
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Button
-            className={classes.signinButton}
-            onClick={() => {
-              history.push("/kodlama");
-            }}
-          >
-            Bütün Dersler
-          </Button>
-        </Grid>
-      </Grid>
-      <Carousel slidesPerPage={4} arrows infinite>
-        <CourseCard
-          instructor={{ givenName: "Çağlayan", familiyName: "Şerbetçi" }}
-        ></CourseCard>
-        <CourseCard
-          instructor={{ givenName: "Çağlayan", familiyName: "Şerbetçi" }}
-        ></CourseCard>
-        <CourseCard
-          instructor={{ givenName: "Çağlayan", familiyName: "Şerbetçi" }}
-        ></CourseCard>
-        <CourseCard
-          instructor={{ givenName: "Çağlayan", familiyName: "Şerbetçi" }}
-        ></CourseCard>
-      </Carousel>
       <Grid
         container
         direction="row"
@@ -74,14 +33,14 @@ export default function TextArea() {
             component="h6"
             align="left"
           >
-            Robotik Dersleri
+            {props.name}
           </Typography>
         </Grid>
         <Grid item>
           <Button
             className={classes.signinButton}
             onClick={() => {
-              history.push("/kodlama");
+              history.push(`/coursemap/` + props._id);
             }}
           >
             Bütün Dersler
@@ -89,18 +48,9 @@ export default function TextArea() {
         </Grid>
       </Grid>
       <Carousel slidesPerPage={4} arrows infinite>
-        <CourseCard
-          instructor={{ givenName: "Çağlayan", familiyName: "Şerbetçi" }}
-        ></CourseCard>
-        <CourseCard
-          instructor={{ givenName: "Çağlayan", familiyName: "Şerbetçi" }}
-        ></CourseCard>
-        <CourseCard
-          instructor={{ givenName: "Çağlayan", familiyName: "Şerbetçi" }}
-        ></CourseCard>
-        <CourseCard
-          instructor={{ givenName: "Çağlayan", familiyName: "Şerbetçi" }}
-        ></CourseCard>
+        {props.courses.map((course, index) => {
+          return <CourseCard key={course.course_id} {...course}></CourseCard>;
+        })}
       </Carousel>
     </Container>
   );

@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, Button } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   PremiumButton: {
@@ -12,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
 
 const PremiumPanel = (props) => {
   const classes = useStyles();
+  const history = useHistory();
   console.log("Video Panel", props);
   return (
     <Grid
@@ -44,6 +46,9 @@ const PremiumPanel = (props) => {
           className={classes.PremiumButton}
           variant="contained"
           color="secondary"
+          onClick={() => {
+            history.push(`/checkout`);
+          }}
         >
           Öğrencimiz olun: 12,99₺
         </Button>

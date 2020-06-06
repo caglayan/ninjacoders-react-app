@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Chip, Button } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 /*
 value         |0px     600px    960px    1280px   1920px
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default (props) => {
   const classes = useStyles();
+  const history = useHistory();
 
   return (
     <Grid
@@ -55,6 +57,9 @@ export default (props) => {
           className={classes.PremiumButton}
           variant="contained"
           color="secondary"
+          onClick={() => {
+            history.push(`/checkout`);
+          }}
         >
           Öğrencimiz olun: 12,99₺
         </Button>
