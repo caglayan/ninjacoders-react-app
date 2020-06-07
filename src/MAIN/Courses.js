@@ -10,6 +10,18 @@ const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: theme.spacing(12),
   },
+  sectionDesktop: {
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+    },
+  },
+  sectionMobile: {
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
+  },
 }));
 
 export default function CourseCrousel(props) {
@@ -47,11 +59,20 @@ export default function CourseCrousel(props) {
           </Button>
         </Grid>
       </Grid>
-      <Carousel slidesPerPage={4} arrows infinite>
-        {props.courses.map((course, index) => {
-          return <CourseCard key={course.course_id} {...course}></CourseCard>;
-        })}
-      </Carousel>
+      <div className={classes.sectionDesktop}>
+        <Carousel slidesPerPage={4} arrows dots infinite>
+          {props.courses.map((course, index) => {
+            return <CourseCard key={course.course_id} {...course}></CourseCard>;
+          })}
+        </Carousel>
+      </div>
+      <div className={classes.sectionMobile}>
+        <Carousel slidesPerPage={1} arrows centered dots infinite>
+          {props.courses.map((course, index) => {
+            return <CourseCard key={course.course_id} {...course}></CourseCard>;
+          })}
+        </Carousel>
+      </div>
     </Container>
   );
 }
