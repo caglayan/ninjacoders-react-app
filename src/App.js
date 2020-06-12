@@ -17,7 +17,8 @@ import { Provider } from "react-redux";
 import BodyArea from "./LAYOUT/BodyArea";
 import Header from "./LAYOUT/Header";
 import Footer from "./LAYOUT/Footer";
-import SideMenu from "./LAYOUT/SideMenu";
+import RightSideMenu from "./LAYOUT/RightSideMenu";
+import LeftSideMenu from "./LAYOUT/LeftSideMenu";
 import SnackBar from "./Components/SnackBar/SnackBar";
 import SignInDialog from "./LAYOUT/Dialogs/SignInDialog";
 import SignUpDialog from "./LAYOUT/Dialogs/SignUpDialog";
@@ -79,7 +80,8 @@ const theme = createMuiTheme({
 });
 
 export default function App() {
-  const [sideMenuOpen, setSideMenuOpen] = React.useState(false);
+  const [sideRightMenuOpen, setSideRightMenuOpen] = React.useState(false);
+  const [sideLefttMenuOpen, setSideLeftMenuOpen] = React.useState(false);
 
   React.useEffect(() => {
     if (startCreateUserLocal(store.dispatch)) {
@@ -165,11 +167,18 @@ export default function App() {
     setSnackIsActive(false);
   };
 
-  const handleOpenSideMenu = () => {
-    setSideMenuOpen(true);
+  const handleOpenRightSideMenu = () => {
+    setSideRightMenuOpen(true);
   };
-  const handleCloseSideMenu = () => {
-    setSideMenuOpen(false);
+  const handleCloseRightSideMenu = () => {
+    setSideRightMenuOpen(false);
+  };
+
+  const handleOpenLeftSideMenu = () => {
+    setSideLeftMenuOpen(true);
+  };
+  const handleCloseLeftSideMenu = () => {
+    setSideLeftMenuOpen(false);
   };
 
   return (
@@ -182,7 +191,8 @@ export default function App() {
               isUserLogin={false}
               loginOpen={openSignInDialog}
               signupOpen={openSignUpDialog}
-              sideMenuOpen={handleOpenSideMenu}
+              sideRightMenuOpen={handleOpenRightSideMenu}
+              sideLeftMenuOpen={handleOpenLeftSideMenu}
             />
             <BodyArea
               askQuestionOpen={openQuestionDialog}
@@ -219,10 +229,16 @@ export default function App() {
               closeSnack={handleCloseSnack}
               isActive={snackIsActive}
             />
-            <SideMenu
-              isOpen={sideMenuOpen}
-              open={handleOpenSideMenu}
-              close={handleCloseSideMenu}
+            <RightSideMenu
+              isOpen={sideRightMenuOpen}
+              open={handleOpenRightSideMenu}
+              close={handleCloseRightSideMenu}
+              logoutUser={logoutUser}
+            />
+            <LeftSideMenu
+              isOpen={sideLefttMenuOpen}
+              open={handleOpenLeftSideMenu}
+              close={handleCloseLeftSideMenu}
               logoutUser={logoutUser}
             />
           </ThemeProvider>

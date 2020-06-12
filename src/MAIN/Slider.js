@@ -8,17 +8,20 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     width: "100%",
     height: "400px",
+    [theme.breakpoints.up("md")]: {
+      height: "500px",
+    },
   },
   image: {
     position: "absolute",
     width: "100%",
-    height: "400px",
+    height: "100%",
     objectFit: "cover",
   },
   image2: {
     position: "absolute",
     width: "100%",
-    height: "400px",
+    height: "100%",
     objectFit: "cover",
   },
   gradientDiv: {
@@ -27,17 +30,25 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     flex: "1 1 auto",
     padding: "30px",
-    height: "400px",
+    height: "100%",
     background:
       "linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, transparent 100%)",
   },
   banner1: {
     position: "absolute",
     display: "flex",
-    width: "50%",
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "50%",
+      marginLeft: "5%",
+    },
     flex: "1 1 auto",
     padding: "30px",
-    height: "400px",
+    height: "100%",
+  },
+
+  PremiumButton: {
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -68,7 +79,7 @@ export default function SimpleSlide() {
         <div>
           <img
             className={classes.image}
-            src="https://static.skillshare.com/assets/images/homepage/promo-banner/laci-jordan-bg-desktop.jpg"
+            src="https://images.squarespace-cdn.com/content/v1/59371b611e5b6cbaaa211ff9/1508513861460-YJ6XUF57VPQILZ68SRUM/ke17ZwdGBToddI8pDm48kGPVK--wGoWXJsqwlxbZlQN7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0mwONMR1ELp49Lyc52iWr5enfxu_O4VeONvneR-F6W8oeFhFqSrYyNrfPB9Y70_gvQ/_DSC4427.jpg"
           ></img>
           <div className={classes.gradientDiv}></div>
         </div>
@@ -78,7 +89,7 @@ export default function SimpleSlide() {
         <div>
           <img
             className={classes.image}
-            src="https://static.skillshare.com/assets/images/homepage/promo-banner/di-ujdi-bg-desktop.jpg"
+            src="https://scontent.fsaw1-1.fna.fbcdn.net/v/t31.0-8/17349701_1026959527405302_442742209446467883_o.jpg?_nc_cat=100&_nc_sid=dd9801&_nc_ohc=4GeoIvA_8p4AX-poxK9&_nc_ht=scontent.fsaw1-1.fna&oh=081da00687f6b3a9acf3b6972b351700&oe=5F068D61"
           ></img>
           <div className={classes.gradientDiv}></div>
         </div>
@@ -96,7 +107,7 @@ export default function SimpleSlide() {
               container
               direction="column"
               justify="center"
-              alignItems="center"
+              alignItems="left"
               style={{ height: "100%" }}
             >
               <Grid item>
@@ -104,20 +115,16 @@ export default function SimpleSlide() {
                   style={{ color: "white" }}
                   variant="h6"
                   component="h6"
-                  align="center"
                 >
-                  Devam etmek için ve diğer dersleri de özgürce seyretmek için,
+                  Ufkunuzu açın,
                 </Typography>
                 <Typography
                   style={{ color: "white" }}
                   variant="h6"
                   component="h6"
-                  align="center"
                 >
-                  Öğrencimiz olun.
+                  yüzlerce yazılım ve robotik dersini uzaktan öğrenin.
                 </Typography>
-              </Grid>
-              <Grid item>
                 <Button
                   className={classes.PremiumButton}
                   variant="contained"
@@ -129,6 +136,7 @@ export default function SimpleSlide() {
                   Öğrencimiz olun: 12,99₺
                 </Button>
               </Grid>
+              <Grid item></Grid>
             </Grid>
           </Fade>
         </div>
@@ -146,7 +154,7 @@ export default function SimpleSlide() {
               container
               direction="column"
               justify="center"
-              alignItems="center"
+              alignItems="left"
               style={{ height: "100%" }}
             >
               <Grid item>
@@ -154,20 +162,17 @@ export default function SimpleSlide() {
                   style={{ color: "white" }}
                   variant="h6"
                   component="h6"
-                  align="center"
                 >
-                  Devam etmek için ve diğer dersleri de özgürce seyretmek için,
+                  NinjaCoders ile geleceği kodlayın,
                 </Typography>
                 <Typography
                   style={{ color: "white" }}
                   variant="h6"
                   component="h6"
-                  align="center"
                 >
-                  Öğrencimiz olun.
+                  Alanında en başarılı eğitmenler ile üretin, eğlenin ve
+                  hayallerinize ulaşın.
                 </Typography>
-              </Grid>
-              <Grid item>
                 <Button
                   className={classes.PremiumButton}
                   variant="contained"
@@ -179,6 +184,7 @@ export default function SimpleSlide() {
                   Öğrencimiz olun: 12,99₺
                 </Button>
               </Grid>
+              <Grid item></Grid>
             </Grid>
           </Fade>
         </div>

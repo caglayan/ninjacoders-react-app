@@ -2,7 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { AppBar, Toolbar, Button, Avatar, Link } from "@material-ui/core";
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  Avatar,
+  Link,
+  IconButton,
+} from "@material-ui/core";
+
+import { Menu } from "@material-ui/icons";
 
 import logo from "../logo.svg";
 
@@ -14,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(1),
   },
   logoDesktop: {
-    width: theme.spacing(32),
+    width: theme.spacing(24),
     marginLeft: theme.spacing(6),
   },
   logoMobile: {
@@ -30,7 +39,10 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(6),
   },
   SigninButton: {
-    width: theme.spacing(12),
+    width: theme.spacing(8),
+    [theme.breakpoints.up("md")]: {
+      width: theme.spacing(12),
+    },
     borderRadius: 50,
     color: "#313e5b",
   },
@@ -59,6 +71,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     width: 60,
     height: 60,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
   },
 }));
 
@@ -101,7 +116,7 @@ const Header = (props) => {
   const signComponentMobile = (
     <div className={classes.sectionMobile}>
       <Avatar
-        onClick={props.sideMenuOpen}
+        onClick={props.sideRightMenuOpen}
         className={classes.Avatar}
         alt={props.givenName + " " + props.familyName}
         src={props.avatarImage ? props.avatarImage.dataUri : null}
@@ -116,7 +131,7 @@ const Header = (props) => {
   const signComponent = (
     <div className={classes.sectionDesktop}>
       <Avatar
-        onClick={props.sideMenuOpen}
+        onClick={props.sideRightMenuOpen}
         className={classes.Avatar}
         alt={props.givenName + " " + props.familyName}
         src={props.avatarImage ? props.avatarImage.dataUri : null}
@@ -148,6 +163,16 @@ const Header = (props) => {
       <AppBar className={classes.appBar} position="static" color="inherit">
         <div className={classes.sectionMobile}>
           <Toolbar className={classes.Toolbar}>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+              onClick={props.sideLeftMenuOpen}
+            >
+              <Menu />
+            </IconButton>
+            <div className={classes.grow} />
             <Link href="/">
               <img
                 src="/ninjacoders_h_logo.png"
@@ -158,15 +183,6 @@ const Header = (props) => {
             <div className={classes.grow} />
             {props._id != "" ? signComponentMobile : notSignComponentMobile}
           </Toolbar>
-          {/* <IconButton
-            aria-label="show more"
-            aria-controls={mobileMenuId}
-            aria-haspopup="true"
-            onClick={handleMobileMenuOpen}
-            color="inherit"
-          >
-            <MoreIcon />
-          </IconButton> */}
         </div>
         <div className={classes.sectionDesktop}>
           <Toolbar className={classes.Toolbar}>

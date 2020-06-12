@@ -8,7 +8,10 @@ import "@brainhubeu/react-carousel/lib/style.css";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    marginTop: theme.spacing(12),
+    marginTop: theme.spacing(6),
+    [theme.breakpoints.up("md")]: {
+      marginTop: theme.spacing(12),
+    },
   },
   sectionDesktop: {
     display: "none",
@@ -22,12 +25,14 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
+  mapButton: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 export default function CourseCrousel(props) {
   const classes = useStyles();
   const history = useHistory();
-  console.log(props);
 
   return (
     <Container className={classes.container} maxWidth="lg">
@@ -36,27 +41,17 @@ export default function CourseCrousel(props) {
         direction="row"
         justify="space-between"
         alignItems="center"
-        style={{ marginTop: 100, paddingRight: "5%", paddingLeft: "5%" }}
+        style={{ paddingRight: "5%", paddingLeft: "5%" }}
       >
         <Grid item>
           <Typography
             className={classes.text1}
-            variant="h6"
-            component="h6"
-            align="left"
+            variant="h5"
+            component="h5"
+            align="center"
           >
             {props.name}
           </Typography>
-        </Grid>
-        <Grid item>
-          <Button
-            className={classes.signinButton}
-            onClick={() => {
-              history.push(`/coursemap/` + props._id);
-            }}
-          >
-            Bütün Dersler
-          </Button>
         </Grid>
       </Grid>
       <div className={classes.sectionDesktop}>
@@ -73,6 +68,24 @@ export default function CourseCrousel(props) {
           })}
         </Carousel>
       </div>
+      {
+        // Ok için renk 8768ff
+        // background-color: #8768ff
+      }
+      <Grid container direction="row" justify="center" alignItems="center">
+        <Grid item>
+          <Button
+            className={classes.mapButton}
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              history.push(`/coursemap/` + props._id);
+            }}
+          >
+            Sertifika için yol haritası
+          </Button>
+        </Grid>
+      </Grid>
     </Container>
   );
 }

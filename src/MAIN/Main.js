@@ -4,7 +4,7 @@ import { CircularProgress, Container, Grid } from "@material-ui/core";
 import Slider from "./Slider";
 import TextArea from "./TextArea";
 import Supporters from "./Supporters";
-import CourseArea from "./Courses";
+import CourseArea from "./CoursesSlider";
 import Comments from "./Comments";
 import { findApplication } from "../Api/applicationApi";
 
@@ -16,7 +16,7 @@ range         |   xs   |   sm   |   md   |   lg   |   xl
 */
 
 const useStyles = makeStyles((theme) => ({
-  container: { marginTop: theme.spacing(2) },
+  container: {},
 }));
 
 export default function Main(props) {

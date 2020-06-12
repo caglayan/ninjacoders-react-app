@@ -12,7 +12,10 @@ import CommentPanel from "../Components/CommentHelpers/CommentPanel";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    marginTop: theme.spacing(12),
+    marginTop: theme.spacing(6),
+    [theme.breakpoints.up("md")]: {
+      marginTop: theme.spacing(12),
+    },
   },
   comments: {
     marginTop: theme.spacing(6),

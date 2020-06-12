@@ -100,6 +100,104 @@
                 "familyName": "Şerbetçi"
             }
         }]
+    }, {
+        "_id": {
+            "$oid": "5edb4b9af011fe1d55b60fd1"
+        },
+        "name": "Kodlama Dersleri",
+        "courses": [{
+            "thumbnail": "https://i.imgur.com/McOh0Ub.png",
+            "_id": "5df92c57ea9f59862aacd1ab",
+            "name": "Stracth'i tanıyalım",
+            "duration": {
+                "$numberInt": "3234"
+            },
+            "percentage": {
+                "$numberInt": "0"
+            },
+            "students": {
+                "$numberInt": "127"
+            },
+            "videos": {
+                "$numberInt": "7"
+            },
+            "rating": {
+                "$numberDouble": "4.7"
+            },
+            "instructor": {
+                "givenName": "Çağlayan",
+                "familyName": "Şerbetçi"
+            }
+        }, {
+            "thumbnail": "https://i.imgur.com/o1jAD6g.jpg",
+            "_id": "5df92c57ea9f59862aaad2ab",
+            "name": "Labirent Oyunu Yapımı",
+            "duration": {
+                "$numberInt": "3234"
+            },
+            "percentage": {
+                "$numberInt": "0"
+            },
+            "students": {
+                "$numberInt": "127"
+            },
+            "videos": {
+                "$numberInt": "7"
+            },
+            "rating": {
+                "$numberDouble": "4.7"
+            },
+            "instructor": {
+                "givenName": "Çağlayan",
+                "familyName": "Şerbetçi"
+            }
+        }, {
+            "thumbnail": "https://i.imgur.com/blfnbvl.jpg",
+            "_id": "5df92c57ea9f5986aaabd1ad",
+            "name": "Sağlıklı Beslenelim",
+            "duration": {
+                "$numberInt": "3234"
+            },
+            "percentage": {
+                "$numberInt": "0"
+            },
+            "students": {
+                "$numberInt": "127"
+            },
+            "videos": {
+                "$numberInt": "7"
+            },
+            "rating": {
+                "$numberDouble": "4.7"
+            },
+            "instructor": {
+                "givenName": "Çağlayan",
+                "familyName": "Şerbetçi"
+            }
+        }, {
+            "thumbnail": "https://i.imgur.com/C6pG9ay.jpg",
+            "_id": "5df92c57ea9f59862aabd2ac",
+            "name": "Uzay Oyunu",
+            "duration": {
+                "$numberInt": "3234"
+            },
+            "percentage": {
+                "$numberInt": "0"
+            },
+            "students": {
+                "$numberInt": "127"
+            },
+            "videos": {
+                "$numberInt": "7"
+            },
+            "rating": {
+                "$numberDouble": "4.7"
+            },
+            "instructor": {
+                "givenName": "Çağlayan",
+                "familyName": "Şerbetçi"
+            }
+        }]
     }],
     "createdAt": {
         "$date": {
