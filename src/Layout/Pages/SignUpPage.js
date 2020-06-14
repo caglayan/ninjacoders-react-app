@@ -6,9 +6,11 @@ import SignUpComp from "../../Components/SignUp/SignUp";
 const useStyles = makeStyles((theme) => ({
   Container: {
     background: "#fff",
-    borderRadius: "10px",
     paddingTop: theme.spacing(6),
     paddingBottom: theme.spacing(6),
+    [theme.breakpoints.up("md")]: {
+      borderRadius: "10px",
+    },
   },
 }));
 

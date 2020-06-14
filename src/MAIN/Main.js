@@ -68,7 +68,7 @@ export default function Main(props) {
               <CourseArea {...courseGroup} key={courseGroup._id}></CourseArea>
             );
           })}
-          <Comments></Comments>
+          <Comments comments={application.comments}></Comments>
           <Supporters></Supporters>
         </div>
       )}

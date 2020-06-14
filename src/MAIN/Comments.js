@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TextArea() {
+export default function CommentsArea(props) {
   const classes = useStyles();
 
   return (
@@ -47,10 +47,15 @@ export default function TextArea() {
         Üniversitesi'nde tanıyor.
       </Typography>
       <div className={classes.comments}>
-        <CommentPanel className={classes.commentContainer}></CommentPanel>
-        <CommentPanel className={classes.commentContainer}></CommentPanel>
-        <CommentPanel className={classes.commentContainer}></CommentPanel>
-        <CommentPanel className={classes.commentContainer}></CommentPanel>
+        {props.comments.map((comment, index) => {
+          return (
+            <CommentPanel
+              key={comment._id}
+              {...comment}
+              className={classes.commentContainer}
+            ></CommentPanel>
+          );
+        })}
       </div>
     </Container>
   );

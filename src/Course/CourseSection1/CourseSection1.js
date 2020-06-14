@@ -27,6 +27,16 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     backgroundColor: "rgba(0,0,0,1)",
   },
+  sectionDesktop: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+  sectionMobile: {
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
+  },
 }));
 
 const CourseVideoContent = (props) => {
@@ -35,7 +45,7 @@ const CourseVideoContent = (props) => {
   const [listState, setListState] = React.useState({
     selChapter: 0,
     selSection: 0,
-    shownChapters: { 0: true },
+    shownChapters: {},
   });
   const [isWorking, setIsWorking] = React.useState(true);
   const [currentVideoIsPlaying, setCurrentVideoIsPlaying] = React.useState(
@@ -152,7 +162,27 @@ const CourseVideoContent = (props) => {
               )}
             </Grid>
             <Grid
+              className={classes.sectionDesktop}
               style={{ height: videoHeight, overflow: "auto" }}
+              item
+              sm={4}
+              xs={12}
+            >
+              <ListPanel
+                registeredCourse={props.registeredCourse}
+                courseDuration={props.courseDuration}
+                currentVideoIsPlaying={currentVideoIsPlaying}
+                numberOfVideos={props.numberOfVideos}
+                courseChapters={props.chapters}
+                listState={listState}
+                changeVideo={playVideo}
+                expandChapters={expandChapters}
+                premium={props.premium}
+              ></ListPanel>
+            </Grid>
+            <Grid
+              className={classes.sectionMobile}
+              style={{ height: videoHeight + 200, overflow: "auto" }}
               item
               sm={4}
               xs={12}

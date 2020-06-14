@@ -30,9 +30,6 @@ const useStyles = makeStyles((theme) => ({
     paddingInlineEnd: "10px",
     margin: "0px",
     display: "inline-flex",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "0.8rem",
-    },
   },
   nested: {
     paddingLeft: theme.spacing(4),
@@ -40,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     color: theme.palette.secondary.dark,
     minWidth: "36px",
+  },
+  listItemText: {
+    fontSize: "0.9em", //Insert your required size
   },
 }));
 
@@ -64,7 +64,7 @@ const ListPanel = (props) => {
     <List>
       <ListItem key="00">
         <Box className={classes.CourseInstName} fontWeight="fontWeightLight">
-          <Typography variant="subtitle1">
+          <Typography variant="subtitle2">
             {props.numberOfVideos} Ders {msToTime(props.courseDuration)}
           </Typography>
         </Box>
@@ -80,6 +80,7 @@ const ListPanel = (props) => {
                   }}
                 >
                   <ListItemText
+                    classes={{ primary: classes.listItemText }}
                     secondary={indexChap + 1 + ". " + chapter.title}
                   />
                   {props.listState.shownChapters[indexChap] ? (
@@ -89,7 +90,7 @@ const ListPanel = (props) => {
                   )}
                 </ListItem>
                 <Collapse
-                  in={props.listState.shownChapters[indexChap]}
+                  in={!props.listState.shownChapters[indexChap]}
                   timeout="auto"
                   unmountOnExit
                 >
@@ -144,7 +145,10 @@ const ListPanel = (props) => {
                             </ListItemIcon>
                           )}
 
-                          <ListItemText secondary={section.title} />
+                          <ListItemText
+                            classes={{ secondary: classes.listItemText }}
+                            secondary={section.title}
+                          />
                         </ListItem>
                       );
                     })}

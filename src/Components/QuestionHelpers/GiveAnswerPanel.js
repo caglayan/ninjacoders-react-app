@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(0),
     marginBottom: theme.spacing(2),
     marginLeft: theme.spacing(12),
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: theme.spacing(0),
+    },
     padding: theme.spacing(2),
     margin: "0",
     maxWidth: "100%",
@@ -43,6 +46,16 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     maxWidth: "100%",
     maxHeight: "100%",
+  },
+  sectionDesktop: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+  sectionMobile: {
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
   },
 }));
 
@@ -92,7 +105,7 @@ const GiveAnswerPanel = (props) => {
         <div className={classes.root}>
           <Paper elevation={0} className={classes.paper}>
             <Grid container spacing={2}>
-              <Grid item>
+              <Grid className={classes.sectionDesktop} item>
                 <Avatar
                   onClick={props.sideMenuOpen}
                   className={classes.Avatar}

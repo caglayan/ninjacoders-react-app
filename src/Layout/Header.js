@@ -108,7 +108,7 @@ const Header = (props) => {
           history.push("/signin");
         }}
       >
-        Sign in
+        Giriş
       </Button>
     </div>
   );
@@ -145,7 +145,7 @@ const Header = (props) => {
   const notSignComponent = (
     <div className={classes.sectionDesktop}>
       <Button className={classes.SigninButton} onClick={loginOpen}>
-        Sign in
+        Giriş
       </Button>
       <Button
         className={classes.SignupButton}
@@ -153,7 +153,7 @@ const Header = (props) => {
         color="primary"
         onClick={signupOpen}
       >
-        Sign up
+        Üye ol
       </Button>
     </div>
   );

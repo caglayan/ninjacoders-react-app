@@ -28,6 +28,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(0),
     marginBottom: theme.spacing(2),
     marginLeft: theme.spacing(12),
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: theme.spacing(0),
+    },
+
     padding: theme.spacing(2),
     margin: "0",
     maxWidth: "100%",
@@ -66,7 +70,6 @@ const AnswerPanel = (props) => {
     <div className={classes.root}>
       <Paper elevation={0} className={classes.paper}>
         <Grid container spacing={2}>
-          <Grid item></Grid>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={1}>
               <Grid item xs>

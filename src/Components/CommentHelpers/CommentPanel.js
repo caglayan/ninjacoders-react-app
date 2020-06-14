@@ -1,9 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import Avatar from "@material-ui/core/Avatar";
+import { Grid, Box, Paper, Typography, Avatar } from "@material-ui/core/";
+
 import Rater from "react-rater";
 import "react-rater/lib/react-rater.css";
 import TimeAgo from "react-timeago";
@@ -21,15 +19,28 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "100%",
     backgroundColor: theme.palette.grey[100],
   },
-  image: {
+  Avatar: {
     width: 50,
     height: 50,
+    marginRight: theme.spacing(2),
   },
-  img: {
-    margin: "auto",
-    display: "block",
-    maxWidth: "100%",
-    maxHeight: "100%",
+  grow: {
+    flexGrow: 1,
+  },
+  commentBody: {
+    marginTop: theme.spacing(2),
+  },
+  starDesktop: {
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+    },
+  },
+  starMobile: {
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
   },
 }));
 
@@ -53,7 +64,7 @@ export default function Comment(props) {
     <div className={classes.root}>
       <Paper elevation={0} className={classes.paper}>
         <Grid container spacing={2}>
-          <Grid item>
+          <Box display="inline">
             <Avatar
               onClick={props.sideMenuOpen}
               className={classes.Avatar}
@@ -65,27 +76,37 @@ export default function Comment(props) {
                 ? props.familyName.charAt(0).toUpperCase()
                 : null}
             </Avatar>
-          </Grid>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={1}>
-              <Grid item xs>
-                <Typography variant="subtitle1">
-                  {props.givenName} {props.familyName}
-                </Typography>
-                <Typography variant="body2" gutterBottom color="textSecondary">
-                  <TimeAgo date={props.updatedAt} formatter={formatter} />
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  {props.body}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid item>
-              <Rater total={5} rating={props.star} interactive={false}>
-                <Star />
-              </Rater>
-            </Grid>
-          </Grid>
+          </Box>
+          <Box display="inline">
+            <Typography variant="subtitle1">
+              {props.givenName} {props.familyName}
+            </Typography>
+            <Typography variant="body2" gutterBottom color="textSecondary">
+              <TimeAgo date={props.updatedAt} formatter={formatter} />
+            </Typography>
+          </Box>
+          <div className={classes.grow} />
+          <Box className={classes.starDesktop} display="inline">
+            <Rater total={5} rating={props.star} interactive={false}>
+              <Star />
+            </Rater>
+          </Box>
+          <Box className={classes.starMobile} display="inline">
+            <Rater
+              style={{ marginRight: "5px" }}
+              total={1}
+              rating={props.star}
+              interactive={false}
+            >
+              <Star />
+            </Rater>
+            {props.star}.0
+          </Box>
+        </Grid>
+        <Grid container className={classes.commentBody} spacing={1}>
+          <Typography variant="body2" gutterBottom>
+            {props.body}
+          </Typography>
         </Grid>
       </Paper>
     </div>

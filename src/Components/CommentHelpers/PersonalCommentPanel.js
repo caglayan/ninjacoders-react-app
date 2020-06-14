@@ -22,7 +22,7 @@ const PersonalCommentPanel = (props) => {
   };
 
   React.useEffect(() => {
-    if (props.premium & props.course_id) findCommentAdd();
+    if (props.premium && props.course_id) findCommentAdd();
   }, [props.course_id]);
 
   React.useEffect(() => {

@@ -106,7 +106,7 @@ const CourseSection2 = (props) => {
             indicatorColor="primary"
             textColor="primary"
           >
-            <Tab label="Bölüm Açıklaması" />
+            <Tab label="Açıklama" />
             <Tab label="Yorumlar" />
             <Tab label="Sorular" />
           </Tabs>

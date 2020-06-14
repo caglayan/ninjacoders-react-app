@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import React from "react";
+import PropTypes from "prop-types";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 
 export default function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -15,7 +15,7 @@ export default function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      <Box p={3}>{children}</Box>
+      <Box style={{ paddingTop: 40, paddingBottom: 40 }}>{children}</Box>
     </Typography>
   );
 }

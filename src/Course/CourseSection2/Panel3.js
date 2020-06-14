@@ -18,7 +18,6 @@ import TabPanel from "../../Components/CourseHelpers/TabPanel";
 
 const useStyles = makeStyles((theme) => ({
   askQuestionButton: {
-    marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
 }));
@@ -31,6 +30,7 @@ const QuestionTab = (props) => {
   const classes = useStyles();
 
   const pullQuestionsAdd = () => {
+    setIsWorking(true);
     pullQuestions(questions.length, 3, props.course_id) // skip limit
       .then((questionsi) => {
         if (questionsi.length === 0) setIsMoreActive(false);
@@ -175,7 +175,8 @@ const QuestionTab = (props) => {
                 variant="contained"
                 color="primary"
               >
-                Diğer Yorumlar
+                {isWorking && <CircularProgress color="secondary" size={18} />}
+                {!isWorking && " Diğer Sorular"}
               </Button>
             </Box>
           ) : null}

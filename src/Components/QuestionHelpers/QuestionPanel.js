@@ -61,7 +61,9 @@ export default function Question(props) {
             <Grid item xs container direction="column" spacing={1}>
               <Grid item xs>
                 <Typography variant="subtitle1">
-                  {props.givenName} {props.familyName}
+                  {props.givenName
+                    ? props.givenName + " " + props.familyName
+                    : null}
                 </Typography>
                 <Typography variant="body2" gutterBottom color="textSecondary">
                   <TimeAgo date={props.updatedAt} formatter={formatter} />

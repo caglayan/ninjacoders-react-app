@@ -43,7 +43,7 @@ const Basic = (props) => {
             <Grid item xs={10}>
               <TextField
                 error={errors.email != null && touched.email}
-                label="Email"
+                label="E-mail"
                 fullWidth
                 id="email"
                 helperText={errors.email && touched.email && errors.email}
@@ -57,7 +57,7 @@ const Basic = (props) => {
             <Grid item xs={10}>
               <TextField
                 error={errors.password != null && touched.password}
-                label="Password"
+                label="Şifre"
                 type="password"
                 fullWidth
                 id="password"
@@ -78,7 +78,7 @@ const Basic = (props) => {
                 variant="body1"
                 color="primary"
               >
-                Forgot Password?
+                Şifrenizi mi unuttunuz?
               </Link>
               {/* <Button
                 onClick={() => {
@@ -105,7 +105,7 @@ const Basic = (props) => {
                       : false
                   }
                 >
-                  Sign in
+                  Giriş
                 </Button>
               </Box>
             </Grid>

@@ -52,7 +52,7 @@ const Basic = (props) => (
             <Grid item xs={6}>
               <TextField
                 error={errors.givenName != null && touched.givenName}
-                label="First Name"
+                label="İsim"
                 fullWidth
                 name="givenName"
                 id="givenName"
@@ -69,7 +69,7 @@ const Basic = (props) => (
             <Grid item xs={6}>
               <TextField
                 error={errors.familyName != null && touched.familyName}
-                label="Last Name"
+                label="Soyisim"
                 fullWidth
                 name="familyName"
                 id="familyName"
@@ -88,7 +88,7 @@ const Basic = (props) => (
             <Grid item xs={6}>
               <TextField
                 error={errors.email != null && touched.email}
-                label="Email Address"
+                label="E-mail"
                 fullWidth
                 id="email"
                 helperText={errors.email && touched.email && errors.email}
@@ -103,7 +103,7 @@ const Basic = (props) => (
             <Grid item xs={6}>
               <TextField
                 error={errors.password != null && touched.password}
-                label="Create Password"
+                label="Şifre"
                 type="password"
                 fullWidth
                 id="password"
@@ -140,7 +140,7 @@ const Basic = (props) => (
                   errors.familyName
                 }
               >
-                Sign Up
+                Üye ol
               </Button>
             </Box>
           </Grid>

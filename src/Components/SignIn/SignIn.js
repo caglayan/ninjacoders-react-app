@@ -77,7 +77,7 @@ function LoginDialogContent(props) {
             setProgressVisible(true);
           }}
           clientId={API_KEY}
-          buttonText="Log in with Google"
+          buttonText="Google ile giriş yap"
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
           cookiePolicy={"single_host_origin"}
@@ -90,7 +90,7 @@ function LoginDialogContent(props) {
           </Grid>
           <Grid item xs={2}>
             <Box textAlign="center" m={1}>
-              or
+              veya
             </Box>
           </Grid>
           <Grid item xs={5}>
@@ -107,7 +107,7 @@ function LoginDialogContent(props) {
               }
             }}
           >
-            Not a member yet? Sign up
+            Henüz üye değil misiniz? Üye olun.
           </Button>
         </Grid>
       </Grid>

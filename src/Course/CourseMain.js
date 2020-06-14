@@ -8,6 +8,7 @@ import {
   startCreatePublicCourseLocal,
 } from "../Redux/Selectors/courseSelector";
 import { connect } from "react-redux";
+import BottomMobile from "./BottomMobile";
 
 const CourseContainer = (props) => {
   const downloadCourse = () => {
@@ -45,6 +46,7 @@ const CourseContainer = (props) => {
       <CourseSection1 {...props}></CourseSection1>
       <CourseSection2 {...props}></CourseSection2>
       <CourseSection3 {...props}></CourseSection3>
+      <BottomMobile></BottomMobile>
     </div>
   );
 };

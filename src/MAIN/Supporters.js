@@ -14,7 +14,22 @@ import "@brainhubeu/react-carousel/lib/style.css";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    marginTop: theme.spacing(12),
+    marginTop: theme.spacing(6),
+    [theme.breakpoints.up("md")]: {
+      marginTop: theme.spacing(12),
+    },
+  },
+  sectionDesktop: {
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+    },
+  },
+  sectionMobile: {
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
   },
   text1: {
     marginTop: theme.spacing(2),
@@ -23,6 +38,10 @@ const useStyles = makeStyles((theme) => ({
   carousel: {
     marginTop: theme.spacing(6),
     marginBottom: theme.spacing(6),
+  },
+  supportImage: {
+    width: 100,
+    height: 100,
   },
 }));
 
@@ -50,12 +69,56 @@ export default function TextArea() {
         haftalık Ekransız Kodlama eğitimleri ile çocuklar teknolojiyi Boğaziçi
         Üniversitesi'nde tanıyor.
       </Typography>
-      <Carousel className={classes.carousel} slidesPerPage={4} arrows infinite>
-        <img src={"https://via.placeholder.com/150"} />
-        <img src={"https://via.placeholder.com/150"} />
-        <img src={"https://via.placeholder.com/150"} />
-        <img src={"https://via.placeholder.com/150"} />
-      </Carousel>
+      <div className={classes.sectionDesktop}>
+        <Carousel
+          className={classes.carousel}
+          slidesPerPage={4}
+          arrows
+          infinite
+        >
+          <img
+            style={{ borderRadius: 5, width: 150, height: 150 }}
+            src={"/supporters_logo_1.png"}
+          />
+          <img
+            style={{ borderRadius: 5, width: 150, height: 150 }}
+            src={"/supporters_logo_2.png"}
+          />
+          <img
+            style={{ borderRadius: 5, width: 150, height: 150 }}
+            src={"/supporters_logo_3.png"}
+          />
+          <img
+            style={{ borderRadius: 5, width: 150, height: 150 }}
+            src={"/supporters_logo_4.png"}
+          />
+        </Carousel>
+      </div>
+      <div className={classes.sectionMobile}>
+        <Carousel
+          className={classes.carousel}
+          slidesPerPage={1}
+          arrows
+          infinite
+        >
+          <img
+            style={{ borderRadius: 5, width: 150, height: 150 }}
+            src={"/supporters_logo_1.png"}
+          />
+          <img
+            style={{ borderRadius: 5, width: 150, height: 150 }}
+            src={"/supporters_logo_2.png"}
+          />
+          <img
+            style={{ borderRadius: 5, width: 150, height: 150 }}
+            src={"/supporters_logo_3.png"}
+          />
+          <img
+            style={{ borderRadius: 5, width: 150, height: 150 }}
+            src={"/supporters_logo_4.png"}
+          />
+        </Carousel>
+      </div>
     </Container>
   );
 }

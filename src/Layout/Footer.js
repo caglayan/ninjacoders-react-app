@@ -35,6 +35,12 @@ const useStyles = makeStyles((theme) => ({
       marginTop: "40px",
     },
   },
+  linkBar: {
+    marginTop: "",
+    [theme.breakpoints.up("sm")]: {
+      marginTop: "40px",
+    },
+  },
   grow: {
     display: "none",
     [theme.breakpoints.up("sm")]: {
@@ -66,7 +72,50 @@ export default function Footer(props) {
               öğretmenlerden oluşur.
             </Typography>
           </Grid>
-          <Grid item sm={4} className={classes.grow} />
+          <Grid item sm={1} className={classes.grow}></Grid>
+          <Grid item sm={2} className={classes.grow}>
+            <Grid container direction="column" justify="center" spacing={2}>
+              <Grid className={classes.linkBar} item>
+                <Link
+                  target="_blank"
+                  href="/service-policy"
+                  variant="subtitle2"
+                  color="primary"
+                >
+                  Kullanızı Sözleşmesi
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link
+                  target="_blank"
+                  href="/service-policy"
+                  variant="subtitle2"
+                  color="primary"
+                >
+                  Hakkımızda
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link
+                  target="_blank"
+                  href="/service-policy"
+                  variant="subtitle2"
+                  color="primary"
+                >
+                  Yardım
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link
+                  target="_blank"
+                  href="mailto:merhaba@ninjacoders.co?subject=Size bir mesajım var."
+                >
+                  Bize ulaşın
+                </Link>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item sm={1} className={classes.grow}></Grid>
           <Grid item sm={4}>
             <Typography
               className={classes.mailTypograpgh}
@@ -100,8 +149,8 @@ export default function Footer(props) {
           <Grid item sm={12}>
             <Divider></Divider>
           </Grid>
-          <Typography variant="body1" gutterBottom>
-            Copyright 2020 NinjaCoders All Rights Reserved.
+          <Typography variant="subtitle2" gutterBottom>
+            Telif hakkı @ 2020 NinjaCoders Yazılım LTD. ŞTİ.
           </Typography>
         </Grid>
       </Container>

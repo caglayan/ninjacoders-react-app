@@ -71,7 +71,7 @@ function SignupDialogContent(props) {
 
   return (
     <div>
-      <img style={{ width: "100%" }} src="/login_art.jpg"></img>
+      <img style={{ width: "100%" }} src="/ninjacoders_banner_art.jpg"></img>
       {progressVisible ? (
         <LinearProgress variant="query" color="secondary" />
       ) : null}
@@ -81,7 +81,7 @@ function SignupDialogContent(props) {
             setProgressVisible(true);
           }}
           clientId={API_KEY}
-          buttonText="Sign Up with Google"
+          buttonText="Google ile üye ol"
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
           cookiePolicy={"single_host_origin"}
@@ -94,7 +94,7 @@ function SignupDialogContent(props) {
           </Grid>
           <Grid item xs={2}>
             <Box textAlign="center" m={1}>
-              or
+              veya
             </Box>
           </Grid>
           <Grid item xs={5}>
@@ -111,7 +111,7 @@ function SignupDialogContent(props) {
               }
             }}
           >
-            Already a member? Sign in
+            Üye misiniz? Lütfen giriş yapın.
           </Button>
         </Grid>
       </Grid>

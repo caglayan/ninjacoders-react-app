@@ -17,6 +17,7 @@ import MainPage from "../MAIN/Main";
 import MyCoursesPage from "../USER/Courses/Courses";
 import CourseMapPage from "../COURSEMAP/CourseMap";
 import CheckoutPage from "../CHECKOUT/Checkout";
+import ServicePolicyPage from "../HELP/ServicePolicy";
 
 import { startCreateUserLocal } from "../Redux/Selectors/userSelector";
 
@@ -174,6 +175,16 @@ function BodyArea(propsGeneral) {
           exact={true}
           render={(props) => (
             <CheckoutPage {...props} showMessages={propsGeneral.showMessages} />
+          )}
+        />
+        <Route
+          path="/service-policy"
+          exact={true}
+          render={(props) => (
+            <ServicePolicyPage
+              {...props}
+              showMessages={propsGeneral.showMessages}
+            />
           )}
         />
         <Route

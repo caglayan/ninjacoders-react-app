@@ -2,33 +2,108 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { Person, ThumbUp, SignalCellularAltTwoTone } from "@material-ui/icons";
+import { Person, LocalLibrary, ThumbUp } from "@material-ui/icons";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({}));
 
-}));
-
-export default function InstStat() {
+export default function InstStat(props) {
   const classes = useStyles();
 
   return (
-    <Grid container justify="center" spacing={0}>
-      <Grid item>
-        <Person style={{ width: "30px", height: "24px" }} />
-      </Grid>
-      <Grid item>
-        <Typography variant="body2" style={{ width: "30px", height: "20px" }}>
-          333
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <Typography
-          variant="body2"
-          style={{ width: "100%", textAlign: "center" }}
+    <div>
+      {props.studentsNo ? (
+        <Grid
+          container
+          direction="column"
+          align="center"
+          justify="center"
+          spacing={0}
         >
-          Öğrenci
-        </Typography>
-      </Grid>
-    </Grid>
+          <Grid item>
+            <Person display="block" style={{ width: "30px", height: "24px" }} />
+          </Grid>
+          <Grid item>
+            <Typography
+              display="block"
+              variant="body2"
+              style={{ height: "20px" }}
+            >
+              {props.studentsNo}
+            </Typography>
+            <Typography
+              display="block"
+              variant="body2"
+              style={{ height: "20px" }}
+            >
+              Öğrenci
+            </Typography>
+          </Grid>
+        </Grid>
+      ) : null}
+      {props.rating ? (
+        <Grid
+          container
+          direction="column"
+          align="center"
+          justify="center"
+          spacing={0}
+        >
+          <Grid item>
+            <ThumbUp
+              display="block"
+              style={{ width: "30px", height: "24px" }}
+            />
+          </Grid>
+          <Grid item>
+            <Typography
+              display="block"
+              variant="body2"
+              style={{ height: "20px" }}
+            >
+              {props.rating}
+            </Typography>
+            <Typography
+              display="block"
+              variant="body2"
+              style={{ height: "20px" }}
+            >
+              Puan
+            </Typography>
+          </Grid>
+        </Grid>
+      ) : null}
+      {props.coursesNo ? (
+        <Grid
+          container
+          direction="column"
+          align="center"
+          justify="center"
+          spacing={0}
+        >
+          <Grid item>
+            <LocalLibrary
+              display="block"
+              style={{ width: "30px", height: "24px" }}
+            />
+          </Grid>
+          <Grid item>
+            <Typography
+              display="block"
+              variant="body2"
+              style={{ height: "20px" }}
+            >
+              {props.coursesNo}
+            </Typography>
+            <Typography
+              display="block"
+              variant="body2"
+              style={{ height: "20px" }}
+            >
+              Ders
+            </Typography>
+          </Grid>
+        </Grid>
+      ) : null}
+    </div>
   );
 }

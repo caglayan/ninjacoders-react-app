@@ -107,7 +107,6 @@ export default function SimpleSlide() {
               container
               direction="column"
               justify="center"
-              alignItems="left"
               style={{ height: "100%" }}
             >
               <Grid item>
@@ -154,7 +153,6 @@ export default function SimpleSlide() {
               container
               direction="column"
               justify="center"
-              alignItems="left"
               style={{ height: "100%" }}
             >
               <Grid item>

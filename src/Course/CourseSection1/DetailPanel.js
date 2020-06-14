@@ -16,6 +16,16 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 50,
     marginRight: 75,
   },
+  sectionDesktop: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+  sectionMobile: {
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
+  },
 }));
 
 export default (props) => {
@@ -23,47 +33,50 @@ export default (props) => {
   const history = useHistory();
 
   return (
-    <Grid
-      container
-      direction="row"
-      justify="space-between"
-      alignItems="center"
-      style={{ marginTop: "10px" }}
-      spacing={2}
-    >
-      <Grid item>
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          style={{ height: "100%" }}
-        >
-          Bu eğitimdeki yetenekler:
-          {props.abilities.map((ability, index) => {
-            return (
-              <Chip
-                key={100 + index}
-                style={{ marginLeft: 8 }}
-                label={ability}
-                variant="outlined"
-              />
-            );
-          })}
+    <div>
+      <Grid
+        container
+        direction="row"
+        justify="space-between"
+        alignItems="center"
+        style={{ marginTop: "20px" }}
+        spacing={2}
+        className={classes.sectionDesktop}
+      >
+        <Grid item>
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="center"
+            style={{ height: "100%" }}
+          >
+            Bu eğitimdeki yetenekler:
+            {props.abilities.map((ability, index) => {
+              return (
+                <Chip
+                  key={100 + index}
+                  style={{ marginLeft: 8 }}
+                  label={ability}
+                  variant="outlined"
+                />
+              );
+            })}
+          </Grid>
+        </Grid>
+        <Grid item>
+          <Button
+            className={classes.PremiumButton}
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              history.push(`/checkout`);
+            }}
+          >
+            Öğrencimiz olun: 12,99₺
+          </Button>
         </Grid>
       </Grid>
-      <Grid item>
-        <Button
-          className={classes.PremiumButton}
-          variant="contained"
-          color="secondary"
-          onClick={() => {
-            history.push(`/checkout`);
-          }}
-        >
-          Öğrencimiz olun: 12,99₺
-        </Button>
-      </Grid>
-    </Grid>
+    </div>
   );
 };
