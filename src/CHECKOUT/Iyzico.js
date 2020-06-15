@@ -5,7 +5,7 @@ import {
   Container,
   TextField,
   Grid,
-  Box,
+  CircularProgress,
   Button,
   Link,
   Typography,
@@ -17,14 +17,24 @@ const useStyles = makeStyles((theme) => ({}));
 
 const IyzicoForm = (props) => {
   const classes = useStyles();
-
-  const [paymentPageUrl, setPaymentPageUrl] = React.useState();
+  const [isWorking, setIsWorking] = React.useState(true);
+  const [checkoutFormContent, setCheckoutFormContent] = React.useState();
 
   const findApp = () => {
     pullPaymentForm(props.token) // skip limit
       .then((result) => {
-        console.log(result.checkoutFormContent);
-        setPaymentPageUrl(result.paymentPageUrl);
+        console.log(
+          result.checkoutFormContent
+            .split("</script>")[0]
+            .split('<script type="text/javascript">')[1]
+        );
+
+        setCheckoutFormContent(
+          result.checkoutFormContent
+            .split("</script>")[0]
+            .split('<script type="text/javascript">')[1]
+        );
+        setIsWorking(false);
       })
       .catch((err) => {
         console.log(err);
@@ -32,22 +42,32 @@ const IyzicoForm = (props) => {
   };
 
   React.useEffect(() => {
-    console.log(paymentPageUrl);
-    if (!paymentPageUrl) {
+    const script = document.createElement("script");
+    if (!checkoutFormContent) {
       findApp();
     } else {
-      //setIsWorking(false);
+      console.log(checkoutFormContent);
+      script.appendChild(document.createTextNode(checkoutFormContent));
+      script.async = true;
+      document.body.appendChild(script);
     }
-  }, [paymentPageUrl]);
+  }, [checkoutFormContent]);
 
   return (
     <div className={classes.root}>
-      <iframe
-        width="100%"
-        height="900px"
-        src={paymentPageUrl}
-        frameborder="0"
-      />
+      {isWorking ? (
+        <Grid container direction="row" justify="center" alignItems="center">
+          <Grid item>
+            <CircularProgress
+              style={{ marginTop: "5vh", marginBottom: "5vh" }}
+              color="primary"
+              size={40}
+            />
+          </Grid>
+        </Grid>
+      ) : (
+        <div id="iyzipay-checkout-form" class="responsive"></div>
+      )}
     </div>
   );
 };

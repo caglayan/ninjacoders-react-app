@@ -1,7 +1,8 @@
 import axios from "axios";
 import ls from "local-storage";
 
-const url = "http://localhost:4000";
+//const url = "http://localhost:4000";
+const url = "https://ninjaoders-backend.herokuapp.com";
 
 export const userFetchLocal = () => {
   return ls.get("user");

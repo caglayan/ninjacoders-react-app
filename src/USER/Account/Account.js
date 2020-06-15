@@ -51,7 +51,7 @@ const Account = (props) => {
   const logoutUser = () => {
     console.log("user logout");
     startRemoveUserLocal(props.dispatch);
-    props.history.push("/");
+    props.history.push("/logout");
   };
 
   const desktopOptimizedAccount = (

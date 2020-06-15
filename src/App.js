@@ -54,6 +54,7 @@ const theme = createMuiTheme({
       main: "#ec407a",
     },
   },
+
   typography: {
     button: {
       textTransform: "none",

@@ -19,27 +19,51 @@ const DescriptionPanel = (props) => {
   return (
     <TabPanel value={props.index} index={0}>
       <Grid container spacing={3}>
-        <Grid item sm={8}>
-          <Typography variant="h6" component="h1">
-            <Box fontWeight="fontWeightMedium">
-              {props.description ? props.description.header : null}
-            </Box>
-          </Typography>
-          <Typography
-            style={{ marginTop: "5px" }}
-            variant="body2"
-            component="h1"
-          >
-            {props.description ? props.description.parap1 : null}
-          </Typography>
-          <Typography
-            style={{ marginTop: "5px" }}
-            variant="body2"
-            component="h1"
-          >
-            {props.description ? props.description.parap2 : null}
-          </Typography>
-        </Grid>
+        {props.premium ? (
+          <Grid item sm={8}>
+            <Typography variant="h6" component="h1">
+              <Box fontWeight="fontWeightMedium">
+                {props.description ? props.description.header : null}
+              </Box>
+            </Typography>
+            <Typography
+              style={{ marginTop: "5px" }}
+              variant="body2"
+              component="h1"
+            >
+              {props.description ? props.description.parap1 : null}
+            </Typography>
+            <Typography
+              style={{ marginTop: "5px" }}
+              variant="body2"
+              component="h1"
+            >
+              {props.description ? props.description.parap2 : null}
+            </Typography>
+          </Grid>
+        ) : (
+          <Grid item sm={8}>
+            <Typography variant="h6" component="h1">
+              <Box fontWeight="fontWeightMedium">
+                {props.description ? props.description.header : null}
+              </Box>
+            </Typography>
+            <Typography
+              style={{ marginTop: "5px" }}
+              variant="body2"
+              component="h1"
+            >
+              {props.description ? props.description.parap1 : null}
+            </Typography>
+            <Typography
+              style={{ marginTop: "5px" }}
+              variant="body2"
+              component="h1"
+            >
+              {props.description ? props.description.parap2 : null}
+            </Typography>
+          </Grid>
+        )}
         <Grid item sm={4}>
           <InstructorPan {...props.instructor} />
         </Grid>
@@ -60,6 +84,7 @@ const DescriptionPanelCon = connect((state) => ({
   chapters: state.courseReducer.chapters,
   shoppingCart: state.userReducer.shoppingCart,
   token: state.userReducer.token,
+  premium: state.userReducer.premium,
 }))(DescriptionPanel);
 
 export default DescriptionPanelCon;

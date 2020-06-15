@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     color: "black",
   },
   PremiumButton: {
-    width: theme.spacing(32),
     borderRadius: 50,
     marginTop: theme.spacing(4),
   },
@@ -63,10 +62,33 @@ export default function TextArea(props) {
               variant="contained"
               color="secondary"
               onClick={() => {
-                history.push(`/user/checkout`);
+                history.push(`/user/checkout/TATIL`);
               }}
             >
-              Öğrencimiz olun: 12,99₺
+              <Typography variant="body1" style={{ marginRight: "5px" }}>
+                6 Aylık Üyelik:
+              </Typography>
+              <Typography variant="h6"> 24 ₺</Typography>
+
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                style={{
+                  marginLeft: "10px",
+                }}
+              >
+                %66 indirim
+              </Typography>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                style={{
+                  marginLeft: "10px",
+                  textDecoration: "line-through",
+                }}
+              >
+                72 ₺
+              </Typography>
             </Button>
           ) : null}
         </Grid>

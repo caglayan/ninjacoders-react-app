@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Chip, Button } from "@material-ui/core";
+import { Grid, Chip, Button, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
 /*
@@ -12,7 +12,6 @@ range         |   xs   |   sm   |   md   |   lg   |   xl
 
 const useStyles = makeStyles((theme) => ({
   PremiumButton: {
-    width: theme.spacing(32),
     borderRadius: 50,
     marginRight: 75,
   },
@@ -70,10 +69,33 @@ export default (props) => {
             variant="contained"
             color="secondary"
             onClick={() => {
-              history.push(`/user/checkout`);
+              history.push(`/user/checkout/TATIL`);
             }}
           >
-            Öğrencimiz olun: 12,99₺
+            <Typography variant="body1" style={{ marginRight: "5px" }}>
+              6 Aylık Üyelik:
+            </Typography>
+            <Typography variant="h6"> 24 ₺</Typography>
+
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              style={{
+                marginLeft: "10px",
+              }}
+            >
+              %66 indirim
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              style={{
+                marginLeft: "10px",
+                textDecoration: "line-through",
+              }}
+            >
+              72 ₺
+            </Typography>
           </Button>
         </Grid>
       </Grid>

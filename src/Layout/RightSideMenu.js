@@ -85,7 +85,7 @@ const SideMenu = (props) => {
       </ListItem>
       <ListItem
         onClick={() => {
-          history.push("/");
+          history.push("/logout");
           props.logoutUser();
         }}
         button
@@ -197,7 +197,14 @@ const SideMenu = (props) => {
       >
         <ListItemText primary="Yardım" />
       </ListItem>
-      <ListItem onClick={props.logoutUser} button key="15">
+      <ListItem
+        onClick={() => {
+          props.logoutUser();
+          history.push("/logout");
+        }}
+        button
+        key="15"
+      >
         <ListItemText primary="Çıkış" />
       </ListItem>
     </List>

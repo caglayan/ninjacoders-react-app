@@ -31,11 +31,20 @@ const useStyles = makeStyles((theme) => ({
   paperNews: {
     backgroundColor: theme.palette.grey[200],
     padding: theme.spacing(4),
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(12),
+    [theme.breakpoints.down("sm")]: {
+      marginTop: theme.spacing(2),
+      padding: theme.spacing(4),
+    },
   },
   summary: {
     padding: theme.spacing(4),
     marginTop: theme.spacing(8),
+    [theme.breakpoints.down("sm")]: {
+      marginTop: theme.spacing(4),
+      padding: theme.spacing(0),
+      paddingBottom: theme.spacing(2),
+    },
   },
   grow: {
     flexGrow: 1,
@@ -77,7 +86,7 @@ export default function NotFoundPage(props) {
                   display="inline"
                   variant="h6"
                 >
-                  48.00 ₺
+                  72.00 ₺
                 </Typography>
               </Grid>
               <Grid
@@ -99,7 +108,7 @@ export default function NotFoundPage(props) {
                   display="inline"
                   variant="h6"
                 >
-                  24.00 ₺
+                  48.00 ₺
                 </Typography>
               </Grid>
               <Divider></Divider>
