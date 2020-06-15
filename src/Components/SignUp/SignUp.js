@@ -101,6 +101,7 @@ function SignupDialogContent(props) {
             <Divider />
           </Grid>
           <SignUpForm onSubmit={onSubmit} />
+
           <Button
             className={classes.SignupButton}
             onClick={() => {

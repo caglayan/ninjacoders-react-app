@@ -35,7 +35,7 @@ export default function BottomAppBar() {
           variant="contained"
           color="secondary"
           onClick={() => {
-            history.push(`/checkout`);
+            history.push(`/user/checkout`);
           }}
         >
           Öğrencimiz olun: 12,99₺

@@ -129,7 +129,7 @@ export default function SimpleSlide() {
                   variant="contained"
                   color="secondary"
                   onClick={() => {
-                    history.push(`/checkout`);
+                    history.push(`/user/checkout`);
                   }}
                 >
                   Öğrencimiz olun: 12,99₺
@@ -176,7 +176,7 @@ export default function SimpleSlide() {
                   variant="contained"
                   color="secondary"
                   onClick={() => {
-                    history.push(`/checkout`);
+                    history.push(`/user/checkout`);
                   }}
                 >
                   Öğrencimiz olun: 12,99₺

@@ -88,7 +88,7 @@ export default function Footer(props) {
               <Grid item>
                 <Link
                   target="_blank"
-                  href="/service-policy"
+                  href="/about-us"
                   variant="subtitle2"
                   color="primary"
                 >
@@ -98,7 +98,7 @@ export default function Footer(props) {
               <Grid item>
                 <Link
                   target="_blank"
-                  href="/service-policy"
+                  href="/help"
                   variant="subtitle2"
                   color="primary"
                 >

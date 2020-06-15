@@ -18,6 +18,8 @@ import MyCoursesPage from "../USER/Courses/Courses";
 import CourseMapPage from "../COURSEMAP/CourseMap";
 import CheckoutPage from "../CHECKOUT/Checkout";
 import ServicePolicyPage from "../HELP/ServicePolicy";
+import HelpPage from "../HELP/Help";
+import AboutUsPage from "../HELP/AboutUs";
 
 import { startCreateUserLocal } from "../Redux/Selectors/userSelector";
 
@@ -58,43 +60,69 @@ function BodyArea(propsGeneral) {
         <Route
           path="/user/questions"
           exact={true}
-          render={(props) => (
-            <QuestionsPage
-              {...props}
-              questionOpen={propsGeneral.questionOpen}
-              makeCommentOpen={propsGeneral.makeCommentOpen}
-              updateCommentOpen={propsGeneral.updateCommentOpen}
-              askQuestionOpen={propsGeneral.askQuestionOpen}
-              showMessages={propsGeneral.showMessages}
-            />
-          )}
+          render={(props) =>
+            checkLogin() ? (
+              <QuestionsPage
+                {...props}
+                questionOpen={propsGeneral.questionOpen}
+                makeCommentOpen={propsGeneral.makeCommentOpen}
+                updateCommentOpen={propsGeneral.updateCommentOpen}
+                askQuestionOpen={propsGeneral.askQuestionOpen}
+                showMessages={propsGeneral.showMessages}
+              />
+            ) : (
+              <Redirect to="/signin?via=/user/questions" />
+            )
+          }
         />
         <Route
           path="/user/courses"
           exact={true}
-          render={(props) => (
-            <MyCoursesPage
-              {...props}
-              questionOpen={propsGeneral.questionOpen}
-              makeCommentOpen={propsGeneral.makeCommentOpen}
-              updateCommentOpen={propsGeneral.updateCommentOpen}
-              askQuestionOpen={propsGeneral.askQuestionOpen}
-              showMessages={propsGeneral.showMessages}
-            />
-          )}
+          render={(props) =>
+            checkLogin() ? (
+              <MyCoursesPage
+                {...props}
+                questionOpen={propsGeneral.questionOpen}
+                makeCommentOpen={propsGeneral.makeCommentOpen}
+                updateCommentOpen={propsGeneral.updateCommentOpen}
+                askQuestionOpen={propsGeneral.askQuestionOpen}
+                showMessages={propsGeneral.showMessages}
+              />
+            ) : (
+              <Redirect to="/signin?via=/user/courses" />
+            )
+          }
         />
         <Route
           path="/user/coursemap"
           exact={true}
-          render={(props) => (
-            <CourseMapUserPage
-              {...props}
-              showMessages={propsGeneral.showMessages}
-            />
-          )}
+          render={(props) =>
+            checkLogin() ? (
+              <CourseMapUserPage
+                {...props}
+                showMessages={propsGeneral.showMessages}
+              />
+            ) : (
+              <Redirect to="/signin?via=/user/coursemap" />
+            )
+          }
         />
         <Route
-          path="/user/"
+          path="/user/checkout/:coupon"
+          exact={true}
+          render={(props) =>
+            checkLogin() ? (
+              <CheckoutPage
+                {...props}
+                showMessages={propsGeneral.showMessages}
+              />
+            ) : (
+              <Redirect to="/signin?via=/user/checkout" />
+            )
+          }
+        />
+        <Route
+          path="/user/account"
           render={(props) =>
             checkLogin() ? (
               <AccountPage
@@ -102,9 +130,13 @@ function BodyArea(propsGeneral) {
                 showMessages={propsGeneral.showMessages}
               />
             ) : (
-              <Redirect to="/signin" />
+              <Redirect to="/signin?via=/user/account" />
             )
           }
+        />
+        <Route
+          path="/user/"
+          render={(props) => <Redirect to="/user/account" />}
         />
         <Route
           path="/reset-password/:token"
@@ -170,13 +202,7 @@ function BodyArea(propsGeneral) {
             />
           )}
         />
-        <Route
-          path="/checkout"
-          exact={true}
-          render={(props) => (
-            <CheckoutPage {...props} showMessages={propsGeneral.showMessages} />
-          )}
-        />
+
         <Route
           path="/service-policy"
           exact={true}
@@ -185,6 +211,20 @@ function BodyArea(propsGeneral) {
               {...props}
               showMessages={propsGeneral.showMessages}
             />
+          )}
+        />
+        <Route
+          path="/help"
+          exact={true}
+          render={(props) => (
+            <HelpPage {...props} showMessages={propsGeneral.showMessages} />
+          )}
+        />
+        <Route
+          path="/about-us"
+          exact={true}
+          render={(props) => (
+            <AboutUsPage {...props} showMessages={propsGeneral.showMessages} />
           )}
         />
         <Route

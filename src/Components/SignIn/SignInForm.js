@@ -1,7 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
 import { Box, Button, TextField, Grid, Link } from "@material-ui/core";
-// import { useHistory } from "react-router-dom";
 
 const Basic = (props) => {
   //const history = useHistory();
@@ -11,15 +10,15 @@ const Basic = (props) => {
       validate={(values) => {
         const errors = {};
         if (!values.email) {
-          errors.email = "Email is required.";
+          errors.email = "E-mail gereklidir.";
         } else if (
           !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
         ) {
-          errors.email = "Incorrect email.";
+          errors.email = "Lütfen geçerli bir e-mail adresi yazın";
         }
 
         if (!values.password) {
-          errors.password = "Password is required.";
+          errors.password = "Şifre gereklidir.";
         }
 
         return errors;

@@ -1,9 +1,19 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Container, Typography, Grid, Paper, Button } from "@material-ui/core";
+import {
+  Container,
+  Typography,
+  Grid,
+  Paper,
+  Link,
+  Divider,
+  Box,
+} from "@material-ui/core";
 import VideoLibrary from "@material-ui/icons/VideoLibrary";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
+import CouponForm from "./CouponForm";
+import Iyzico from "./Iyzico";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,18 +33,122 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(4),
     marginTop: theme.spacing(8),
   },
+  summary: {
+    padding: theme.spacing(4),
+    marginTop: theme.spacing(8),
+  },
+  grow: {
+    flexGrow: 1,
+  },
 }));
 
 export default function NotFoundPage(props) {
+  const [existCoupon, setExistCoupon] = React.useState(false);
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <Container className={classes.Container} maxWidth="lg">
         <Grid container className={classes.Body} justify="center" spacing={10}>
           <Grid item className={classes.payout} sm="6">
-            <div id="iyzipay-checkout-form" class="responsive">
-              Ödeme Formu
-            </div>
+            <Paper className={classes.summary} elevation={0}>
+              <Typography
+                style={{ marginBottom: "10px" }}
+                className={classes.summaryTitle}
+                variant="h5"
+              >
+                Özet
+              </Typography>
+              <Grid
+                container
+                direction="row"
+                justify="space-between"
+                alignItems="center"
+              >
+                <Typography
+                  className={classes.summaryPriceTitle}
+                  display="inline"
+                  variant="body1"
+                >
+                  6 Aylık NinjaCoders Üyelik Ücreti:
+                </Typography>
+                <Typography
+                  className={classes.summaryPriceTitle}
+                  align="right"
+                  display="inline"
+                  variant="h6"
+                >
+                  48.00 ₺
+                </Typography>
+              </Grid>
+              <Grid
+                container
+                direction="row"
+                justify="space-between"
+                alignItems="center"
+              >
+                <Typography
+                  className={classes.summaryPriceTitle}
+                  display="inline"
+                  variant="body1"
+                >
+                  Kupon İndirimi:
+                </Typography>
+                <Typography
+                  className={classes.summaryPriceTitle}
+                  align="right"
+                  display="inline"
+                  variant="h6"
+                >
+                  24.00 ₺
+                </Typography>
+              </Grid>
+              <Divider></Divider>
+              <Grid
+                container
+                direction="row"
+                justify="space-between"
+                alignItems="center"
+              >
+                <Typography
+                  className={classes.summaryPriceTitle}
+                  display="inline"
+                  variant="h6"
+                >
+                  TOPLAM
+                </Typography>
+                <Typography
+                  className={classes.summaryPriceTitle}
+                  align="right"
+                  display="inline"
+                  variant="h5"
+                >
+                  24.00 ₺
+                </Typography>
+              </Grid>
+              <Box textAlign="left" mt={2}>
+                Satın alma işlemi yaparak NinjaCoders'ın{" "}
+                <Link href="/service-policy">
+                  Kullanıcı ve Üyelik Sözleşmesini
+                </Link>{" "}
+                kabul etmiş olursunuz.
+              </Box>
+              <Box textAlign="left" mt={5}>
+                {existCoupon ? (
+                  <CouponForm></CouponForm>
+                ) : (
+                  <Link
+                    component="button"
+                    variant="body2"
+                    onClick={() => {
+                      setExistCoupon(true);
+                    }}
+                  >
+                    İndirim kuponu uygula
+                  </Link>
+                )}
+              </Box>
+            </Paper>
+            <Iyzico></Iyzico>
           </Grid>
           <Grid item sm="6">
             <Paper className={classes.paperNews} elevation={0}>

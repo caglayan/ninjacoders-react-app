@@ -105,7 +105,7 @@ const Header = (props) => {
       <Button
         className={classes.SigninButton}
         onClick={() => {
-          history.push("/signin");
+          history.push("/signin?via=" + history.location.pathname);
         }}
       >
         Giriş
