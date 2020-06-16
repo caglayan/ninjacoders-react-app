@@ -69,7 +69,7 @@ export default function CourseReviewCard(props) {
   return (
     <Card
       onClick={() => {
-        history.push(`/course/5df92c57ea9f59862aabd1ab`);
+        history.push("/course/" + props._id);
       }}
       className={classes.root}
     >
@@ -82,12 +82,13 @@ export default function CourseReviewCard(props) {
       >
         <Grid style={{ marginLeft: 5 }} item>
           <Typography variant="body2" color="textSecondary">
-            {props.students} Öğrenci
+            {props.statistics ? props.statistics.numberStudents : null} Öğrenci
           </Typography>
         </Grid>
         <Grid style={{ marginRight: 5 }} item>
           <Typography variant="body2" color="textSecondary">
-            {props.videos} Ders {msToTime(props.duration)}
+            {props.statistics ? props.statistics.numberSections : null} Ders{" "}
+            {msToTime(props.statistics.duration)}
           </Typography>
         </Grid>
       </Grid>
@@ -107,7 +108,7 @@ export default function CourseReviewCard(props) {
           <Grid item xs={12}>
             <Box height="70px">
               <Typography variant="h6" color="textPrimary">
-                {props.name}
+                {props.title}
               </Typography>
             </Box>
           </Grid>
@@ -123,7 +124,7 @@ export default function CourseReviewCard(props) {
             <Rater
               style={{ float: "right", display: "block" }}
               total={5}
-              rating={props.rating}
+              rating={props.statistics.rating}
               interactive={false}
             >
               <Star />
@@ -134,12 +135,12 @@ export default function CourseReviewCard(props) {
               variant="body2"
               color="textSecondary"
             >
-              Puan: {props.rating}
+              Puan: {props.statistics.rating}
             </Typography>
           </Grid>
         </Grid>
       </CardContent>
-      {props.percentage != 0 ? (
+      {props.percentage ? (
         <Box m={2} style={{ marginTop: 0 }}>
           <Progress percent={Math.floor(props.percentage * 100)} />
         </Box>

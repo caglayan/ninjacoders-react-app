@@ -9,6 +9,7 @@ import TextAreaEnd from "./TextAreaEnd";
 import { findApplication } from "../Api/applicationApi";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { findCourseGroup } from "../Api/applicationApi";
 
 /*
 value         |0px     600px    960px    1280px   1920px
@@ -32,20 +33,15 @@ const useStyles = makeStyles((theme) => ({
 const CourseMap = (props) => {
   const classes = useStyles();
   const [isWorking, setIsWorking] = React.useState(true);
-  const [courseGroup, setCourseGroup] = React.useState();
+  const [courseGroup, setCourseGrouplication] = React.useState();
   const [overallPer, setOverallPer] = React.useState(0);
   const history = useHistory();
 
-  const findApp = () => {
-    findApplication("5edb4b1bb4965a757aa6d7a1") // skip limit
-      .then((app) => {
-        const array = app.courseGroups.filter(function (courseGroup) {
-          return courseGroup._id == props.match.params.id;
-        });
-        if (array.length > 0) {
-          console.log(array[0]);
-          setCourseGroup(array[0]);
-        }
+  const findCourseGroupIn = () => {
+    console.log("group_id ", props.match.params.id);
+    findCourseGroup(props.match.params.id) // skip limit
+      .then((courseGroup) => {
+        setCourseGrouplication(courseGroup);
       })
       .catch((err) => {
         console.log(err);
@@ -53,8 +49,9 @@ const CourseMap = (props) => {
   };
 
   React.useEffect(() => {
+    console.log(courseGroup);
     if (!courseGroup) {
-      findApp();
+      findCourseGroupIn();
     } else {
       setIsWorking(false);
     }
@@ -101,7 +98,7 @@ const CourseMap = (props) => {
                   return registeredCourse._id == course._id;
                 });
                 if (array.length > 0) {
-                  course = array[0];
+                  course.percentage = array[0].percentage;
                 }
                 return (
                   <Bookmark key={course._id} progress={index * 25}>
@@ -112,7 +109,7 @@ const CourseMap = (props) => {
                           history.push(`/course/` + course._id);
                         }}
                         variant="contained"
-                        color="primary"
+                        color={!course.percentage ? "primary" : "secondary"}
                       >
                         {!course.percentage
                           ? "Derse Başlayın"

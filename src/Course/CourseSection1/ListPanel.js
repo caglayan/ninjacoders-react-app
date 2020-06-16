@@ -41,6 +41,12 @@ const useStyles = makeStyles((theme) => ({
   listItemText: {
     fontSize: "0.9em", //Insert your required size
   },
+  grow: {
+    flexGrow: 1,
+  },
+  statBox: {
+    width: "100%",
+  },
 }));
 
 const ListPanel = (props) => {
@@ -53,9 +59,9 @@ const ListPanel = (props) => {
     seconds = seconds < 10 ? "0" + seconds : seconds;
     let str = "";
     if (hours > 0) {
-      str = "(" + str + hours + " saat " + minutes + " dakika" + ")";
+      str = "" + str + hours + " saat " + minutes + " dakika" + "";
     } else if (minutes > 0) {
-      str = "(" + str + minutes + " dakika" + ")";
+      str = "" + str + minutes + " dakika" + "";
     }
     return str;
   };
@@ -63,9 +69,17 @@ const ListPanel = (props) => {
   return (
     <List>
       <ListItem key="00">
-        <Box className={classes.CourseInstName} fontWeight="fontWeightLight">
-          <Typography variant="subtitle2">
-            {props.numberOfVideos} Ders {msToTime(props.courseDuration)}
+        <Box
+          display="flex"
+          className={classes.statBox}
+          fontWeight="fontWeightLight"
+        >
+          <Typography display="inline" variant="body1">
+            {props.numberOfVideos} Ders
+          </Typography>
+          <div className={classes.grow} />
+          <Typography display="inline" variant="body1">
+            {msToTime(props.courseDuration)}
           </Typography>
         </Box>
       </ListItem>

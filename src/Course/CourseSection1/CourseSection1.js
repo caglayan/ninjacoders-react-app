@@ -170,9 +170,13 @@ const CourseVideoContent = (props) => {
             >
               <ListPanel
                 registeredCourse={props.registeredCourse}
-                courseDuration={props.courseDuration}
+                courseDuration={
+                  props.statistics ? props.statistics.duration : null
+                }
                 currentVideoIsPlaying={currentVideoIsPlaying}
-                numberOfVideos={props.numberOfVideos}
+                numberOfVideos={
+                  props.statistics ? props.statistics.numberSections : null
+                }
                 courseChapters={props.chapters}
                 listState={listState}
                 changeVideo={playVideo}
@@ -230,6 +234,7 @@ const CourseVideoContentCon = connect((state) => {
     chapters: state.courseReducer.chapters,
     abilities: state.courseReducer.abilities,
     premium: state.userReducer.premium,
+    statistics: state.courseReducer.statistics,
     registeredCourse,
   };
 })(CourseVideoContent);

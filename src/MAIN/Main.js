@@ -63,9 +63,12 @@ export default function Main(props) {
         <div>
           <Slider></Slider>
           <TextArea></TextArea>
-          {application.courseGroups.map((courseGroup, index) => {
+          {application.courseGroups.map((courseGroupId, index) => {
             return (
-              <CourseArea {...courseGroup} key={courseGroup._id}></CourseArea>
+              <CourseArea
+                group_id={courseGroupId}
+                key={courseGroupId}
+              ></CourseArea>
             );
           })}
           <Comments comments={application.comments}></Comments>

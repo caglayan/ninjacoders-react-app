@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   PremiumButton: {
-    width: theme.spacing(32),
     borderRadius: 50,
     marginTop: theme.spacing(4),
   },
