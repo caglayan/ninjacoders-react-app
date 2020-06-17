@@ -19,6 +19,7 @@ import MyCoursesPage from "../USER/Courses/Courses";
 import CourseMapPage from "../COURSEMAP/CourseMap";
 import CheckoutPage from "../CHECKOUT/Checkout";
 import ServicePolicyPage from "../HELP/ServicePolicy";
+import PrivacyPolicyPage from "../HELP/PrivacyPolicy";
 import HelpPage from "../HELP/Help";
 import AboutUsPage from "../HELP/AboutUs";
 
@@ -204,12 +205,21 @@ function BodyArea(propsGeneral) {
               />
             )}
           />
-
           <Route
             path="/service-policy"
             exact={true}
             render={(props) => (
               <ServicePolicyPage
+                {...props}
+                showMessages={propsGeneral.showMessages}
+              />
+            )}
+          />
+          <Route
+            path="/privacy-policy"
+            exact={true}
+            render={(props) => (
+              <PrivacyPolicyPage
                 {...props}
                 showMessages={propsGeneral.showMessages}
               />

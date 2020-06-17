@@ -82,8 +82,8 @@ const CourseMap = (props) => {
       ) : (
         <Grid container direction="row" justify="center" alignItems="center">
           <TextAreaStart
-            title={courseGroup.CMTitle}
-            desc={courseGroup.CMDerscription}
+            title={courseGroup.CM.title}
+            desc={courseGroup.CM.desc}
             premium={props._id != "" && props.premium}
           ></TextAreaStart>
           <Grid style={{ marginTop: 100 }} item xs={12} md={4}>

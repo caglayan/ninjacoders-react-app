@@ -5,7 +5,7 @@ import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { Container } from "@material-ui/core";
-import Link from "@material-ui/core/Link";
+import { Link, Box } from "@material-ui/core/";
 import logo from "../logo.svg";
 
 /*
@@ -82,7 +82,17 @@ export default function Footer(props) {
                   variant="subtitle2"
                   color="primary"
                 >
-                  Kullanızı Sözleşmesi
+                  Kullanıcı Sözleşmesi
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link
+                  target="_blank"
+                  href="/privacy-policy"
+                  variant="subtitle2"
+                  color="primary"
+                >
+                  Gizlilik Politikası
                 </Link>
               </Grid>
               <Grid item>
@@ -105,14 +115,14 @@ export default function Footer(props) {
                   Yardım
                 </Link>
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <Link
                   target="_blank"
                   href="mailto:merhaba@ninjacoders.co?subject=Size bir mesajım var."
                 >
                   Bize ulaşın
                 </Link>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
           <Grid item sm={1} className={classes.grow}></Grid>
@@ -134,15 +144,41 @@ export default function Footer(props) {
               Boğaziçi Üniversitesi Kuzey Kampüs Teknopark No:206 Bebek/
               Beşiktaş/ ISTANBUL
             </Typography>
-            <Typography
-              style={{ marginTop: "20px" }}
-              variant="body1"
-              gutterBottom
-            >
-              I{" "}
-              <FavoriteIcon className={classes.inlineIcon} color="secondary" />{" "}
-              Istanbul
-            </Typography>
+            <Box style={{ marginTop: "20px" }} display="flex">
+              <Box flexGrow={1}>
+                <Typography
+                  style={{ marginTop: "20px" }}
+                  variant="body1"
+                  gutterBottom
+                  display="inline"
+                >
+                  I{" "}
+                  <FavoriteIcon
+                    className={classes.inlineIcon}
+                    color="secondary"
+                  />{" "}
+                  Istanbul{" "}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography
+                  style={{ marginTop: "20px" }}
+                  variant="body1"
+                  display="inline"
+                  gutterBottom
+                  align="right"
+                >
+                  <img
+                    style={{ marginLeft: "15px", width: "40px" }}
+                    src="/visa-v2.svg"
+                  ></img>
+                  <img
+                    style={{ marginLeft: "5px", width: "40px" }}
+                    src="/mastercard-v2.svg"
+                  ></img>
+                </Typography>
+              </Box>
+            </Box>
           </Grid>
         </Grid>
         <Grid container justify="center" spacing={2}>
