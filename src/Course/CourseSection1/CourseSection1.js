@@ -15,7 +15,7 @@ import {
 const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(4),
+    marginBottom: theme.spacing(2),
     paddingLeft: "0px",
     paddingRight: "0px",
     [theme.breakpoints.down("sm")]: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CourseVideoContent = (props) => {
   const classes = useStyles();
-  const [videoHeight, setVideoHeight] = React.useState(0);
+  const [videoHeight, setVideoHeight] = React.useState(400);
   const [listState, setListState] = React.useState({
     selChapter: 0,
     selSection: 0,
@@ -51,7 +51,7 @@ const CourseVideoContent = (props) => {
   const [currentVideoIsPlaying, setCurrentVideoIsPlaying] = React.useState(
     false
   );
-  const [playerVideo, setPlayerVideo] = React.useState("422209484");
+  const [playerVideo, setPlayerVideo] = React.useState("start");
 
   const expandChapters = (index) => {
     setListState({
@@ -90,12 +90,25 @@ const CourseVideoContent = (props) => {
       setPlayerVideo(
         props.chapters[listState.selChapter].sections[newSelSection].video
       );
+    } else {
+      const newChapSection = listState.selChapter + 1;
+      if (props.chapters.length > newChapSection) {
+        setListState((prevState) => {
+          return {
+            ...prevState,
+            selChapter: newChapSection,
+            selSection: 0,
+          };
+        });
+        setPlayerVideo(props.chapters[newChapSection].sections[0].video);
+      }
     }
   };
 
   React.useEffect(() => {
     if (props.courseTitle) {
       console.log("Course is ready");
+      setPlayerVideo(props.chapters[0].sections[0].video);
       setIsWorking(false);
     }
   }, [props.courseTitle]);
@@ -117,11 +130,23 @@ const CourseVideoContent = (props) => {
 
   const finishVideo = (videoId) => {
     console.log("finished:", videoId);
+    if (
+      props.chapters[listState.selChapter].sections[listState.selSection]
+        .isLast == true
+    ) {
+      props.finishVideoOpen();
+    } else if (
+      props.chapters[listState.selChapter].sections[listState.selSection]
+        .isComment == true
+    ) {
+      props.makeCommentOpen();
+    }
+
     props
       .dispatch(updateUserWatchedVideo(props.token, props.course_id, videoId))
       .then((user) => {})
       .catch((err) => {
-        props.showMessages(2, "Bir problem var.");
+        //props.showMessages(2, "Bir problem var.");
       });
   };
 
@@ -147,14 +172,20 @@ const CourseVideoContent = (props) => {
           <Grid container className={classes.grid} spacing={1}>
             <Grid style={{ height: videoHeight }} item sm={8} xs={12}>
               {playerVideo != "" ? (
-                <VideoPanel
-                  playerVideo={playerVideo}
-                  playNextVideo={playNextVideo}
-                  onResize={onResize}
-                  onPlay={onPlay}
-                  onStop={onStop}
-                  finishVideo={finishVideo}
-                ></VideoPanel>
+                <div>
+                  {playerVideo != "start" ? (
+                    <VideoPanel
+                      playerVideo={playerVideo}
+                      playNextVideo={playNextVideo}
+                      onResize={onResize}
+                      onPlay={onPlay}
+                      onStop={onStop}
+                      finishVideo={finishVideo}
+                    ></VideoPanel>
+                  ) : (
+                    <div className={classes.PremiumArea}></div>
+                  )}
+                </div>
               ) : (
                 <div className={classes.PremiumArea}>
                   <PremiumPanel></PremiumPanel>
@@ -204,7 +235,11 @@ const CourseVideoContent = (props) => {
               ></ListPanel>
             </Grid>
           </Grid>
-          <DetailPanel abilities={props.abilities}></DetailPanel>
+          <DetailPanel
+            premium={props.premium}
+            abilities={props.abilities}
+            statistics={props.statistics}
+          ></DetailPanel>
         </div>
       )}
     </Container>

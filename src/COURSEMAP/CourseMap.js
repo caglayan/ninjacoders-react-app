@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: theme.spacing(1),
     [theme.breakpoints.up("md")]: {
-      marginTop: theme.spacing(1),
+      marginTop: theme.spacing(2),
     },
   },
   courseCard: {
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 const CourseMap = (props) => {
   const classes = useStyles();
   const [isWorking, setIsWorking] = React.useState(true);
-  const [courseGroup, setCourseGrouplication] = React.useState();
+  const [courseGroup, setCourseGroup] = React.useState();
   const [overallPer, setOverallPer] = React.useState(0);
   const history = useHistory();
 
@@ -41,7 +41,7 @@ const CourseMap = (props) => {
     console.log("group_id ", props.match.params.id);
     findCourseGroup(props.match.params.id) // skip limit
       .then((courseGroup) => {
-        setCourseGrouplication(courseGroup);
+        setCourseGroup(courseGroup);
       })
       .catch((err) => {
         console.log(err);

@@ -1,7 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Chip, Button, Typography } from "@material-ui/core";
+import { Grid, Chip, Button, Typography, Box } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 
 /*
 value         |0px     600px    960px    1280px   1920px
@@ -12,6 +13,10 @@ range         |   xs   |   sm   |   md   |   lg   |   xl
 
 const useStyles = makeStyles((theme) => ({
   PremiumButton: {
+    borderRadius: 50,
+    marginRight: 75,
+  },
+  OtherCoursesButton: {
     borderRadius: 50,
     marginRight: 75,
   },
@@ -37,66 +42,93 @@ export default (props) => {
         container
         direction="row"
         justify="space-between"
-        alignItems="center"
-        style={{ marginTop: "20px" }}
+        alignItems="flex-end"
+        style={{ marginTop: "5px" }}
         spacing={2}
         className={classes.sectionDesktop}
       >
         <Grid item>
-          <Grid
-            container
-            direction="row"
-            justify="center"
-            alignItems="center"
-            style={{ height: "100%" }}
-          >
-            Bu eğitimdeki yetenekler:
-            {props.abilities.map((ability, index) => {
-              return (
-                <Chip
-                  key={100 + index}
-                  style={{ marginLeft: 8 }}
-                  label={ability}
-                  variant="outlined"
-                />
-              );
-            })}
-          </Grid>
+          {props.premium ? (
+            <Box>
+              <Typography
+                style={{ marginLeft: "5px" }}
+                display="inline"
+                variant="body2"
+              >
+                Bu dersi şu anda {props.statistics.onlineStudents + " "}
+                <VisibilityIcon
+                  style={{ fontSize: 18, paddingTop: "4px" }}
+                />{" "}
+                kişi izliyor.
+              </Typography>
+            </Box>
+          ) : (
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              style={{ height: "100%" }}
+            >
+              Bu eğitimdeki yetenekler:
+              {props.abilities.map((ability, index) => {
+                return (
+                  <Chip
+                    key={100 + index}
+                    style={{ marginLeft: 8 }}
+                    label={ability}
+                    variant="outlined"
+                  />
+                );
+              })}
+            </Grid>
+          )}
         </Grid>
         <Grid item>
-          <Button
-            className={classes.PremiumButton}
-            variant="contained"
-            color="secondary"
-            onClick={() => {
-              history.push(`/user/checkout/TATIL`);
-            }}
-          >
-            <Typography variant="body1" style={{ marginRight: "5px" }}>
-              6 Aylık Üyelik:
-            </Typography>
-            <Typography variant="h6"> 24 ₺</Typography>
+          {!props.premium ? (
+            <Button
+              className={classes.PremiumButton}
+              variant="contained"
+              color="secondary"
+              onClick={() => {
+                history.push(`/user/checkout/TATIL`);
+              }}
+            >
+              <Typography variant="body1" style={{ marginRight: "5px" }}>
+                6 Aylık Üyelik:
+              </Typography>
+              <Typography variant="h6"> 24 ₺</Typography>
 
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              style={{
-                marginLeft: "10px",
-              }}
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                style={{
+                  marginLeft: "10px",
+                }}
+              >
+                %66 indirim
+              </Typography>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                style={{
+                  marginLeft: "10px",
+                  textDecoration: "line-through",
+                }}
+              >
+                72 ₺
+              </Typography>
+            </Button>
+          ) : (
+            <Button
+              onClick={props.updateCommentOpen}
+              className={classes.OtherCoursesButton}
+              variant="contained"
+              color="primary"
             >
-              %66 indirim
-            </Typography>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              style={{
-                marginLeft: "10px",
-                textDecoration: "line-through",
-              }}
-            >
-              72 ₺
-            </Typography>
-          </Button>
+              Yolculuğun diğer dersleri
+            </Button>
+          )}
         </Grid>
       </Grid>
     </div>

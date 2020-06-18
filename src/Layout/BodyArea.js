@@ -53,6 +53,7 @@ function BodyArea(propsGeneral) {
                   {...props}
                   questionOpen={propsGeneral.questionOpen}
                   makeCommentOpen={propsGeneral.makeCommentOpen}
+                  finishVideoOpen={propsGeneral.finishVideoOpen}
                   updateCommentOpen={propsGeneral.updateCommentOpen}
                   askQuestionOpen={propsGeneral.askQuestionOpen}
                   showMessages={propsGeneral.showMessages}

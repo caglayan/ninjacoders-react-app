@@ -55,48 +55,6 @@ const QuestionsCont = (props) => {
   const [isMoreActive, setIsMoreActive] = React.useState(true);
   const classes = useStyles();
 
-  const pullQuestionsAdd = () => {
-    pullUserQuestions(props.token, questions.length, 2) // skip limit
-      .then((questionsi) => {
-        if (questionsi.length === 0) setIsMoreActive(false);
-        var newArray = questions.concat(questionsi);
-        setQuestions(newArray);
-        setIsWorking(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  React.useEffect(() => {
-    if (props.token) pullQuestionsAdd();
-  }, [props.token]);
-
-  React.useEffect(() => {
-    if (props.isUpdating == true) {
-      setQuestions([]);
-    }
-  }, [props.isUpdating]);
-
-  React.useEffect(() => {
-    if (props.isUpdating == true && questions.length == 0) {
-      pullQuestionsAdd();
-      props.dispatch(updatePersonalQuestion({ isUpdating: false }));
-    }
-  }, [questions]);
-
-  const updateQuestion = (question) => {
-    var updatedQ = questions.map((questionIn) => {
-      if (questionIn._id === question._id) {
-        return question;
-      } else {
-        return questionIn;
-      }
-    });
-    console.log("Updated Questions: ", updatedQ);
-    setQuestions(updatedQ);
-  };
-
   return (
     <Container className={classes.container} maxWidth="md">
       <Grid
@@ -108,7 +66,11 @@ const QuestionsCont = (props) => {
       >
         {props.registeredCourses.map((registeredCourse, index) => (
           <Grid item>
-            <CourseCard {...registeredCourse}></CourseCard>
+            <CourseCard
+              isDownloadable={true}
+              course_id={registeredCourse._id}
+              {...registeredCourse}
+            ></CourseCard>
           </Grid>
         ))}
       </Grid>

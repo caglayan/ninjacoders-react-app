@@ -1,8 +1,8 @@
 import axios from "axios";
 import ls from "local-storage";
 
-//const url = "http://localhost:4000";
-const url = "https://ninjaoders-backend.herokuapp.com";
+const url = "http://localhost:4000";
+//const url = "https://ninjaoders-backend.herokuapp.com";
 
 export const courseFetchLocal = () => {
   return ls.get("course");
@@ -17,7 +17,7 @@ export const courseRemoveLocal = (course) => {
 };
 
 export const findUserCourseWithId = (token, course_id, user_id) => {
-  console.log("Find User Course Api");
+  console.log("Find User Priavte Course Api");
   const apiString = url + "/api/course/auth/find";
   return new Promise((resolve, reject) => {
     axios

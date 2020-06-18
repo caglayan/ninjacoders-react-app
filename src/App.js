@@ -24,11 +24,13 @@ import SignInDialog from "./LAYOUT/Dialogs/SignInDialog";
 import SignUpDialog from "./LAYOUT/Dialogs/SignUpDialog";
 import QuestionDialog from "./LAYOUT/Dialogs/QuestionDialog";
 import CommentDialog from "./LAYOUT/Dialogs/CommentDialog";
+import FinishVideoDialog from "./LAYOUT/Dialogs/FinishVideoDialog";
 import configureStore from "./Redux/Store/configStore";
 import {
   startCreateUserLocal,
   startRemoveUserLocal,
 } from "./Redux/Selectors/userSelector";
+import { startCreateApplication } from "./Redux/Selectors/applicationSelector";
 
 /*
 value         |0px     600px    960px    1280px   1920px
@@ -87,15 +89,30 @@ export default function App() {
   React.useEffect(() => {
     if (startCreateUserLocal(store.dispatch)) {
       console.log("user logged in");
+      findApp();
     } else {
       console.log("user is not logged in");
       //setRedirctTo(true);
+      findApp();
     }
   }, []);
+
+  const findApp = () => {
+    store
+      .dispatch(startCreateApplication("5edb4b1bb4965a757aa6d7a1"))
+      .then((app) => {})
+      .catch((err) => {
+        //props.showMessages(2, "Bir problem var.");
+      });
+  };
 
   // ********************** DIALOGS ********************** //
   const [signinDialogIsActive, setSigninDialogIsActive] = React.useState(false);
   const [signupDialogIsActive, setSignupDialogIsActive] = React.useState(false);
+  const [
+    finishVideoDialogIsActive,
+    setFinishVideoDialogIsActive,
+  ] = React.useState(false);
   const [questionDialogIsActive, setQuestionDialogIsActive] = React.useState(
     false
   );
@@ -109,6 +126,7 @@ export default function App() {
     setSignupDialogIsActive(false);
     setQuestionDialogIsActive(false);
     setCommentDialogIsActive(false);
+    setFinishVideoDialogIsActive(false);
   };
 
   const openSignInDialog = () => {
@@ -133,6 +151,12 @@ export default function App() {
     closeDialogs();
     console.log("Comment Button is clicked");
     setCommentDialogIsActive(true);
+  };
+
+  const openFinishVideoDialog = () => {
+    closeDialogs();
+    console.log("Finish Video Button is clicked");
+    setFinishVideoDialogIsActive(true);
   };
   // ********************** ERROR HANDLING ********************** //
 
@@ -198,6 +222,7 @@ export default function App() {
             <BodyArea
               askQuestionOpen={openQuestionDialog}
               makeCommentOpen={openCommentDialog}
+              finishVideoOpen={openFinishVideoDialog}
               updateCommentOpen={openCommentDialog}
               showMessages={showMessages}
             />
@@ -221,6 +246,11 @@ export default function App() {
             />
             <CommentDialog
               isActive={commentDialogIsActive}
+              closeDialog={closeDialogs}
+              showMessages={showMessages}
+            />
+            <FinishVideoDialog
+              isActive={finishVideoDialogIsActive}
               closeDialog={closeDialogs}
               showMessages={showMessages}
             />

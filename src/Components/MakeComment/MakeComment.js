@@ -114,7 +114,7 @@ function MakeCommentContent(props) {
         <Grid item xs={12}>
           <Box textAlign="center" m={1}>
             <Typography variant="h6" gutterBottom>
-              Değerlendirmeni Güncelleyebilirsin.
+              Değerlendirmeninizi güncelleyebilirsiniz.
             </Typography>
           </Box>
         </Grid>

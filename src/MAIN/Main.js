@@ -6,7 +6,7 @@ import TextArea from "./TextArea";
 import Supporters from "./Supporters";
 import CourseArea from "./CoursesSlider";
 import Comments from "./Comments";
-import { findApplication } from "../Api/applicationApi";
+import { connect } from "react-redux";
 
 /*
 value         |0px     600px    960px    1280px   1920px
@@ -19,29 +19,15 @@ const useStyles = makeStyles((theme) => ({
   container: {},
 }));
 
-export default function Main(props) {
+const Main = (props) => {
   const classes = useStyles();
   const [isWorking, setIsWorking] = React.useState(true);
-  const [application, setApplication] = React.useState();
-
-  const findApp = () => {
-    findApplication("5edb4b1bb4965a757aa6d7a1") // skip limit
-      .then((app) => {
-        setApplication(app);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   React.useEffect(() => {
-    console.log(application);
-    if (!application) {
-      findApp();
-    } else {
+    if (props.applicationComments) {
       setIsWorking(false);
     }
-  }, [application]);
+  }, [props.applicationComments]);
 
   return (
     <Container
@@ -63,7 +49,7 @@ export default function Main(props) {
         <div>
           <Slider></Slider>
           <TextArea></TextArea>
-          {application.courseGroups.map((courseGroupId, index) => {
+          {props.applicationCourseGroups.map((courseGroupId, index) => {
             return (
               <CourseArea
                 group_id={courseGroupId}
@@ -71,10 +57,18 @@ export default function Main(props) {
               ></CourseArea>
             );
           })}
-          <Comments comments={application.comments}></Comments>
+          <Comments comments={props.applicationComments}></Comments>
           <Supporters></Supporters>
         </div>
       )}
     </Container>
   );
-}
+};
+
+const MainCon = connect((state) => ({
+  _id: state.userReducer._id,
+  applicationComments: state.applicationReducer.comments,
+  applicationCourseGroups: state.applicationReducer.courseGroups,
+}))(Main);
+
+export default MainCon;

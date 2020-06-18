@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ListPanel = (props) => {
   const classes = useStyles();
+  const [isSelectFirstCourse, setIsSelectFirstCourse] = React.useState(false);
 
   const msToTime = (duration) => {
     let seconds = Math.floor(duration % 60),
@@ -65,6 +66,27 @@ const ListPanel = (props) => {
     }
     return str;
   };
+
+  React.useEffect(() => {
+    if (props.courseChapters) {
+      console.log("Selection is ready");
+      var isSelected = false;
+      props.courseChapters.map((chapter, indexChap) => {
+        chapter.sections.map((section, indexSec) => {
+          if (
+            !isSelected &&
+            section.video != "" &&
+            (props.registeredCourse
+              ? !props.registeredCourse.wathedVideos.includes(section.video)
+              : true)
+          ) {
+            isSelected = true;
+            props.changeVideo(section.video, indexChap, indexSec);
+          }
+        });
+      });
+    }
+  }, [props.courseChapters]);
 
   return (
     <List>

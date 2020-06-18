@@ -19,6 +19,7 @@ import TextAreaStart from "./TextAreaStart";
 import TextAreaEnd from "./TextAreaEnd";
 import { findApplication } from "../../Api/applicationApi";
 import { connect } from "react-redux";
+import { findCourseGroup } from "../../Api/applicationApi";
 
 /*
 value         |0px     600px    960px    1280px   1920px
@@ -28,7 +29,12 @@ range         |   xs   |   sm   |   md   |   lg   |   xl
 */
 
 const useStyles = makeStyles((theme) => ({
-  container: { marginTop: theme.spacing(2) },
+  container: {
+    marginTop: theme.spacing(1),
+    [theme.breakpoints.up("md")]: {
+      marginTop: theme.spacing(10),
+    },
+  },
   courseCard: {
     maxWidth: 100,
   },
@@ -40,20 +46,23 @@ const useStyles = makeStyles((theme) => ({
 const CourseMap = (props) => {
   const classes = useStyles();
   const [isWorking, setIsWorking] = React.useState(true);
-  const [application, setApplication] = React.useState();
   const [overallPer, setOverallPer] = React.useState(0);
+  const [courseGroups, setCourseGroups] = React.useState([]);
   const [selectedItem, setSelectedItem] = React.useState(0);
 
-  const findApp = () => {
-    findApplication("5edb4b1bb4965a757aa6d7a1") // skip limit
-      .then((app) => {
-        // const array = app.courseGroups.filter(function (courseGroup) {
-        //   return courseGroup._id == props.match.params.id;
-        // });
-        // if (array.length > 0) {
-        //   setApplication(app);
-        // }
-        setApplication(app);
+  React.useEffect(() => {
+    if (props.applicationCourseGroups) {
+      props.applicationCourseGroups.map((courseGroupId, index) => {
+        findCourseGroupIn(courseGroupId);
+      });
+    }
+  }, [props.applicationCourseGroups]);
+
+  const findCourseGroupIn = (courseGroupId) => {
+    findCourseGroup(courseGroupId) // skip limit
+      .then((courseGroupIn) => {
+        console.log(courseGroupIn);
+        setCourseGroups([...courseGroups, courseGroupIn]);
       })
       .catch((err) => {
         console.log(err);
@@ -61,13 +70,13 @@ const CourseMap = (props) => {
   };
 
   React.useEffect(() => {
-    console.log(application);
-    if (!application) {
-      findApp();
-    } else {
-      setIsWorking(false);
+    if (props.applicationCourseGroups.length > 0) {
+      if (courseGroups.length === props.applicationCourseGroups.length) {
+        setIsWorking(false);
+        console.log("ok", courseGroups);
+      }
     }
-  }, [application]);
+  }, [courseGroups]);
 
   React.useEffect(() => {
     if (props._id != "") {
@@ -100,41 +109,43 @@ const CourseMap = (props) => {
           {/* <TextAreaStart
             premium={props._id != "" && props.premium}
           ></TextAreaStart> */}
-          <Grid style={{ marginTop: 100 }} item xs={4}>
+          <Grid item xs={12} md={4}>
             <List className={classes.List}>
-              {application.courseGroups.map((CourseGroup, index) => {
-                return (
-                  <ListItem
-                    selected={index == selectedItem}
-                    activeClassName={classes.ListItemActive}
-                    button
-                    onClick={() => {
-                      console.log(selectedItem);
-                      console.log(index);
-                      selectItem(index);
-                    }}
-                    key={index}
-                  >
-                    <ListItemText primary={CourseGroup.name} />
-                  </ListItem>
-                );
-              })}
+              {courseGroups
+                ? courseGroups.map((courseGroup, index) => {
+                    return (
+                      <ListItem
+                        selected={index == selectedItem}
+                        activeClassName={classes.ListItemActive}
+                        button
+                        onClick={() => {
+                          console.log(selectedItem);
+                          console.log(index);
+                          selectItem(index);
+                        }}
+                        key={index}
+                      >
+                        <ListItemText primary={courseGroup.name} />
+                      </ListItem>
+                    );
+                  })
+                : null}
             </List>
             <TextAreaEnd isFinish={overallPer > 90}></TextAreaEnd>
           </Grid>
-          <Grid style={{ marginTop: 100 }} item xs={4}>
+          <Grid item xs={12} md={4}>
             <Timeline
-              height={application.courseGroups[0].courses.length * 500}
+              height={courseGroups[selectedItem].courses.length * 500}
               progress={overallPer}
             >
-              {application.courseGroups[0].courses.map((course, index) => {
+              {courseGroups[selectedItem].courses.map((course, index) => {
                 const array = props.registeredCourses.filter(function (
                   registeredCourse
                 ) {
                   return registeredCourse._id == course._id;
                 });
                 if (array.length > 0) {
-                  course = array[0];
+                  course.percentage = array[0].percentage;
                 }
                 return (
                   <Bookmark key={course._id} progress={index * 25}>
@@ -142,7 +153,7 @@ const CourseMap = (props) => {
                       <Button
                         className={classes.PremiumButton}
                         variant="contained"
-                        color="primary"
+                        color={!course.percentage ? "primary" : "secondary"}
                       >
                         {!course.percentage
                           ? "Derse Başlayın"
@@ -169,6 +180,7 @@ const CourseMapCon = connect((state) => ({
   _id: state.userReducer._id,
   premium: state.userReducer.premium,
   registeredCourses: state.userReducer.registeredCourses,
+  applicationCourseGroups: state.applicationReducer.courseGroups,
 }))(CourseMap);
 
 export default CourseMapCon;

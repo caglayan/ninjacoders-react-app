@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container } from "@material-ui/core";
-import Comment from "../../Components/MakeComment/MakeComment";
+import MakeComment from "../../Components/MakeComment/MakeComment";
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -16,7 +16,7 @@ export default function SignInPageContent(props) {
   const classes = useStyles();
   return (
     <Container className={classes.Container} maxWidth="sm">
-      <Comment {...props}></Comment>
+      <MakeComment {...props}></MakeComment>
     </Container>
   );
 }
