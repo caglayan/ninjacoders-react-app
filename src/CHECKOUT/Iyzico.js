@@ -23,12 +23,7 @@ const IyzicoForm = (props) => {
   const findApp = () => {
     pullPaymentForm(props.token) // skip limit
       .then((result) => {
-        console.log(
-          result.checkoutFormContent
-            .split("</script>")[0]
-            .split('<script type="text/javascript">')[1]
-        );
-
+        console.log(result);
         setCheckoutFormContent(
           result.checkoutFormContent
             .split("</script>")[0]
@@ -46,7 +41,7 @@ const IyzicoForm = (props) => {
     if (!checkoutFormContent) {
       findApp();
     } else {
-      console.log(checkoutFormContent);
+      //console.log(checkoutFormContent);
       script.appendChild(document.createTextNode(checkoutFormContent));
       script.async = true;
       document.body.appendChild(script);

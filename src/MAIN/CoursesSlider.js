@@ -60,6 +60,7 @@ const CourseCrousel = (props) => {
     if (!courseGroup) {
       findCourseGroupIn();
     } else {
+      console.log(courseGroup);
       setIsWorking(false);
     }
   }, [courseGroup]);
@@ -150,7 +151,13 @@ const CourseCrousel = (props) => {
             </Carousel>
           </div>
 
-          <Grid container direction="row" justify="center" alignItems="center">
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+            spacing={2}
+          >
             <Grid item>
               <Button
                 className={classes.mapButton}
@@ -160,7 +167,66 @@ const CourseCrousel = (props) => {
                   history.push(`/coursemap/` + courseGroup._id);
                 }}
               >
-                {courseGroup ? courseGroup.buttonName : null}
+                <Typography variant="body1" style={{ marginRight: "5px" }}>
+                  Bütün {courseGroup ? courseGroup.shortName : null} ve
+                  Sertifikaya gözat
+                </Typography>
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                className={classes.PremiumButton}
+                variant="contained"
+                color="secondary"
+                onClick={() => {
+                  history.push("/user/checkout?courseGroup=" + courseGroup._id);
+                }}
+              >
+                <Typography variant="body1" style={{ marginRight: "5px" }}>
+                  Tüm {courseGroup ? courseGroup.shortName : null} + Sertifika:
+                </Typography>
+                <Typography variant="h6">
+                  {courseGroup
+                    ? (courseGroup.price.base * (1 - courseGroup.price.sale))
+                        .toFixed(2)
+                        .toString()
+                        .replace(".", ",")
+                    : null}{" "}
+                  ₺
+                </Typography>
+                {courseGroup.price.isSale ? (
+                  <div>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      style={{
+                        marginLeft: "10px",
+                      }}
+                    >
+                      %{" "}
+                      {courseGroup
+                        ? (courseGroup.price.sale * 100).toString()
+                        : null}{" "}
+                      indirim
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      style={{
+                        marginLeft: "10px",
+                        textDecoration: "line-through",
+                      }}
+                    >
+                      {courseGroup
+                        ? courseGroup.price.base
+                            .toFixed(2)
+                            .toString()
+                            .replace(".", ",")
+                        : null}{" "}
+                      ₺
+                    </Typography>
+                  </div>
+                ) : null}
               </Button>
             </Grid>
           </Grid>

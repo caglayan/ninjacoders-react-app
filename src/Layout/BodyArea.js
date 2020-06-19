@@ -22,6 +22,7 @@ import ServicePolicyPage from "../HELP/ServicePolicy";
 import PrivacyPolicyPage from "../HELP/PrivacyPolicy";
 import HelpPage from "../HELP/Help";
 import AboutUsPage from "../HELP/AboutUs";
+import queryString from "query-string";
 
 import { startCreateUserLocal } from "../Redux/Selectors/userSelector";
 
@@ -113,18 +114,23 @@ function BodyArea(propsGeneral) {
             }
           />
           <Route
-            path="/user/checkout/:coupon"
+            path="/user/checkout/"
             exact={true}
-            render={(props) =>
-              checkLogin() ? (
+            render={(props) => {
+              return checkLogin() ? (
                 <CheckoutPage
                   {...props}
                   showMessages={propsGeneral.showMessages}
                 />
               ) : (
-                <Redirect to="/signin?via=/user/checkout/TATIL" />
-              )
-            }
+                <Redirect
+                  to={
+                    "/signin?via=/user/checkout?courseGroup=" +
+                    queryString.parse(props.location.search).courseGroup
+                  }
+                />
+              );
+            }}
           />
           <Route
             path="/user/account"

@@ -37,3 +37,22 @@ export const findCourseGroup = (group_id) => {
       });
   });
 };
+
+export const findSaleCode = (group_id, type, name) => {
+  console.log("Find Public findappcode Api");
+  const apiString = url + "/api/app/unauth/findappcode";
+  return new Promise((resolve, reject) => {
+    axios
+      .post(apiString, {
+        group_id,
+        type,
+        name,
+      })
+      .then((res) => {
+        resolve(res.data.code);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};

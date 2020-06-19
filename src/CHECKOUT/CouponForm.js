@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik } from "formik";
-import { Box, Button, TextField, Grid, Link } from "@material-ui/core";
-
+import { Box, Button, TextField, Grid, IconButton } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
 const Basic = (props) => {
   //const history = useHistory();
   return (
@@ -9,7 +9,7 @@ const Basic = (props) => {
       initialValues={{ coupon: "" }}
       validate={(values) => {
         const errors = {};
-        if (!values.email) {
+        if (!values.coupon) {
           errors.coupon = "Kupon Kodu Gereklidir.";
         }
 
@@ -33,7 +33,8 @@ const Basic = (props) => {
           <Grid
             container
             direction="row"
-            alignItems="center"
+            justify="space-between"
+            alignItems="flex-start"
             style={{ marginTop: "10px" }}
             spacing={2}
           >
@@ -50,18 +51,26 @@ const Basic = (props) => {
                 value={values.coupon}
               />
             </Grid>
-            <Grid item xs={2}>
-              <Button
-                onClick={props.closeDialog}
-                variant="contained"
-                color="primary"
-                type="submit"
-                disabled={
-                  errors.password ? true : false || errors.email ? true : false
-                }
-              >
-                Uygula
-              </Button>
+            <Grid item>
+              <Box m={1}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  disabled={
+                    errors.password
+                      ? true
+                      : false || errors.email
+                      ? true
+                      : false
+                  }
+                >
+                  Uygula
+                </Button>
+                <IconButton aria-label="close" onClick={props.closeForm}>
+                  <CloseIcon />
+                </IconButton>
+              </Box>
             </Grid>
           </Grid>
         </form>

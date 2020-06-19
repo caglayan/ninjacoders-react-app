@@ -7,13 +7,21 @@ import {
   Paper,
   Link,
   Divider,
+  CircularProgress,
   Box,
+  LinearProgress,
+  Button,
 } from "@material-ui/core";
+
 import VideoLibrary from "@material-ui/icons/VideoLibrary";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import CouponForm from "./CouponForm";
 import Iyzico from "./Iyzico";
+import queryString from "query-string";
+import { useHistory } from "react-router-dom";
+import { findCourseGroup } from "../Api/applicationApi";
+import { findSaleCode } from "../Api/applicationApi";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,182 +60,378 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function NotFoundPage(props) {
-  const [existCoupon, setExistCoupon] = React.useState(false);
   const classes = useStyles();
+  const history = useHistory();
+  const [totalPrice, setTotalPrice] = React.useState(0);
+  const [existCoupon, setExistCoupon] = React.useState(false);
+  const [isWorking, setIsWorking] = React.useState(true);
+  const [courseGroup, setCourseGroup] = React.useState();
+  const [saleCode, setSaleCode] = React.useState();
+  const [progressVisible, setProgressVisible] = React.useState(false);
+
+  const findCourseGroupIn = () => {
+    console.log(
+      "group_id ",
+      queryString.parse(props.location.search).courseGroup
+    );
+    findCourseGroup(queryString.parse(props.location.search).courseGroup) // skip limit
+      .then((courseGroup) => {
+        setCourseGroup(courseGroup);
+      })
+      .catch((err) => {
+        console.log(err);
+        history.push("/");
+      });
+  };
+
+  React.useEffect(() => {
+    console.log(courseGroup);
+    if (!courseGroup) {
+      findCourseGroupIn();
+    } else {
+      setIsWorking(false);
+      if (courseGroup.price.isSale) {
+        setTotalPrice(
+          courseGroup.price.base -
+            courseGroup.price.base * courseGroup.price.sale
+        );
+      } else {
+        setTotalPrice(courseGroup.price.base);
+      }
+    }
+  }, [courseGroup]);
+
+  const onSubmit = (formValues) => {
+    console.log(formValues);
+    setProgressVisible(true);
+    findSaleCode(courseGroup._id, "sale", formValues.coupon)
+      .then((code) => {
+        console.log(code);
+        setSaleCode(code);
+        setTotalPrice(
+          courseGroup.price.base - courseGroup.price.base * code.sale
+        );
+        setProgressVisible(false);
+        setExistCoupon(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        props.showMessages(2, "Bu indirim kodu geçersizdir.");
+        setProgressVisible(false);
+      });
+  };
+
   return (
     <div className={classes.root}>
-      <Container className={classes.Container} maxWidth="lg">
-        <Grid container className={classes.Body} justify="center" spacing={10}>
-          <Grid item className={classes.payout} sm="6">
-            <Paper className={classes.summary} elevation={0}>
-              <Typography
-                style={{ marginBottom: "10px" }}
-                className={classes.summaryTitle}
-                variant="h5"
-              >
-                Özet
-              </Typography>
-              <Grid
-                container
-                direction="row"
-                justify="space-between"
-                alignItems="center"
-              >
-                <Typography
-                  className={classes.summaryPriceTitle}
-                  display="inline"
-                  variant="body1"
-                >
-                  6 Aylık NinjaCoders Üyelik Ücreti:
-                </Typography>
-                <Typography
-                  className={classes.summaryPriceTitle}
-                  align="right"
-                  display="inline"
-                  variant="h6"
-                >
-                  72.00 ₺
-                </Typography>
-              </Grid>
-              <Grid
-                container
-                direction="row"
-                justify="space-between"
-                alignItems="center"
-              >
-                <Typography
-                  className={classes.summaryPriceTitle}
-                  display="inline"
-                  variant="body1"
-                >
-                  Kupon İndirimi:
-                </Typography>
-                <Typography
-                  className={classes.summaryPriceTitle}
-                  align="right"
-                  display="inline"
-                  variant="h6"
-                >
-                  48.00 ₺
-                </Typography>
-              </Grid>
-              <Divider></Divider>
-              <Grid
-                container
-                direction="row"
-                justify="space-between"
-                alignItems="center"
-              >
-                <Typography
-                  className={classes.summaryPriceTitle}
-                  display="inline"
-                  variant="h6"
-                >
-                  TOPLAM
-                </Typography>
-                <Typography
-                  className={classes.summaryPriceTitle}
-                  align="right"
-                  display="inline"
-                  variant="h5"
-                >
-                  24.00 ₺
-                </Typography>
-              </Grid>
-              <Box textAlign="left" mt={2}>
-                Satın alma işlemi yaparak NinjaCoders'ın{" "}
-                <Link href="/service-policy">
-                  Kullanıcı ve Üyelik Sözleşmesini
-                </Link>{" "}
-                kabul etmiş olursunuz.
-              </Box>
-              <Box textAlign="left" mt={5}>
-                {existCoupon ? (
-                  <CouponForm></CouponForm>
-                ) : (
-                  <Link
-                    component="button"
-                    variant="body2"
-                    onClick={() => {
-                      setExistCoupon(true);
-                    }}
-                  >
-                    İndirim kuponu uygula
-                  </Link>
-                )}
-              </Box>
-            </Paper>
-            <Iyzico></Iyzico>
-          </Grid>
-          <Grid item sm="6">
-            <Paper className={classes.paperNews} elevation={0}>
-              <Typography
-                className={classes.text1}
-                variant="h5"
-                component="h5"
-                align="center"
-              >
-                <VideoLibrary style={{ fontSize: 60 }} />
-              </Typography>
-
-              <Typography className={classes.text1} variant="h6" align="center">
-                Sınırsız Ders İçeriği
-              </Typography>
-              <Typography
-                className={classes.text1}
-                variant="subtitle1"
-                align="center"
-              >
-                İstediğiniz kadar çok dersi izleyebilecek, sorularınızı
-                sorabileceksiniz.
-              </Typography>
-            </Paper>
-            <Paper className={classes.paperNews} elevation={0}>
-              <Typography
-                className={classes.text1}
-                variant="h5"
-                component="h5"
-                align="center"
-              >
-                <SupervisorAccountIcon style={{ fontSize: 60 }} />
-              </Typography>
-
-              <Typography className={classes.text1} variant="h6" align="center">
-                Alanında uzman eğitmenler
-              </Typography>
-              <Typography
-                className={classes.text1}
-                variant="subtitle1"
-                align="center"
-              >
-                Boğaziçi'li Mühendis ve Öğretmenlerden oluşan uzman kadro ile
-                senelerdir uygulanan ve geliştirlen müfredatları izleyeceksiniz.
-              </Typography>
-            </Paper>
-            <Paper className={classes.paperNews} elevation={0}>
-              <Typography
-                className={classes.text1}
-                variant="h5"
-                component="h5"
-                align="center"
-              >
-                <InsertDriveFileIcon style={{ fontSize: 60 }} />
-              </Typography>
-
-              <Typography className={classes.text1} variant="h6" align="center">
-                Sertifika
-              </Typography>
-              <Typography
-                className={classes.text1}
-                variant="subtitle1"
-                align="center"
-              >
-                NinjaCoders tarafından verilen sertifikayı alabileceksiniz.
-              </Typography>
-            </Paper>
+      {isWorking ? (
+        <Grid container direction="row" justify="center" alignItems="center">
+          <Grid item>
+            <CircularProgress
+              style={{ marginTop: "5vh", marginBottom: "5vh" }}
+              color="primary"
+              size={40}
+            />
           </Grid>
         </Grid>
-      </Container>
+      ) : (
+        <Container className={classes.Container} maxWidth="lg">
+          <Grid
+            container
+            className={classes.Body}
+            justify="center"
+            spacing={10}
+          >
+            <Grid item className={classes.payout} sm={6}>
+              <Paper className={classes.summary} elevation={0}>
+                <Typography
+                  style={{ marginBottom: "10px" }}
+                  className={classes.summaryTitle}
+                  variant="h5"
+                >
+                  Özet
+                </Typography>
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-between"
+                  alignItems="center"
+                >
+                  <Typography
+                    className={classes.summaryPriceTitle}
+                    display="inline"
+                    variant="body1"
+                  >
+                    {courseGroup ? courseGroup.name : null} + Sertifika
+                  </Typography>
+                  <Typography
+                    className={classes.summaryPriceTitle}
+                    align="right"
+                    display="inline"
+                    variant="h6"
+                  >
+                    {courseGroup
+                      ? courseGroup.price.base
+                          .toFixed(2)
+                          .toString()
+                          .replace(".", ",")
+                      : null}{" "}
+                    ₺
+                  </Typography>
+                </Grid>
+                {saleCode ? (
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-between"
+                    alignItems="center"
+                  >
+                    <Typography
+                      className={classes.summaryPriceTitle}
+                      display="inline"
+                      variant="body1"
+                    >
+                      {"%"}
+                      {saleCode ? (saleCode.sale * 100).toString() : null}{" "}
+                      indirim kodu: ({saleCode ? saleCode.name : null})
+                    </Typography>
+                    <Typography
+                      className={classes.summaryPriceTitle}
+                      align="right"
+                      display="inline"
+                      variant="h6"
+                    >
+                      {(courseGroup.price.base * saleCode.sale)
+                        .toFixed(2)
+                        .toString()
+                        .replace(".", ",")}{" "}
+                      ₺
+                    </Typography>
+                  </Grid>
+                ) : (
+                  <div>
+                    {courseGroup.price.isSale ? (
+                      <Grid
+                        container
+                        direction="row"
+                        justify="space-between"
+                        alignItems="center"
+                      >
+                        <Typography
+                          className={classes.summaryPriceTitle}
+                          display="inline"
+                          variant="body1"
+                        >
+                          {"%"}
+                          {courseGroup
+                            ? (courseGroup.price.sale * 100).toString()
+                            : null}{" "}
+                          NinjaCoders İndirimi:
+                        </Typography>
+                        <Typography
+                          className={classes.summaryPriceTitle}
+                          align="right"
+                          display="inline"
+                          variant="h6"
+                        >
+                          {(courseGroup.price.base * courseGroup.price.sale)
+                            .toFixed(2)
+                            .toString()
+                            .replace(".", ",")}{" "}
+                          ₺
+                        </Typography>
+                      </Grid>
+                    ) : null}
+                  </div>
+                )}
+
+                <Divider></Divider>
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-between"
+                  alignItems="center"
+                >
+                  <Typography
+                    className={classes.summaryPriceTitle}
+                    display="inline"
+                    variant="h6"
+                  >
+                    TOPLAM{" "}
+                    <Typography display="inline" variant="body2">
+                      (Vergiler dahildir.)
+                    </Typography>
+                  </Typography>
+                  <Typography
+                    className={classes.summaryPriceTitle}
+                    align="right"
+                    display="inline"
+                    variant="h5"
+                  >
+                    {totalPrice.toFixed(2).toString().replace(".", ",")} ₺
+                  </Typography>
+                </Grid>
+                <Box textAlign="left" mt={2}>
+                  Satın alma işlemi yaparak NinjaCoders'ın{" "}
+                  <Link href="/service-policy">Satın Alma Sözleşmesini</Link>{" "}
+                  kabul etmiş olursunuz.
+                </Box>
+                <Box textAlign="left" mt={2}>
+                  Aldığınız kurslardan memnun kalmanızı istiyoruz. Bu nedenle,
+                  satın aldığınız tüm kursları 5 gün içinde iade edebilirsiniz.{" "}
+                  <Link href="/helo">NinjaCoders Yardım</Link>{" "}
+                </Box>
+                <Box textAlign="left" mt={5}>
+                  {progressVisible ? (
+                    <LinearProgress variant="query" color="secondary" />
+                  ) : null}
+
+                  {saleCode ? (
+                    <Box>
+                      <Box display="flex" style={{ width: "100%" }}>
+                        <Typography display="inline" variant="body1">
+                          Uygulanan indirim kodu: {saleCode.name}
+                        </Typography>
+                        <Box className={classes.grow} />
+                        <Button
+                          style={{ margin: "0px", padding: "0px" }}
+                          color="primary"
+                          type="submit"
+                          onClick={() => {
+                            if (courseGroup.price.isSale) {
+                              setTotalPrice(
+                                courseGroup.price.base -
+                                  courseGroup.price.base *
+                                    courseGroup.price.sale
+                              );
+                            } else {
+                              setTotalPrice(courseGroup.price.base);
+                            }
+                            setSaleCode(null);
+                          }}
+                        >
+                          Kodu Sil
+                        </Button>
+                      </Box>
+                      <Box>
+                        <Typography
+                          display="inline"
+                          color="textSecondary"
+                          variant="body2"
+                        >
+                          Başka bir indirm kodu uygulamak için bu indirim kodunu
+                          silmeniz gerekmektedir.
+                        </Typography>
+                      </Box>
+                    </Box>
+                  ) : (
+                    <div>
+                      {existCoupon ? (
+                        <CouponForm
+                          closeForm={() => {
+                            setExistCoupon(false);
+                          }}
+                          onSubmit={onSubmit}
+                        ></CouponForm>
+                      ) : (
+                        <Link
+                          component="button"
+                          variant="body2"
+                          onClick={() => {
+                            setExistCoupon(true);
+                          }}
+                        >
+                          İndirim kuponu uygula
+                        </Link>
+                      )}
+                    </div>
+                  )}
+                </Box>
+              </Paper>
+              <Iyzico></Iyzico>
+            </Grid>
+            <Grid item sm={6}>
+              <Paper className={classes.paperNews} elevation={0}>
+                <Typography
+                  className={classes.text1}
+                  variant="h5"
+                  component="h5"
+                  align="center"
+                >
+                  <VideoLibrary style={{ fontSize: 60 }} />
+                </Typography>
+
+                <Typography
+                  className={classes.text1}
+                  variant="h6"
+                  align="center"
+                >
+                  Sınırsız Ders İçeriği
+                </Typography>
+                <Typography
+                  className={classes.text1}
+                  variant="subtitle1"
+                  align="center"
+                >
+                  İstediğiniz kadar çok dersi izleyebilecek, sorularınızı
+                  sorabileceksiniz.
+                </Typography>
+              </Paper>
+              <Paper className={classes.paperNews} elevation={0}>
+                <Typography
+                  className={classes.text1}
+                  variant="h5"
+                  component="h5"
+                  align="center"
+                >
+                  <SupervisorAccountIcon style={{ fontSize: 60 }} />
+                </Typography>
+
+                <Typography
+                  className={classes.text1}
+                  variant="h6"
+                  align="center"
+                >
+                  Alanında uzman eğitmenler
+                </Typography>
+                <Typography
+                  className={classes.text1}
+                  variant="subtitle1"
+                  align="center"
+                >
+                  Boğaziçi'li Mühendis ve Öğretmenlerden oluşan uzman kadro ile
+                  senelerdir uygulanan ve geliştirlen müfredatları
+                  izleyeceksiniz.
+                </Typography>
+              </Paper>
+              <Paper className={classes.paperNews} elevation={0}>
+                <Typography
+                  className={classes.text1}
+                  variant="h5"
+                  component="h5"
+                  align="center"
+                >
+                  <InsertDriveFileIcon style={{ fontSize: 60 }} />
+                </Typography>
+
+                <Typography
+                  className={classes.text1}
+                  variant="h6"
+                  align="center"
+                >
+                  Sertifika
+                </Typography>
+                <Typography
+                  className={classes.text1}
+                  variant="subtitle1"
+                  align="center"
+                >
+                  NinjaCoders tarafından verilen sertifikayı alabileceksiniz.
+                </Typography>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Container>
+      )}
     </div>
   );
 }

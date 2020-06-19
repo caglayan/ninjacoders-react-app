@@ -16,6 +16,29 @@ export const userRemoveLocal = (user) => {
   return ls.remove("user");
 };
 
+export const checkTokenApi = (token) => {
+  console.log("Login Api");
+  const apiString = url + "/api/user/unauth/authtoken";
+  return new Promise((resolve, reject) => {
+    axios
+      .post(apiString, {
+        headers: { "x-api-key": token },
+      })
+      .then((res) => {
+        console.log(res.data.user);
+        resolve(res.data.user);
+      })
+      .catch((err) => {
+        err.response
+          ? reject(err.response.data.Message)
+          : reject("No connection to our machines");
+        err.response
+          ? console.log("Error Code:", err.response.data.Code)
+          : console.log("No internet connection or database problem");
+      });
+  });
+};
+
 export const signupGoogleApi = (googleIdToken) => {
   console.log("Signup Api");
   const apiString = url + "/api/user/unauth/signupgoogle";
