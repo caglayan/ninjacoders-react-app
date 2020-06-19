@@ -18,6 +18,7 @@ export const updateCourse = ({
   statistics = null,
   isBelongNinja = false,
   numberOfSections = 0,
+  group_id = "",
   __v = 0,
 } = {}) => ({
   type: "UPDATE_COURSE",
@@ -41,6 +42,7 @@ export const updateCourse = ({
     duration,
     isBelongNinja,
     numberOfSections,
+    group_id,
   },
 });
 

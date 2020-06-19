@@ -5,8 +5,8 @@ import CourseSection3 from "./CourseSection3";
 import {
   startCreatePublicCourse,
   startCreateUserCourse,
-  startCreatePublicCourseLocal,
 } from "../Redux/Selectors/courseSelector";
+import { removeCourseUserComment } from "../Redux/Selectors/commentSelector";
 import { connect } from "react-redux";
 import BottomMobile from "./BottomMobile";
 
@@ -14,6 +14,7 @@ const CourseContainer = (props) => {
   const downloadCourse = () => {
     console.log("course_id ", props.match.params.id);
     console.log("user_id ", props.user_id);
+    props.dispatch(removeCourseUserComment());
     if (props.user_id) {
       props
         .dispatch(

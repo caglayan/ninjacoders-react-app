@@ -58,3 +58,20 @@ export const findPublicCourseWithId = (course_id) => {
       });
   });
 };
+
+export const findAtomicCourse = (course_id) => {
+  console.log("Find Atomic Course Api");
+  const apiString = url + "/api/course/unauth/findatomic";
+  return new Promise((resolve, reject) => {
+    axios
+      .post(apiString, {
+        course_id,
+      })
+      .then((res) => {
+        resolve(res.data.course);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};

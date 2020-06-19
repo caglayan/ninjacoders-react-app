@@ -55,10 +55,11 @@ export default (props) => {
                 display="inline"
                 variant="body2"
               >
-                Bu dersi şu anda {props.statistics.onlineStudents + " "}
-                <VisibilityIcon
-                  style={{ fontSize: 18, paddingTop: "4px" }}
-                />{" "}
+                Bu dersi şu anda{" "}
+                {props.statistics
+                  ? props.statistics.onlineStudents + " "
+                  : null}
+                <VisibilityIcon style={{ fontSize: 18, paddingTop: "4px" }} />{" "}
                 kişi izliyor.
               </Typography>
             </Box>
@@ -121,7 +122,9 @@ export default (props) => {
             </Button>
           ) : (
             <Button
-              onClick={props.updateCommentOpen}
+              onClick={() => {
+                history.push(`/coursemap/` + props.group_id);
+              }}
               className={classes.OtherCoursesButton}
               variant="contained"
               color="primary"

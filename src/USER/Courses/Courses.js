@@ -10,12 +10,8 @@ import {
   Typography,
 } from "@material-ui/core/";
 import { connect } from "react-redux";
-import QuestionPanel from "../../Components/QuestionHelpers/QuestionPanel";
-import GiveAnswerPanel from "../../Components/QuestionHelpers/GiveAnswerPanel";
-import AnswerPanel from "../../Components/QuestionHelpers/AnswerPanel";
 import CourseCard from "../../Components/CourseCard/CourseCard";
-import { pullUserQuestions } from "../../Api/questionApi";
-import { updatePersonalQuestion } from "../../Redux/Selectors/questionSelector";
+import { startRemoveCourse } from "../../Redux/Selectors/courseSelector";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -50,10 +46,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const QuestionsCont = (props) => {
-  const [questions, setQuestions] = React.useState([]);
-  const [isWorking, setIsWorking] = React.useState(true);
-  const [isMoreActive, setIsMoreActive] = React.useState(true);
   const classes = useStyles();
+  React.useEffect(() => {
+    props.dispatch(startRemoveCourse());
+  }, []);
 
   return (
     <Container className={classes.container} maxWidth="md">
@@ -67,9 +63,10 @@ const QuestionsCont = (props) => {
         {props.registeredCourses.map((registeredCourse, index) => (
           <Grid item>
             <CourseCard
-              isDownloadable={true}
+              mini
+              percentage={registeredCourse.percentage}
+              className={classes.courseCard}
               course_id={registeredCourse._id}
-              {...registeredCourse}
             ></CourseCard>
           </Grid>
         ))}

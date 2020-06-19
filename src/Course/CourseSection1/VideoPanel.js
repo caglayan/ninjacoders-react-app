@@ -41,6 +41,11 @@ const VideoPanel = (props) => {
     props.onPlay();
   };
 
+  const onLoaded = () => {
+    console.log("video loaded");
+    setIsEnded(false);
+  };
+
   const onPause = () => {
     props.onStop();
   };
@@ -63,6 +68,7 @@ const VideoPanel = (props) => {
             video={props.playerVideo}
             onEnd={onVideoEnd}
             onPlay={onPlay}
+            onLoaded={onLoaded}
             onPause={onPause}
             //autoplay
             responsive

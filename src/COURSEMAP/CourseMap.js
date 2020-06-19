@@ -6,10 +6,10 @@ import { Timeline, Bookmark, Marker } from "react-vertical-timeline";
 import "react-vertical-timeline/style.css";
 import TextAreaStart from "./TextAreaStart";
 import TextAreaEnd from "./TextAreaEnd";
-import { findApplication } from "../Api/applicationApi";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { findCourseGroup } from "../Api/applicationApi";
+import { startRemoveCourse } from "../Redux/Selectors/courseSelector";
 
 /*
 value         |0px     600px    960px    1280px   1920px
@@ -51,9 +51,19 @@ const CourseMap = (props) => {
   React.useEffect(() => {
     console.log(courseGroup);
     if (!courseGroup) {
+      props.dispatch(startRemoveCourse());
       findCourseGroupIn();
     } else {
       setIsWorking(false);
+      if (props._id != "") {
+        var sum = 0;
+        props.registeredCourses.filter(function (registeredCourse) {
+          sum = sum + registeredCourse.percentage;
+        });
+        console.log("deneme:", sum / (courseGroup.courses.length * 100));
+
+        setOverallPer(sum / courseGroup.courses.length);
+      }
     }
   }, [courseGroup]);
 
@@ -89,36 +99,46 @@ const CourseMap = (props) => {
           <Grid style={{ marginTop: 100 }} item xs={12} md={4}>
             <Timeline
               height={courseGroup.courses.length * 500}
-              progress={overallPer}
+              progress={overallPer * 100}
             >
-              {courseGroup.courses.map((course, index) => {
+              {courseGroup.courses.map((course_id, index) => {
                 const array = props.registeredCourses.filter(function (
                   registeredCourse
                 ) {
-                  return registeredCourse._id == course._id;
+                  return registeredCourse._id == course_id;
                 });
-                if (array.length > 0) {
-                  course.percentage = array[0].percentage;
-                }
+
                 return (
-                  <Bookmark key={course._id} progress={index * 25}>
+                  <Bookmark
+                    key={course_id}
+                    progress={(index * 100) / courseGroup.courses.length}
+                  >
                     <div>
                       <Button
                         className={classes.PremiumButton}
                         onClick={() => {
-                          history.push(`/course/` + course._id);
+                          history.push(`/course/` + course_id);
                         }}
                         variant="contained"
-                        color={!course.percentage ? "primary" : "secondary"}
+                        color={!array.length > 0 ? "primary" : "secondary"}
                       >
-                        {!course.percentage
-                          ? "Derse Başlayın"
-                          : "Derse Devam edin"}
+                        {!array.length > 0 ? (
+                          "Derse Başlayın"
+                        ) : (
+                          <div>
+                            {array[0].percentage > 0.9
+                              ? "Dersi bitirdiniz!"
+                              : "Derse Devam edin"}
+                          </div>
+                        )}
                       </Button>
                       <CourseCard
                         mini
+                        percentage={
+                          array.length > 0 ? array[0].percentage : null
+                        }
                         className={classes.courseCard}
-                        {...course}
+                        course_id={course_id}
                       ></CourseCard>
                     </div>
                   </Bookmark>
@@ -126,7 +146,12 @@ const CourseMap = (props) => {
               })}
             </Timeline>
           </Grid>
-          <TextAreaEnd isFinish={overallPer > 90}></TextAreaEnd>
+          <TextAreaEnd
+            certificateOpen={() => {
+              props.certificateOpenId(courseGroup._id);
+            }}
+            percentage={overallPer}
+          ></TextAreaEnd>
         </Grid>
       )}
     </Container>

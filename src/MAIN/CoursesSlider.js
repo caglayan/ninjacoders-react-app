@@ -106,17 +106,21 @@ const CourseCrousel = (props) => {
               infinite
             >
               {courseGroup
-                ? courseGroup.courses.map((course, index) => {
+                ? courseGroup.courses.map((course_id, index) => {
                     const array = props.registeredCourses.filter(function (
                       registeredCourse
                     ) {
-                      return registeredCourse._id == course._id;
+                      return registeredCourse._id == course_id;
                     });
-                    if (array.length > 0) {
-                      course.percentage = array[0].percentage;
-                    }
+
                     return (
-                      <CourseCard key={course._id} {...course}></CourseCard>
+                      <CourseCard
+                        key={course_id}
+                        percentage={
+                          array.length > 0 ? array[0].percentage : null
+                        }
+                        course_id={course_id}
+                      ></CourseCard>
                     );
                   })
                 : null}
@@ -125,9 +129,21 @@ const CourseCrousel = (props) => {
           <div className={classes.sectionMobile}>
             <Carousel slidesPerPage={1} arrows dots infinite>
               {courseGroup
-                ? courseGroup.courses.map((course, index) => {
+                ? courseGroup.courses.map((course_id, index) => {
+                    const array = props.registeredCourses.filter(function (
+                      registeredCourse
+                    ) {
+                      return registeredCourse._id == course_id;
+                    });
+
                     return (
-                      <CourseCard key={course._id} {...course}></CourseCard>
+                      <CourseCard
+                        key={course_id}
+                        percentage={
+                          array.length > 0 ? array[0].percentage : null
+                        }
+                        course_id={course_id}
+                      ></CourseCard>
                     );
                   })
                 : null}

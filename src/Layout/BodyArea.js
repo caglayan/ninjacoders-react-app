@@ -104,6 +104,7 @@ function BodyArea(propsGeneral) {
               checkLogin() ? (
                 <CourseMapUserPage
                   {...props}
+                  certificateOpenId={propsGeneral.certificateOpenId}
                   showMessages={propsGeneral.showMessages}
                 />
               ) : (
@@ -138,10 +139,7 @@ function BodyArea(propsGeneral) {
               )
             }
           />
-          <Route
-            path="/user/"
-            render={(props) => <Redirect to="/user/account" />}
-          />
+
           <Route
             path="/reset-password/:token"
             render={(props) => (
@@ -202,6 +200,7 @@ function BodyArea(propsGeneral) {
             render={(props) => (
               <CourseMapPage
                 {...props}
+                certificateOpenId={propsGeneral.certificateOpenId}
                 showMessages={propsGeneral.showMessages}
               />
             )}

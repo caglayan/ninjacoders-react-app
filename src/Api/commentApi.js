@@ -22,14 +22,14 @@ export const pullComments = (skip, limit, courseId) => {
   });
 };
 
-export const findComment = (token) => {
+export const findComment = (token, course_id) => {
   console.log("Find Comment Api");
   const apiString = url + "/api/comment/auth/find";
   return new Promise((resolve, reject) => {
     axios
       .post(
         apiString,
-        {},
+        { course_id },
         {
           headers: { "x-api-key": token },
         }

@@ -11,7 +11,7 @@ const PersonalCommentPanel = (props) => {
 
   const findCommentAdd = () => {
     props
-      .dispatch(createPersonalComment(props.token))
+      .dispatch(createPersonalComment(props.token, props.course_id))
       .then((comment) => {
         console.log("Fethed personal comment", comment);
         setPersonalComment(comment);
@@ -49,9 +49,13 @@ const PersonalCommentPanel = (props) => {
       ) : (
         <Tooltip
           title={
-            props.premium
+            (
+              props.premium && props.registeredCourse
+                ? props.registeredCourse.wathedVideos.length > 2
+                : false
+            )
               ? ""
-              : "Yorum yapabilmek için en az 5 dersi izlemiş olmanız gerekmektedir."
+              : "Yorum yapabilmek için en az 3 dersi izlemiş olmanız gerekmektedir."
           }
         >
           <span>
@@ -59,7 +63,11 @@ const PersonalCommentPanel = (props) => {
               onClick={props.makeCommentOpen}
               variant="contained"
               color="secondary"
-              disabled={!props.premium}
+              disabled={
+                !(props.premium && props.registeredCourse
+                  ? props.registeredCourse.wathedVideos.length > 2
+                  : false)
+              }
             >
               Yorum Yap
             </Button>

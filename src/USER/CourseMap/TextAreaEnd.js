@@ -33,29 +33,50 @@ export default function TextArea(props) {
         direction="column"
         justify="center"
         alignItems="center"
-        spacing={3}
         style={{ height: "100%" }}
       >
-        <Grid item>
-          <Typography className={classes.text1} variant="body">
-            Sertifikanızı alabilmek için bu grubun % 90'nından daha fazlasını
-            izlemek zorundasınız.
-          </Typography>
-        </Grid>
+        {props.percentage > 0.9 ? (
+          <Grid item>
+            <Typography
+              className={classes.text1}
+              variant="h6"
+              component="h6"
+              align="center"
+            >
+              Dersi başarı ile bitirdiniz. Sertifikanızı isteyin.
+            </Typography>
+          </Grid>
+        ) : (
+          <Grid item>
+            <Typography
+              className={classes.text1}
+              variant="h6"
+              component="h6"
+              align="center"
+            >
+              Dersin şu ana kadar izleme durumunuz:{" "}
+              <b>%{Math.floor(props.percentage * 100)} </b>
+              <br></br> Sertifikanızı alabilmek için bu grubun % 90'nından daha
+              fazlasını izlemek zorundasınız.
+            </Typography>
+          </Grid>
+        )}
+
         <Grid item>
           <Tooltip
             title={
-              props.isFinish
+              props.percentage > 0.9
                 ? ""
                 : "Sertifikanızı alabilmek için bu grubun % 90'nından daha fazlasını izlemek zorundasınız."
             }
           >
             <span>
               <Button
-                onClick={props.makeCommentOpen}
+                style={{ marginTop: "10px" }}
+                onClick={props.certificateOpen}
                 variant="contained"
                 color="primary"
-                disabled={!props.isFinish}
+                disabled={!(props.percentage > 0.9)}
               >
                 Sertifika İste
               </Button>

@@ -54,3 +54,9 @@ export const startRemovePublicCourseLocal = (dispatch) => {
   dispatch(removeCourse());
   courseRemoveLocal();
 };
+
+export const startRemoveCourse = (dispatch) => {
+  return (dispatch) => {
+    dispatch(removeCourse());
+  };
+};

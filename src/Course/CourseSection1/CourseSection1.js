@@ -130,12 +130,19 @@ const CourseVideoContent = (props) => {
 
   const finishVideo = (videoId) => {
     console.log("finished:", videoId);
+
+    if (props.registeredCourse) {
+      var numberOfVideosCourse = 0;
+      props.chapters.map((chapter) => {
+        numberOfVideosCourse = numberOfVideosCourse + chapter.sections.length;
+      });
+      const newper =
+        (props.registeredCourse.percentage * numberOfVideosCourse + 1) /
+        numberOfVideosCourse;
+      if (newper > 0.9) props.finishVideoOpen();
+    }
+
     if (
-      props.chapters[listState.selChapter].sections[listState.selSection]
-        .isLast == true
-    ) {
-      props.finishVideoOpen();
-    } else if (
       props.chapters[listState.selChapter].sections[listState.selSection]
         .isComment == true
     ) {
@@ -146,7 +153,7 @@ const CourseVideoContent = (props) => {
       .dispatch(updateUserWatchedVideo(props.token, props.course_id, videoId))
       .then((user) => {})
       .catch((err) => {
-        //props.showMessages(2, "Bir problem var.");
+        props.showMessages(2, "Bir problem var.");
       });
   };
 
@@ -239,6 +246,7 @@ const CourseVideoContent = (props) => {
             premium={props.premium}
             abilities={props.abilities}
             statistics={props.statistics}
+            group_id={props.group_id}
           ></DetailPanel>
         </div>
       )}
@@ -249,7 +257,7 @@ const CourseVideoContent = (props) => {
 const CourseVideoContentCon = connect((state) => {
   var results = state.userReducer.registeredCourses.filter(
     (registeredCourse) => {
-      return registeredCourse._id.indexOf("5df92c57ea9f59862aabd1ab") > -1;
+      return registeredCourse._id.indexOf(state.courseReducer._id) > -1;
     }
   );
   var registeredCourse = null;
@@ -270,6 +278,7 @@ const CourseVideoContentCon = connect((state) => {
     abilities: state.courseReducer.abilities,
     premium: state.userReducer.premium,
     statistics: state.courseReducer.statistics,
+    group_id: state.courseReducer.group_id,
     registeredCourse,
   };
 })(CourseVideoContent);

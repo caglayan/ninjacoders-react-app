@@ -232,17 +232,30 @@ const CourseSection2 = (props) => {
 </Grid> */
 }
 
-const CourseSection2Con = connect((state) => ({
-  _id: state.courseReducer._id,
-  title: state.courseReducer.title,
-  isBelongNinja: state.courseReducer.isBelongNinja,
-  instructor: state.courseReducer.instructor,
-  description: state.courseReducer.description,
-  duration: state.courseReducer.duration,
-  numberOfSections: state.courseReducer.numberOfSections,
-  chapters: state.courseReducer.chapters,
-  shoppingCart: state.userReducer.shoppingCart,
-  token: state.userReducer.token,
-}))(CourseSection2);
+const CourseSection2Con = connect((state) => {
+  var results = state.userReducer.registeredCourses.filter(
+    (registeredCourse) => {
+      return registeredCourse._id.indexOf(state.courseReducer._id) > -1;
+    }
+  );
+  var registeredCourse = null;
+  if (results.length > 0) {
+    registeredCourse = results[0];
+    console.log("registered:", registeredCourse);
+  }
+  return {
+    _id: state.courseReducer._id,
+    title: state.courseReducer.title,
+    isBelongNinja: state.courseReducer.isBelongNinja,
+    instructor: state.courseReducer.instructor,
+    description: state.courseReducer.description,
+    duration: state.courseReducer.duration,
+    numberOfSections: state.courseReducer.numberOfSections,
+    chapters: state.courseReducer.chapters,
+    shoppingCart: state.userReducer.shoppingCart,
+    token: state.userReducer.token,
+    registeredCourse,
+  };
+})(CourseSection2);
 
 export default CourseSection2Con;

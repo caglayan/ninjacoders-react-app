@@ -15,11 +15,13 @@ import {
 import CourseCard from "../../Components/CourseCard/CourseCard";
 import { Timeline, Bookmark, Marker } from "react-vertical-timeline";
 import "react-vertical-timeline/style.css";
+import { useHistory } from "react-router-dom";
 import TextAreaStart from "./TextAreaStart";
 import TextAreaEnd from "./TextAreaEnd";
 import { findApplication } from "../../Api/applicationApi";
 import { connect } from "react-redux";
 import { findCourseGroup } from "../../Api/applicationApi";
+import { startRemoveCourse } from "../../Redux/Selectors/courseSelector";
 
 /*
 value         |0px     600px    960px    1280px   1920px
@@ -49,9 +51,11 @@ const CourseMap = (props) => {
   const [overallPer, setOverallPer] = React.useState(0);
   const [courseGroups, setCourseGroups] = React.useState([]);
   const [selectedItem, setSelectedItem] = React.useState(0);
+  const history = useHistory();
 
   React.useEffect(() => {
     if (props.applicationCourseGroups) {
+      props.dispatch(startRemoveCourse());
       props.applicationCourseGroups.map((courseGroupId, index) => {
         findCourseGroupIn(courseGroupId);
       });
@@ -75,18 +79,17 @@ const CourseMap = (props) => {
         setIsWorking(false);
         console.log("ok", courseGroups);
       }
+      if (props._id != "" && courseGroups[selectedItem]) {
+        var sum = 0;
+        props.registeredCourses.filter(function (registeredCourse) {
+          sum = sum + registeredCourse.percentage;
+        });
+        console.log("deneme:", sum / courseGroups[selectedItem].courses.length);
+
+        setOverallPer(sum / courseGroups[selectedItem].courses.length);
+      }
     }
   }, [courseGroups]);
-
-  React.useEffect(() => {
-    if (props._id != "") {
-      var sum = 0;
-      props.registeredCourses.filter(function (registeredCourse) {
-        sum = sum + registeredCourse.percentage;
-      });
-      setOverallPer(overallPer + (sum * 100) / props.registeredCourses.length);
-    }
-  }, [props._id]);
 
   const selectItem = (index) => {
     setSelectedItem(index);
@@ -131,38 +134,52 @@ const CourseMap = (props) => {
                   })
                 : null}
             </List>
-            <TextAreaEnd isFinish={overallPer > 90}></TextAreaEnd>
+            <TextAreaEnd
+              certificateOpen={() => {
+                props.certificateOpenId(courseGroups[selectedItem]._id);
+              }}
+              percentage={overallPer}
+            ></TextAreaEnd>
           </Grid>
           <Grid item xs={12} md={4}>
             <Timeline
               height={courseGroups[selectedItem].courses.length * 500}
-              progress={overallPer}
+              progress={overallPer * 100}
             >
-              {courseGroups[selectedItem].courses.map((course, index) => {
+              {courseGroups[selectedItem].courses.map((course_id, index) => {
                 const array = props.registeredCourses.filter(function (
                   registeredCourse
                 ) {
-                  return registeredCourse._id == course._id;
+                  return registeredCourse._id == course_id;
                 });
-                if (array.length > 0) {
-                  course.percentage = array[0].percentage;
-                }
+
                 return (
-                  <Bookmark key={course._id} progress={index * 25}>
+                  <Bookmark
+                    key={course_id}
+                    progress={
+                      (index * 100) / courseGroups[selectedItem].courses.length
+                    }
+                  >
                     <div>
                       <Button
                         className={classes.PremiumButton}
+                        onClick={() => {
+                          history.push(`/course/` + course_id);
+                        }}
                         variant="contained"
-                        color={!course.percentage ? "primary" : "secondary"}
+                        color={!array.length > 0 ? "primary" : "secondary"}
                       >
-                        {!course.percentage
+                        {!array.length > 0
                           ? "Derse Başlayın"
                           : "Derse Devam edin"}
                       </Button>
                       <CourseCard
                         mini
+                        percentage={
+                          array.length > 0 ? array[0].percentage : null
+                        }
                         className={classes.courseCard}
-                        {...course}
+                        course_id={course_id}
                       ></CourseCard>
                     </div>
                   </Bookmark>

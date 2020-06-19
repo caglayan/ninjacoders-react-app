@@ -2,9 +2,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography, Button, Grid } from "@material-ui/core";
 import MakeComment from "../MakeComment/MakeComment";
-
+import { connect } from "react-redux";
 import CourseCard from "../CourseCard/CourseCard";
-import Carousel, { Dots } from "@brainhubeu/react-carousel";
+import { useHistory } from "react-router-dom";
 import { findCourseGroup } from "../../Api/applicationApi";
 
 const useStyles = makeStyles((theme) => ({
@@ -16,11 +16,11 @@ const useStyles = makeStyles((theme) => ({
 const VideoPanel = (props) => {
   const classes = useStyles();
   const [courseGroup, setCourseGrouplication] = React.useState();
-  const [isLoaded, setIsLoaded] = React.useState(true);
+  const history = useHistory();
   const [isEnded, setIsEnded] = React.useState(false);
 
   const findCourseGroupIn = () => {
-    findCourseGroup("5ee7c4e89931e57458d54f96") // skip limit
+    findCourseGroup(props.course_id) // skip limit
       .then((courseGroup) => {
         setCourseGrouplication(courseGroup);
       })
@@ -61,13 +61,18 @@ const VideoPanel = (props) => {
             Bu yolculuğun diğer derslerine göz atın!
           </Typography>
         </Box>
-        <Carousel slidesPerPage={1} arrows dots infinite>
-          {courseGroup
-            ? courseGroup.courses.map((course, index) => {
-                return <CourseCard key={course._id} {...course}></CourseCard>;
-              })
-            : null}
-        </Carousel>
+        <Box textAlign="center" m={1}>
+          <Button
+            onClick={() => {
+              history.push(`/coursemap/` + props.group_id);
+            }}
+            className={classes.OtherCoursesButton}
+            variant="contained"
+            color="primary"
+          >
+            Yolculuğun diğer dersleri
+          </Button>
+        </Box>
       </Grid>
     </Grid>
   );
@@ -75,4 +80,13 @@ const VideoPanel = (props) => {
 
 VideoPanel.propTypes = {};
 
-export default VideoPanel;
+const VideoPanelCon = connect((state) => {
+  return {
+    _id: state.courseReducer._id,
+    token: state.userReducer.token,
+    course_id: state.courseReducer._id,
+    group_id: state.courseReducer.group_id,
+  };
+})(VideoPanel);
+
+export default VideoPanelCon;

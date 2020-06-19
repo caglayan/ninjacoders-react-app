@@ -233,3 +233,33 @@ export const finishWatchVideoApi = (token, course_id, video_id) => {
       });
   });
 };
+
+export const requestCertificateApi = (token, email, group_id) => {
+  console.log("Request Certificate Api");
+  const apiString = url + "/api/user/auth/requestCer";
+  return new Promise((resolve, reject) => {
+    axios
+      .post(
+        apiString,
+        {
+          email: email,
+          group_id: group_id,
+        },
+        {
+          headers: { "x-api-key": token },
+        }
+      )
+      .then((res) => {
+        console.log(res.data.status);
+        resolve(res.data.status);
+      })
+      .catch((err) => {
+        err.response
+          ? reject(err.response.data.Message)
+          : reject("No connection to our machines");
+        err.response
+          ? console.log("Error Code:", err.response.data.Code)
+          : console.log("No internet connection or database problem");
+      });
+  });
+};

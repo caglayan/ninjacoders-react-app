@@ -13,7 +13,7 @@ import Rater from "react-rater";
 import "react-rater/lib/react-rater.css";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
-import { findPublicCourseWithId } from "../../Api/courseApi";
+import { findAtomicCourse } from "../../Api/courseApi";
 import { Box } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
@@ -74,13 +74,12 @@ export default function CourseReviewCard(props) {
     return str;
   };
 
-  const downloadCourse = () => {
+  const downloadAtomicCourse = () => {
     console.log("downloadable: ", props.course_id);
     if (props.course_id) {
-      findPublicCourseWithId(props.course_id)
+      findAtomicCourse(props.course_id)
         .then((courseIn) => {
           setCourse(courseIn);
-          setIsWorking(false);
         })
         .catch((err) => {
           console.log(err);
@@ -88,131 +87,29 @@ export default function CourseReviewCard(props) {
     }
   };
   React.useEffect(() => {
-    if (props.isDownloadable) {
-      downloadCourse();
+    if (!course) {
+      downloadAtomicCourse();
+    } else {
+      setIsWorking(false);
     }
-  }, [props.isDownloadable]);
+  }, [course]);
 
   return (
     <div>
-      {course ? (
-        <div>
-          {isWorking ? (
-            <Grid
-              container
-              direction="row"
-              justify="center"
-              alignItems="center"
-            >
-              <Grid item>
-                <CircularProgress
-                  style={{ marginTop: "5vh", marginBottom: "5vh" }}
-                  color="primary"
-                  size={40}
-                />
-              </Grid>
-            </Grid>
-          ) : (
-            <Card
-              onClick={() => {
-                history.push("/course/" + course._id);
-              }}
-              className={classes.root}
-            >
-              <Grid
-                container
-                style={{ marginTop: 5, marginBottom: 5 }}
-                justify="space-between"
-                alignItems="center"
-                spacing={1}
-              >
-                <Grid style={{ marginLeft: 5 }} item>
-                  <Typography variant="body2" color="textSecondary">
-                    {course.statistics
-                      ? course.statistics.numberStudents
-                      : null}{" "}
-                    Öğrenci
-                  </Typography>
-                </Grid>
-                <Grid style={{ marginRight: 5 }} item>
-                  <Typography variant="body2" color="textSecondary">
-                    {course.statistics
-                      ? course.statistics.numberSections
-                      : null}{" "}
-                    Ders{" "}
-                    {course.statistics
-                      ? msToTime(course.statistics.duration)
-                      : null}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <CardMedia
-                className={classes.media}
-                image={course.thumbnail}
-                title="Course ThumbNail"
-              />
-              <CardContent>
-                <Grid
-                  container
-                  style={{ marginTop: 5, marginBottom: 5 }}
-                  direction="row"
-                  justify="space-between"
-                  alignItems="center"
-                >
-                  <Grid item xs={12}>
-                    <Box height="70px">
-                      <Typography variant="h6" color="textPrimary">
-                        {course.title}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography variant="body2" color="textSecondary">
-                      {course.instructor.givenName}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {course.instructor.familyName}
-                    </Typography>
-                  </Grid>
-                  <Grid
-                    style={{ marginTop: 5, alignItems: "right" }}
-                    item
-                    xs={6}
-                  >
-                    <Rater
-                      style={{ float: "right", display: "block" }}
-                      total={5}
-                      rating={
-                        course.statistics ? course.statistics.rating : null
-                      }
-                      interactive={false}
-                    >
-                      <Star />
-                    </Rater>
-                    <Typography
-                      style={{ float: "right", display: "block" }}
-                      align="right"
-                      variant="body2"
-                      color="textSecondary"
-                    >
-                      Puan:{" "}
-                      {course.statistics ? course.statistics.rating : null}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </CardContent>
-              {props.percentage ? (
-                <Box m={2} style={{ marginTop: 0 }}>
-                  <Progress percent={Math.floor(props.percentage * 100)} />
-                </Box>
-              ) : null}
-            </Card>
-          )}
-        </div>
+      {isWorking ? (
+        <Grid container direction="row" justify="center" alignItems="center">
+          <Grid item>
+            <CircularProgress
+              style={{ marginTop: "5vh", marginBottom: "5vh" }}
+              color="primary"
+              size={40}
+            />
+          </Grid>
+        </Grid>
       ) : (
         <Card
           onClick={() => {
-            history.push("/course/" + props._id);
+            history.push("/course/" + course._id);
           }}
           className={classes.root}
         >
@@ -225,20 +122,23 @@ export default function CourseReviewCard(props) {
           >
             <Grid style={{ marginLeft: 5 }} item>
               <Typography variant="body2" color="textSecondary">
-                {props.statistics ? props.statistics.numberStudents : null}{" "}
+                {course.statistics ? course.statistics.numberStudents : null}{" "}
                 Öğrenci
               </Typography>
             </Grid>
             <Grid style={{ marginRight: 5 }} item>
               <Typography variant="body2" color="textSecondary">
-                {props.statistics ? props.statistics.numberSections : null} Ders{" "}
-                {props.statistics ? msToTime(props.statistics.duration) : null}
+                {course.statistics ? course.statistics.numberSections : null}{" "}
+                Ders{" "}
+                {course.statistics
+                  ? msToTime(course.statistics.duration)
+                  : null}
               </Typography>
             </Grid>
           </Grid>
           <CardMedia
             className={classes.media}
-            image={props.thumbnail}
+            image={course.thumbnail}
             title="Course ThumbNail"
           />
           <CardContent>
@@ -252,23 +152,23 @@ export default function CourseReviewCard(props) {
               <Grid item xs={12}>
                 <Box height="70px">
                   <Typography variant="h6" color="textPrimary">
-                    {props.title}
+                    {course.title}
                   </Typography>
                 </Box>
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="body2" color="textSecondary">
-                  {props.instructor.givenName}
+                  {course.instructor.givenName}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  {props.instructor.familyName}
+                  {course.instructor.familyName}
                 </Typography>
               </Grid>
               <Grid style={{ marginTop: 5, alignItems: "right" }} item xs={6}>
                 <Rater
                   style={{ float: "right", display: "block" }}
                   total={5}
-                  rating={props.statistics ? props.statistics.rating : null}
+                  rating={course.statistics ? course.statistics.rating : null}
                   interactive={false}
                 >
                   <Star />
@@ -279,7 +179,7 @@ export default function CourseReviewCard(props) {
                   variant="body2"
                   color="textSecondary"
                 >
-                  Puan: {props.statistics ? props.statistics.rating : null}
+                  Puan: {course.statistics ? course.statistics.rating : null}
                 </Typography>
               </Grid>
             </Grid>

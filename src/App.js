@@ -25,6 +25,7 @@ import SignUpDialog from "./LAYOUT/Dialogs/SignUpDialog";
 import QuestionDialog from "./LAYOUT/Dialogs/QuestionDialog";
 import CommentDialog from "./LAYOUT/Dialogs/CommentDialog";
 import FinishVideoDialog from "./LAYOUT/Dialogs/FinishVideoDialog";
+import CertificateRequestDialog from "./LAYOUT/Dialogs/CertificateRequestDialog";
 import configureStore from "./Redux/Store/configStore";
 import {
   startCreateUserLocal,
@@ -119,6 +120,10 @@ export default function App() {
   const [commentDialogIsActive, setCommentDialogIsActive] = React.useState(
     false
   );
+  const [
+    certificateDialogGroupId,
+    setCertificateDialogGroupId,
+  ] = React.useState("");
 
   const closeDialogs = () => {
     console.log("Close all Dialogs");
@@ -127,6 +132,7 @@ export default function App() {
     setQuestionDialogIsActive(false);
     setCommentDialogIsActive(false);
     setFinishVideoDialogIsActive(false);
+    setCertificateDialogGroupId("");
   };
 
   const openSignInDialog = () => {
@@ -145,6 +151,12 @@ export default function App() {
     closeDialogs();
     console.log("Question Button is clicked");
     setQuestionDialogIsActive(true);
+  };
+
+  const openCertificateDialog = (_id) => {
+    closeDialogs();
+    console.log("Certificate Dialog is clicked");
+    setCertificateDialogGroupId(_id);
   };
 
   const openCommentDialog = () => {
@@ -220,6 +232,7 @@ export default function App() {
               sideLeftMenuOpen={handleOpenLeftSideMenu}
             />
             <BodyArea
+              certificateOpenId={openCertificateDialog}
               askQuestionOpen={openQuestionDialog}
               makeCommentOpen={openCommentDialog}
               finishVideoOpen={openFinishVideoDialog}
@@ -246,6 +259,12 @@ export default function App() {
             />
             <CommentDialog
               isActive={commentDialogIsActive}
+              closeDialog={closeDialogs}
+              showMessages={showMessages}
+            />
+            <CertificateRequestDialog
+              isActive={certificateDialogGroupId != ""}
+              groupId={certificateDialogGroupId}
               closeDialog={closeDialogs}
               showMessages={showMessages}
             />
