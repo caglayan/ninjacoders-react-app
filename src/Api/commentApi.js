@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const url = "http://localhost:4000";
-//const url = "https://ninjaoders-backend.herokuapp.com";
+// const url = "http://localhost:4000";
+const url = "https://ninjaoders-backend.herokuapp.com";
 
 export const pullComments = (skip, limit, courseId) => {
   console.log("Pull Comments Api");
