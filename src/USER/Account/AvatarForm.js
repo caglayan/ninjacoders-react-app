@@ -71,9 +71,11 @@ const AvatarForm = (props) => {
               spacing={3}
             >
               <Grid item xs={12}>
-                <Typography variant="h5">Update Profile Picture</Typography>
+                <Typography variant="h5">
+                  Profil Resminizi Güncelleyin.
+                </Typography>
                 <Typography variant="subtitle2">
-                  You can update your profile image.
+                  Buradan profil resminizi güncelleyebilirsiniz.
                 </Typography>
               </Grid>
               <Avatar
@@ -147,7 +149,7 @@ const AvatarForm = (props) => {
                     }
                   >
                     {isSubmitting && <CircularProgress size={18} />}
-                    {!isSubmitting && "Update"}
+                    {!isSubmitting && "Güncelle"}
                   </Button>
                 </Box>
               </Grid>

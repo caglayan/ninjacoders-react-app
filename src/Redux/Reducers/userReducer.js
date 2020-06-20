@@ -1,6 +1,6 @@
 const userDefaultState = {
   _id: "",
-  premium: false,
+  premiumCourseGroups: [],
   registeredCourses: [],
 };
 

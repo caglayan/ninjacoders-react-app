@@ -197,11 +197,12 @@ const Header = (props) => {
             {props._id != "" ? signComponent : notSignComponent}
             {props._id != "" ? (
               <Button
+                onClick={props.sideRightMenuOpen}
                 className={classes.PremiumButton}
                 variant="contained"
-                color="secondary"
+                color="primary"
               >
-                Go Premium
+                Menü
               </Button>
             ) : null}
           </Toolbar>

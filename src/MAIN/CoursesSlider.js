@@ -14,6 +14,9 @@ import Carousel, { Dots } from "@brainhubeu/react-carousel";
 import { useHistory } from "react-router-dom";
 import "@brainhubeu/react-carousel/lib/style.css";
 import { findCourseGroup } from "../Api/applicationApi";
+import BuyButton from "../Components/BuyButton/BuyButton";
+import BuyButtonMobile from "../Components/BuyButton/BuyButtonMobile";
+import CourseGroupButton from "../Components/BuyButton/CourseGroupButton";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -61,6 +64,7 @@ const CourseCrousel = (props) => {
       findCourseGroupIn();
     } else {
       console.log(courseGroup);
+
       setIsWorking(false);
     }
   }, [courseGroup]);
@@ -157,77 +161,33 @@ const CourseCrousel = (props) => {
             justify="center"
             alignItems="center"
             spacing={2}
+            style={{ marginTop: "5px" }}
           >
-            <Grid item>
-              <Button
-                className={classes.mapButton}
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  history.push(`/coursemap/` + courseGroup._id);
-                }}
-              >
-                <Typography variant="body1" style={{ marginRight: "5px" }}>
-                  Bütün {courseGroup ? courseGroup.shortName : null} ve
-                  Sertifikaya gözat
-                </Typography>
-              </Button>
+            <Grid className={classes.sectionDesktop} item>
+              <CourseGroupButton
+                courseGroup={courseGroup}
+                width={550}
+              ></CourseGroupButton>
             </Grid>
-            <Grid item>
-              <Button
-                className={classes.PremiumButton}
-                variant="contained"
-                color="secondary"
-                onClick={() => {
-                  history.push("/user/checkout?courseGroup=" + courseGroup._id);
-                }}
-              >
-                <Typography variant="body1" style={{ marginRight: "5px" }}>
-                  Tüm {courseGroup ? courseGroup.shortName : null} + Sertifika:
-                </Typography>
-                <Typography variant="h6">
-                  {courseGroup
-                    ? (courseGroup.price.base * (1 - courseGroup.price.sale))
-                        .toFixed(2)
-                        .toString()
-                        .replace(".", ",")
-                    : null}{" "}
-                  ₺
-                </Typography>
-                {courseGroup.price.isSale ? (
-                  <div>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      style={{
-                        marginLeft: "10px",
-                      }}
-                    >
-                      %{" "}
-                      {courseGroup
-                        ? (courseGroup.price.sale * 100).toString()
-                        : null}{" "}
-                      indirim
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      style={{
-                        marginLeft: "10px",
-                        textDecoration: "line-through",
-                      }}
-                    >
-                      {courseGroup
-                        ? courseGroup.price.base
-                            .toFixed(2)
-                            .toString()
-                            .replace(".", ",")
-                        : null}{" "}
-                      ₺
-                    </Typography>
-                  </div>
-                ) : null}
-              </Button>
+            <Grid className={classes.sectionMobile} item>
+              <CourseGroupButton
+                courseGroup={courseGroup}
+                width={300}
+              ></CourseGroupButton>
+            </Grid>
+            <Grid item className={classes.sectionDesktop}>
+              <BuyButton
+                premiumCourseGroups={props.premiumCourseGroups}
+                courseGroup={courseGroup}
+                width={550}
+              ></BuyButton>
+            </Grid>
+            <Grid className={classes.sectionMobile} item>
+              <BuyButtonMobile
+                premiumCourseGroups={props.premiumCourseGroups}
+                courseGroup={courseGroup}
+                width={300}
+              ></BuyButtonMobile>
             </Grid>
           </Grid>
         </div>
@@ -236,10 +196,12 @@ const CourseCrousel = (props) => {
   );
 };
 
-const CourseCrouselCon = connect((state) => ({
-  _id: state.userReducer._id,
-  premium: state.userReducer.premium,
-  registeredCourses: state.userReducer.registeredCourses,
-}))(CourseCrousel);
+const CourseCrouselCon = connect((state) => {
+  return {
+    _id: state.userReducer._id,
+    premiumCourseGroups: state.userReducer.premiumCourseGroups,
+    registeredCourses: state.userReducer.registeredCourses,
+  };
+})(CourseCrousel);
 
 export default CourseCrouselCon;

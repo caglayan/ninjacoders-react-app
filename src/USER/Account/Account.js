@@ -102,30 +102,30 @@ const Account = (props) => {
             button
             key="account"
           >
-            <ListItemText primary="Your Profile" />
+            <ListItemText primary="Hesap Ayarları" />
           </ListItem>
           <ListItem
             component={NavLink}
             exact
-            to="/user/avatar"
+            to="/user/account/avatar"
             activeClassName={classes.ListItemActive}
             button
             key="avatar"
           >
-            <ListItemText primary="Your Avatar" />
+            <ListItemText primary="Profil Resmi" />
           </ListItem>
           <ListItem
             component={NavLink}
             exact
-            to="/user/password"
+            to="/user/account/password"
             activeClassName={classes.ListItemActive}
             button
             key="password"
           >
-            <ListItemText primary="Password" />
+            <ListItemText primary="Şifre Değiştir " />
           </ListItem>
           <ListItem onClick={logoutUser} button key="25">
-            <ListItemText primary="Sign out" />
+            <ListItemText primary="Çıkış" />
           </ListItem>
         </List>
       </Grid>
@@ -139,14 +139,14 @@ const Account = (props) => {
             )}
           />
           <Route
-            path="/user/avatar"
+            path="/user/account/avatar"
             exact={true}
             render={(prop) => (
               <AvatarForm {...prop} showMessages={props.showMessages} />
             )}
           />
           <Route
-            path="/user/password"
+            path="/user/account/password"
             exact={true}
             render={(prop) => (
               <PasswordForm {...prop} showMessages={props.showMessages} />
@@ -176,14 +176,14 @@ const Account = (props) => {
             )}
           />
           <Route
-            path="/user/avatar"
+            path="/user/account/avatar"
             exact={true}
             render={(prop) => (
               <AvatarForm {...prop} showMessages={props.showMessages} />
             )}
           />
           <Route
-            path="/user/password"
+            path="/user/account/password"
             exact={true}
             render={(prop) => (
               <PasswordForm {...prop} showMessages={props.showMessages} />

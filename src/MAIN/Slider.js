@@ -56,14 +56,14 @@ export default function SimpleSlide() {
   const classes = useStyles();
   const history = useHistory();
   const [checked, setChecked] = React.useState(false);
-  const [direction, setDirection] = React.useState("left");
+  const [direction, setDirection] = React.useState("right");
 
   React.useEffect(() => {
     setInterval(() => {
       setChecked((prev) => !prev);
       setDirection((prev) => {
         if (prev == "right") {
-          return "left";
+          return "right";
         } else {
           return "right";
         }
@@ -112,51 +112,18 @@ export default function SimpleSlide() {
               <Grid item>
                 <Typography
                   style={{ color: "white" }}
-                  variant="h6"
-                  component="h6"
+                  variant="h4"
+                  component="h4"
                 >
                   Ufkunuzu açın,
                 </Typography>
                 <Typography
-                  style={{ color: "white" }}
-                  variant="h6"
-                  component="h6"
+                  style={{ color: "white", marginTop: 5 }}
+                  variant="h5"
+                  component="h5"
                 >
                   yüzlerce yazılım ve robotik dersini uzaktan öğrenin.
                 </Typography>
-                <Button
-                  className={classes.PremiumButton}
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => {
-                    history.push(`/user/checkout/TATIL`);
-                  }}
-                >
-                  <Typography variant="body1" style={{ marginRight: "5px" }}>
-                    6 Aylık Üyelik:
-                  </Typography>
-                  <Typography variant="h6"> 24 ₺</Typography>
-
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    style={{
-                      marginLeft: "10px",
-                    }}
-                  >
-                    %66 indirim
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    style={{
-                      marginLeft: "10px",
-                      textDecoration: "line-through",
-                    }}
-                  >
-                    72 ₺
-                  </Typography>
-                </Button>
               </Grid>
               <Grid item></Grid>
             </Grid>
@@ -181,52 +148,19 @@ export default function SimpleSlide() {
               <Grid item>
                 <Typography
                   style={{ color: "white" }}
-                  variant="h6"
-                  component="h6"
+                  variant="h4"
+                  component="h4"
                 >
                   NinjaCoders ile geleceği kodlayın,
                 </Typography>
                 <Typography
-                  style={{ color: "white" }}
-                  variant="h6"
-                  component="h6"
+                  style={{ color: "white", marginTop: 5 }}
+                  variant="h5"
+                  component="h5"
                 >
                   Alanında en başarılı eğitmenler ile üretin, eğlenin ve
                   hayallerinize ulaşın.
                 </Typography>
-                <Button
-                  className={classes.PremiumButton}
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => {
-                    history.push(`/user/checkout/TATIL`);
-                  }}
-                >
-                  <Typography variant="body1" style={{ marginRight: "5px" }}>
-                    6 Aylık Üyelik:
-                  </Typography>
-                  <Typography variant="h6"> 24 ₺</Typography>
-
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    style={{
-                      marginLeft: "10px",
-                    }}
-                  >
-                    %66 indirim
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    style={{
-                      marginLeft: "10px",
-                      textDecoration: "line-through",
-                    }}
-                  >
-                    72 ₺
-                  </Typography>
-                </Button>
               </Grid>
               <Grid item></Grid>
             </Grid>

@@ -187,13 +187,12 @@ const QuestionTab = (props) => {
 };
 
 const QuestionTabCon = connect((state) => ({
-  premium: state.userReducer.premium,
+  premium: state.courseReducer.isPremium,
   _id: state.userReducer._id,
   token: state.userReducer.token,
   avatarImage: state.userReducer.avatarImage,
   course_id: state.courseReducer._id,
   isUpdating: state.questionReducer.isUpdating,
-  premium: state.userReducer.premium,
 }))(QuestionTab);
 
 export default QuestionTabCon;

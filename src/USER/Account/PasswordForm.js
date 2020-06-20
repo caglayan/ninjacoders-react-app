@@ -72,21 +72,22 @@ const PasswordForm = (props) => {
       }) => (
         <Container maxWidth="sm">
           <form style={{ width: "100%" }} onSubmit={handleSubmit}>
-            <Typography variant="h5">Change Password</Typography>
+            <Typography variant="h5">Şifreni Değiştir.</Typography>
             <Typography variant="subtitle2">
               <List dense={true}>
-                In order to protect your account, make sure your password:
+                Hesabınızı güvende tutmak için, şifreniz
                 <ListItem>
                   <ListItemIcon>
                     <LensIcon style={{ fontSize: 10 }} />
                   </ListItemIcon>
-                  Is longer than 5 characters.
+                  5 karakterden uzun olmalıdır.
                 </ListItem>
                 <ListItem>
                   <ListItemIcon>
                     <LensIcon style={{ fontSize: 10 }} />
                   </ListItemIcon>
-                  Does not match or significantly contain your username.
+                  email adresinizle, isminizle ve soyisiminizle ilişkili
+                  olmamalıdır.
                 </ListItem>
               </List>
             </Typography>
@@ -101,7 +102,7 @@ const PasswordForm = (props) => {
                 <TextField
                   error={errors.pass1 != null && touched.pass1}
                   helperText={errors.pass1 && touched.pass1 && errors.pass1}
-                  label="New Password"
+                  label="Yeni şifre"
                   fullWidth
                   name="pass1"
                   type="password"
@@ -117,7 +118,7 @@ const PasswordForm = (props) => {
                 <TextField
                   error={errors.pass2 != null && touched.pass2}
                   helperText={errors.pass2 && touched.pass2 && errors.pass2}
-                  label="Re-enter Your New Password"
+                  label="Şifrenizi tekrar girin"
                   fullWidth
                   name="pass2"
                   id="pass2"
@@ -143,7 +144,7 @@ const PasswordForm = (props) => {
                   }
                 >
                   {isSubmitting && <CircularProgress size={18} />}
-                  {!isSubmitting && "Change Password"}
+                  {!isSubmitting && "Güncelle"}
                 </Button>
               </Box>
             </Grid>

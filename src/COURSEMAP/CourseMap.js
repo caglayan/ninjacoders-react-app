@@ -95,6 +95,8 @@ const CourseMap = (props) => {
             title={courseGroup.CM.title}
             desc={courseGroup.CM.desc}
             premium={props._id != "" && props.premium}
+            courseGroup={courseGroup}
+            premiumCourseGroups={props.premiumCourseGroups}
           ></TextAreaStart>
           <Grid style={{ marginTop: 100 }} item xs={12} md={4}>
             <Timeline
@@ -161,6 +163,7 @@ const CourseMap = (props) => {
 const CourseMapCon = connect((state) => ({
   _id: state.userReducer._id,
   premium: state.userReducer.premium,
+  premiumCourseGroups: state.userReducer.premiumCourseGroups,
   registeredCourses: state.userReducer.registeredCourses,
 }))(CourseMap);
 

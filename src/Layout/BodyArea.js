@@ -13,6 +13,7 @@ import CreatePassPage from "./Pages/CreatePassPage";
 import AccountPage from "../USER/Account/Account";
 import QuestionsPage from "../USER/Questions/Questions";
 import CourseMapUserPage from "../USER/CourseMap/CourseMap";
+import SuccessPaymentPage from "../USER/SuccessPayment/SuccessPayment";
 import CoursePage from "../COURSE/CourseMain";
 import MainPage from "../MAIN/Main";
 import MyCoursesPage from "../USER/Courses/Courses";
@@ -129,6 +130,20 @@ function BodyArea(propsGeneral) {
                     queryString.parse(props.location.search).courseGroup
                   }
                 />
+              );
+            }}
+          />
+          <Route
+            path="/user/success/"
+            exact={true}
+            render={(props) => {
+              return checkLogin() ? (
+                <SuccessPaymentPage
+                  {...props}
+                  showMessages={propsGeneral.showMessages}
+                />
+              ) : (
+                <Redirect to={"/signin?via=/"} />
               );
             }}
           />

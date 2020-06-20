@@ -97,7 +97,7 @@ const SideMenu = (props) => {
   );
   const desktopOptimizedMenu = (
     <List className={classes.menuDesktop}>
-      <ListItem component={NavLink} to="/user" button key="11">
+      <ListItem component={NavLink} to="/user/account" button key="11">
         <ListItemAvatar>
           <Avatar
             onClick={props.sideMenuOpen}
@@ -169,19 +169,6 @@ const SideMenu = (props) => {
         key="12"
       >
         <ListItemText primary="Sertifikalar" />
-      </ListItem>
-      <ListItem
-        selected={selectedItem == 4}
-        onClick={() => {
-          console.log(selectedItem);
-          selectItem(4);
-        }}
-        component={NavLink}
-        to="/premium"
-        button
-        key="16"
-      >
-        <ListItemText primary="Premium Ol" />
       </ListItem>
       <Divider />
       <ListItem

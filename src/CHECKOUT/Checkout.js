@@ -12,12 +12,13 @@ import {
   LinearProgress,
   Button,
 } from "@material-ui/core";
-
+import { connect } from "react-redux";
 import VideoLibrary from "@material-ui/icons/VideoLibrary";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import CouponForm from "./CouponForm";
-import Iyzico from "./Iyzico";
+import IyzicoWithoutCode from "./IyzicoWithoutCode";
+import IyzicoWithCode from "./IyzicoWithCode";
 import queryString from "query-string";
 import { useHistory } from "react-router-dom";
 import { findCourseGroup } from "../Api/applicationApi";
@@ -59,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NotFoundPage(props) {
+const CheckoutPage = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const [totalPrice, setTotalPrice] = React.useState(0);
@@ -77,6 +78,12 @@ export default function NotFoundPage(props) {
     findCourseGroup(queryString.parse(props.location.search).courseGroup) // skip limit
       .then((courseGroup) => {
         setCourseGroup(courseGroup);
+        props.premiumCourseGroups.map((premiumCourseGroup, index) => {
+          if (premiumCourseGroup.courseGroup_id == courseGroup._id) {
+            props.showMessages(1, "Bu dersi daha önce satın aldınız.");
+            history.push("/coursemap/" + courseGroup._id);
+          }
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -89,6 +96,9 @@ export default function NotFoundPage(props) {
     if (!courseGroup) {
       findCourseGroupIn();
     } else {
+      if (queryString.parse(props.location.search).error) {
+        props.showMessages(2, queryString.parse(props.location.search).error);
+      }
       setIsWorking(false);
       if (courseGroup.price.isSale) {
         setTotalPrice(
@@ -106,7 +116,7 @@ export default function NotFoundPage(props) {
     setProgressVisible(true);
     findSaleCode(courseGroup._id, "sale", formValues.coupon)
       .then((code) => {
-        console.log(code);
+        //console.log(code);
         setSaleCode(code);
         setTotalPrice(
           courseGroup.price.base - courseGroup.price.base * code.sale
@@ -347,7 +357,16 @@ export default function NotFoundPage(props) {
                   )}
                 </Box>
               </Paper>
-              <Iyzico></Iyzico>
+              {saleCode ? (
+                <IyzicoWithCode
+                  codeName={saleCode.name}
+                  courseGroupId={courseGroup._id}
+                ></IyzicoWithCode>
+              ) : (
+                <IyzicoWithoutCode
+                  courseGroupId={courseGroup._id}
+                ></IyzicoWithoutCode>
+              )}
             </Grid>
             <Grid item sm={6}>
               <Paper className={classes.paperNews} elevation={0}>
@@ -434,4 +453,14 @@ export default function NotFoundPage(props) {
       )}
     </div>
   );
-}
+};
+
+const CheckoutPageCon = connect((state) => {
+  return {
+    user_id: state.userReducer._id,
+    token: state.userReducer.token,
+    premiumCourseGroups: state.userReducer.premiumCourseGroups,
+  };
+})(CheckoutPage);
+
+export default CheckoutPageCon;

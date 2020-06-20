@@ -183,7 +183,7 @@ const DescriptionPanelCon = connect((state) => ({
   chapters: state.courseReducer.chapters,
   shoppingCart: state.userReducer.shoppingCart,
   token: state.userReducer.token,
-  premium: state.userReducer.premium,
+  premium: state.courseReducer.isPremium,
 }))(DescriptionPanel);
 
 export default DescriptionPanelCon;

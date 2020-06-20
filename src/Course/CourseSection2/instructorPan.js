@@ -7,11 +7,15 @@ import {
   Divider,
   Box,
   Paper,
+  Button,
 } from "@material-ui/core/";
 import InstStat from "../../Components/CourseHelpers/InstStat";
-import { Person, ThumbUp, SignalCellularAltTwoTone } from "@material-ui/icons";
+import "./instructorPan.css";
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    maxHeight: theme.spacing(100),
+  },
   avatar: {
     width: 80,
     height: 80,
@@ -27,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function InstPanel(props) {
   const classes = useStyles();
-
+  const [descHeight, setDescHeight] = React.useState(100);
   return (
     <Paper elevation={0} className={classes.paper}>
       <Grid
@@ -49,9 +53,12 @@ export default function InstPanel(props) {
           </Avatar>
         </Grid>
         <Grid item>
-          <Typography variant="body2">
+          <Typography align="center" variant="body2">
             {props.givenName ? props.givenName + " " + props.familyName : null}
           </Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant="body2"></Typography>
           <Typography align="center" variant="body2">
             {props.title}
           </Typography>
@@ -69,15 +76,36 @@ export default function InstPanel(props) {
             <InstStat coursesNo={props.coursesNo}>></InstStat>
           </Grid>
           <Grid style={{ height: "50px" }} item sm={3} xs={3}>
-            <InstStat rating={props.rating}>></InstStat>
+            <InstStat rating={props.rating}></InstStat>
           </Grid>
         </Grid>
         <Divider style={{ marginTop: "30px" }} variant="middle" />
         <Grid item xs={12}>
-          <Box mx={4} my={1}>
-            <Typography variant="body2" component="h1">
+          <Box
+            mx={4}
+            overflow="hidden"
+            my={1}
+            style={{ textOverflow: "ellipsis", height: descHeight }}
+            class={descHeight ? "article" : ""}
+          >
+            <Typography variant="body2" component="p">
               {props.description}
             </Typography>
+          </Box>
+          <Box textAlign="center" m={1}>
+            <Button
+              onClick={() => {
+                if (!descHeight) {
+                  setDescHeight(100);
+                } else {
+                  setDescHeight(null);
+                }
+              }}
+              color="primary"
+              type="submit"
+            >
+              {descHeight ? "Devamı" : "Kapat"}
+            </Button>
           </Box>
         </Grid>
       </Grid>

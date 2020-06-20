@@ -19,6 +19,7 @@ export const updateCourse = ({
   isBelongNinja = false,
   numberOfSections = 0,
   group_id = "",
+  isPremium = false,
   __v = 0,
 } = {}) => ({
   type: "UPDATE_COURSE",
@@ -43,6 +44,7 @@ export const updateCourse = ({
     isBelongNinja,
     numberOfSections,
     group_id,
+    isPremium,
   },
 });
 

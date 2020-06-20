@@ -9,6 +9,7 @@ export const updateUser = ({
   premium = false,
   shoppingCart = [],
   registeredCourses = [],
+  premiumCourseGroups = [],
 } = {}) => ({
   type: "UPDATE_USER",
   user: {
@@ -22,6 +23,7 @@ export const updateUser = ({
     shoppingCart,
     premium,
     registeredCourses,
+    premiumCourseGroups,
   },
 });
 
@@ -29,7 +31,7 @@ export const removeUser = () => ({
   type: "REMOVE_USER",
   user: {
     _id: "",
-    premium: false,
+    premiumCourseGroups: [],
     registeredCourses: [],
   },
 });

@@ -10,6 +10,7 @@ import {
   UpdateUserPasswordApi,
   LoginGoogleApi,
   finishWatchVideoApi,
+  checkTokenApi,
 } from "../../Api/userApi";
 import jwtDecode from "jwt-decode";
 
@@ -83,10 +84,32 @@ export const startCreateUserLoginGoogle = (googleId) => {
   };
 };
 
+export const startCreateUserWithToken = (token) => {
+  return (dispatch) => {
+    return new Promise(function (resolve, reject) {
+      checkTokenApi(token)
+        .then((response) => {
+          dispatch(updateUser(response.user));
+          userSaveLocal(response.user);
+          resolve(response.Message);
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  };
+};
+
 export const startCreateUserLocal = (dispatch) => {
   const user = userFetchLocal();
   if (user) {
-    var decodedToken = jwtDecode(user.token);
+    try {
+      var decodedToken = jwtDecode(user.token);
+    } catch (error) {
+      return null;
+    }
+
     const now = new Date();
     if (now.getTime() > decodedToken.exp * 1000) {
       return null;

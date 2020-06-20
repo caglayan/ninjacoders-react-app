@@ -121,7 +121,7 @@ const CommentTab = (props) => {
 const CommentTabCon = connect((state) => ({
   course_id: state.courseReducer._id,
   isUpdating: state.commentReducer.isUpdating,
-  premium: state.userReducer.premium,
+  premium: state.courseReducer.isPremium,
 }))(CommentTab);
 
 export default CommentTabCon;

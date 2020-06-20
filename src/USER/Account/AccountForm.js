@@ -86,12 +86,15 @@ const AccountForm = (props) => {
               spacing={3}
             >
               <Grid item xs={12}>
-                <Typography variant="h5">Update Your Profile</Typography>
+                <Typography variant="h5">Profilinizi Güncelleyin.</Typography>
+                <Typography variant="subtitle2">
+                  Profilinizi buradan güncelleyebilirsiniz.
+                </Typography>
               </Grid>
               <Grid item xs={6}>
                 <TextField
                   error={errors.givenName != null && touched.givenName}
-                  label="First Name"
+                  label="İsim"
                   fullWidth
                   name="givenName"
                   id="givenName"
@@ -108,7 +111,7 @@ const AccountForm = (props) => {
               <Grid item xs={6}>
                 <TextField
                   error={errors.familyName != null && touched.familyName}
-                  label="Last Name"
+                  label="Soyisim"
                   fullWidth
                   name="familyName"
                   id="familyName"
@@ -125,7 +128,7 @@ const AccountForm = (props) => {
               <Grid item xs={12}>
                 <TextField
                   error={errors.email != null && touched.email}
-                  label="Email"
+                  label="E-mail"
                   disabled
                   fullWidth
                   id="email"
@@ -154,7 +157,7 @@ const AccountForm = (props) => {
                     }
                   >
                     {isSubmitting && <CircularProgress size={18} />}
-                    {!isSubmitting && "Update"}
+                    {!isSubmitting && "Güncelle"}
                   </Button>
                 </Box>
               </Grid>

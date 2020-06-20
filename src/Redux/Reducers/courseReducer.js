@@ -2,6 +2,7 @@ const courseDefaultState = {
   _id: "",
   name: "",
   isBelongNinja: false,
+  isPremium: false,
 };
 
 const courseReducer = (state = courseDefaultState, action) => {

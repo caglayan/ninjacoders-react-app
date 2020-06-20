@@ -44,15 +44,18 @@ const SideMenu = (props) => {
       <ListItem component={NavLink} to="/" button key="menu2">
         <ListItemText primary="Anasayfa" />
       </ListItem>
-      <ListItem component={NavLink} to="/user/avatar" button key="menu3">
-        <ListItemText primary="Scratch ile kodlama dersleri" />
+      <ListItem component={NavLink} to="/help" button key="menu4">
+        <ListItemText primary="Yardım" />
       </ListItem>
-      <ListItem component={NavLink} to="/user/password" button key="menu4">
-        <ListItemText primary="Arduino ile Robotik dersleri" />
+      <ListItem component={NavLink} to="/about-us" button key="menu5">
+        <ListItemText primary="Biz kimiz?" />
       </ListItem>
       <Divider />
-      <ListItem component={NavLink} to="/help" button key="menu5">
-        <ListItemText primary="Biz kimiz?" />
+      <ListItem component={NavLink} to="/privacy-policy" button key="menu3">
+        <ListItemText primary="Gizlilik Sözleşmesi" />
+      </ListItem>
+      <ListItem component={NavLink} to="/service-policy" button key="menu3">
+        <ListItemText primary="Kullanıcı Sözleşmesi" />
       </ListItem>
     </List>
   );

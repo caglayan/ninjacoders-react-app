@@ -9,6 +9,8 @@ import {
 } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
+import BuyButton from "../Components/BuyButton/BuyButton";
+import BuyButtonMobile from "../Components/BuyButton/BuyButtonMobile";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -21,6 +23,18 @@ const useStyles = makeStyles((theme) => ({
   PremiumButton: {
     borderRadius: 50,
     marginTop: theme.spacing(4),
+  },
+  sectionDesktop: {
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+    },
+  },
+  sectionMobile: {
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
   },
 }));
 
@@ -55,42 +69,27 @@ export default function TextArea(props) {
             {props.desc}
           </Typography>
         </Grid>
-        <Grid item>
-          {!props.premium ? (
-            <Button
-              className={classes.PremiumButton}
-              variant="contained"
-              color="secondary"
-              onClick={() => {
-                history.push(`/user/checkout/TATIL`);
-              }}
-            >
-              <Typography variant="body1" style={{ marginRight: "5px" }}>
-                6 Aylık Üyelik:
-              </Typography>
-              <Typography variant="h6"> 24 ₺</Typography>
-
-              <Typography
-                variant="body2"
-                color="textSecondary"
-                style={{
-                  marginLeft: "10px",
-                }}
-              >
-                %66 indirim
-              </Typography>
-              <Typography
-                variant="body2"
-                color="textSecondary"
-                style={{
-                  marginLeft: "10px",
-                  textDecoration: "line-through",
-                }}
-              >
-                72 ₺
-              </Typography>
-            </Button>
-          ) : null}
+        <Grid
+          item
+          style={{ marginTop: "30px" }}
+          className={classes.sectionDesktop}
+        >
+          <BuyButton
+            premiumCourseGroups={props.premiumCourseGroups}
+            courseGroup={props.courseGroup}
+            width={550}
+          ></BuyButton>
+        </Grid>
+        <Grid
+          style={{ marginTop: "30px" }}
+          className={classes.sectionMobile}
+          item
+        >
+          <BuyButtonMobile
+            premiumCourseGroups={props.premiumCourseGroups}
+            courseGroup={props.courseGroup}
+            width={300}
+          ></BuyButtonMobile>
         </Grid>
       </Grid>
     </Container>

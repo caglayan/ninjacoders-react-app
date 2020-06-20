@@ -1,17 +1,17 @@
 import axios from "axios";
 import ls from "local-storage";
 
-// const url = "http://localhost:4000";
-const url = "https://ninjaoders-backend.herokuapp.com";
+const url = "http://localhost:4000";
+//const url = "https://ninjaoders-backend.herokuapp.com";
 
-export const pullPaymentForm = (token) => {
+export const pullPaymentForm = (token, group_id, code_name) => {
   console.log("Pull Payment Form Api");
   const apiString = url + "/api/checkout/auth/payment";
   return new Promise((resolve, reject) => {
     axios
       .post(
         apiString,
-        {},
+        { group_id, code_name },
         {
           headers: { "x-api-key": token },
         }

@@ -195,7 +195,7 @@ const CourseVideoContent = (props) => {
                 </div>
               ) : (
                 <div className={classes.PremiumArea}>
-                  <PremiumPanel></PremiumPanel>
+                  <PremiumPanel courseGroup={props.courseGroup}></PremiumPanel>
                 </div>
               )}
             </Grid>
@@ -231,9 +231,13 @@ const CourseVideoContent = (props) => {
             >
               <ListPanel
                 registeredCourse={props.registeredCourse}
-                courseDuration={props.courseDuration}
+                courseDuration={
+                  props.statistics ? props.statistics.duration : null
+                }
                 currentVideoIsPlaying={currentVideoIsPlaying}
-                numberOfVideos={props.numberOfVideos}
+                numberOfVideos={
+                  props.statistics ? props.statistics.numberSections : null
+                }
                 courseChapters={props.chapters}
                 listState={listState}
                 changeVideo={playVideo}
@@ -247,6 +251,7 @@ const CourseVideoContent = (props) => {
             abilities={props.abilities}
             statistics={props.statistics}
             group_id={props.group_id}
+            courseGroup={props.courseGroup}
           ></DetailPanel>
         </div>
       )}
@@ -276,7 +281,7 @@ const CourseVideoContentCon = connect((state) => {
     numberOfVideos: state.courseReducer.numberOfSections,
     chapters: state.courseReducer.chapters,
     abilities: state.courseReducer.abilities,
-    premium: state.userReducer.premium,
+    premium: state.courseReducer.isPremium,
     statistics: state.courseReducer.statistics,
     group_id: state.courseReducer.group_id,
     registeredCourse,
