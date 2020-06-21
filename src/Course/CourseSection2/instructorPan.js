@@ -27,6 +27,18 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "100%",
     backgroundColor: theme.palette.grey[100],
   },
+  sectionDesktop: {
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+    },
+  },
+  sectionMobile: {
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
+  },
 }));
 
 export default function InstPanel(props) {
@@ -80,7 +92,7 @@ export default function InstPanel(props) {
           </Grid>
         </Grid>
         <Divider style={{ marginTop: "30px" }} variant="middle" />
-        <Grid item xs={12}>
+        <Grid item className={classes.sectionDesktop} xs={12}>
           <Box
             mx={4}
             overflow="hidden"
@@ -92,6 +104,8 @@ export default function InstPanel(props) {
               {props.description}
             </Typography>
           </Box>
+        </Grid>
+        <Grid item className={classes.sectionDesktop} xs={12}>
           <Box textAlign="center" m={1}>
             <Button
               onClick={() => {
@@ -106,6 +120,19 @@ export default function InstPanel(props) {
             >
               {descHeight ? "Devamı" : "Kapat"}
             </Button>
+          </Box>
+        </Grid>
+
+        <Grid item className={classes.sectionMobile} xs={12}>
+          <Box
+            mx={4}
+            overflow="hidden"
+            my={1}
+            style={{ textOverflow: "ellipsis" }}
+          >
+            <Typography variant="body2" component="p">
+              {props.description}
+            </Typography>
           </Box>
         </Grid>
       </Grid>

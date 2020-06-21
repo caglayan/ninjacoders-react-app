@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
   PremiumButton: {
     borderRadius: 20,
-    height: 35,
+    height: 40,
     width: 350,
   },
 }));

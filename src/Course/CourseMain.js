@@ -10,8 +10,19 @@ import { removeCourseUserComment } from "../Redux/Selectors/commentSelector";
 import { connect } from "react-redux";
 import BottomMobile from "./BottomMobile";
 import { findCourseGroup } from "../Api/applicationApi";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    maxWidth: "100%",
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: "99%",
+    },
+  },
+}));
 
 const CourseContainer = (props) => {
+  const classes = useStyles();
   const [courseGroup, setCourseGroup] = React.useState();
 
   const findCourseGroupIn = () => {
@@ -75,7 +86,7 @@ const CourseContainer = (props) => {
   }, [props.user_id]);
 
   return (
-    <div>
+    <div className={classes.container}>
       <CourseSection1 courseGroup={courseGroup} {...props}></CourseSection1>
       <CourseSection2 {...props}></CourseSection2>
       <CourseSection3 {...props}></CourseSection3>

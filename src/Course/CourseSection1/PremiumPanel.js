@@ -9,6 +9,11 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 50,
     marginTop: theme.spacing(4),
   },
+  sectionDesktop: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
 }));
 
 const PremiumPanel = (props) => {
@@ -41,7 +46,11 @@ const PremiumPanel = (props) => {
           dersi satın alın.
         </Typography>
       </Grid>
-      <Grid item style={{ marginTop: "20px" }}>
+      <Grid
+        className={classes.sectionDesktop}
+        item
+        style={{ marginTop: "20px" }}
+      >
         <BuyButton courseGroup={props.courseGroup}></BuyButton>
       </Grid>
     </Grid>

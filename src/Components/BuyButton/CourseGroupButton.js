@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
   OtherCourses: {
     borderRadius: 20,
-    height: 35,
+    height: 40,
   },
 }));
 

@@ -130,31 +130,32 @@ const CourseVideoContent = (props) => {
 
   const finishVideo = (videoId) => {
     console.log("finished:", videoId);
+    if (props.premium) {
+      if (props.registeredCourse) {
+        var numberOfVideosCourse = 0;
+        props.chapters.map((chapter) => {
+          numberOfVideosCourse = numberOfVideosCourse + chapter.sections.length;
+        });
+        const newper =
+          (props.registeredCourse.percentage * numberOfVideosCourse + 1) /
+          numberOfVideosCourse;
+        if (newper > 0.9) props.finishVideoOpen();
+      }
 
-    if (props.registeredCourse) {
-      var numberOfVideosCourse = 0;
-      props.chapters.map((chapter) => {
-        numberOfVideosCourse = numberOfVideosCourse + chapter.sections.length;
-      });
-      const newper =
-        (props.registeredCourse.percentage * numberOfVideosCourse + 1) /
-        numberOfVideosCourse;
-      if (newper > 0.9) props.finishVideoOpen();
+      if (
+        props.chapters[listState.selChapter].sections[listState.selSection]
+          .isComment == true
+      ) {
+        props.makeCommentOpen();
+      }
+
+      props
+        .dispatch(updateUserWatchedVideo(props.token, props.course_id, videoId))
+        .then((user) => {})
+        .catch((err) => {
+          props.showMessages(2, "Bir problem var.");
+        });
     }
-
-    if (
-      props.chapters[listState.selChapter].sections[listState.selSection]
-        .isComment == true
-    ) {
-      props.makeCommentOpen();
-    }
-
-    props
-      .dispatch(updateUserWatchedVideo(props.token, props.course_id, videoId))
-      .then((user) => {})
-      .catch((err) => {
-        props.showMessages(2, "Bir problem var.");
-      });
   };
 
   return (
@@ -177,7 +178,7 @@ const CourseVideoContent = (props) => {
             instructor={props.instructor}
           ></TitlePanel>
           <Grid container className={classes.grid} spacing={1}>
-            <Grid style={{ height: videoHeight }} item sm={8} xs={12}>
+            <Grid style={{ height: videoHeight }} item md={8} xs={12}>
               {playerVideo != "" ? (
                 <div>
                   {playerVideo != "start" ? (
@@ -203,7 +204,7 @@ const CourseVideoContent = (props) => {
               className={classes.sectionDesktop}
               style={{ height: videoHeight, overflow: "auto" }}
               item
-              sm={4}
+              md={4}
               xs={12}
             >
               <ListPanel
@@ -224,9 +225,13 @@ const CourseVideoContent = (props) => {
             </Grid>
             <Grid
               className={classes.sectionMobile}
-              style={{ height: videoHeight + 200, overflow: "auto" }}
+              style={{
+                height: videoHeight + 200,
+                maxHeight: 400,
+                overflow: "auto",
+              }}
               item
-              sm={4}
+              md={4}
               xs={12}
             >
               <ListPanel
