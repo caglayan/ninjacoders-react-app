@@ -79,7 +79,7 @@ const CourseContainer = (props) => {
       downloadPrivateCourse();
     } else {
       props.dispatch(removeCourseUserComment());
-      //downloadPublicCourse();
+      downloadPublicCourse();
     }
   }, [props.user_id]);
 

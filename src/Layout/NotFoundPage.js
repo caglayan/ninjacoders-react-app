@@ -32,12 +32,12 @@ export default function NotFoundPage(props) {
 
         <Grid container justify="center" spacing={2}>
           <Typography variant="h4" gutterBottom>
-            Page Not Found
+            Sayfa bulunamadı.
           </Typography>
         </Grid>
         <Grid container className={classes.Body} justify="center" spacing={2}>
           <Typography variant="body1" gutterBottom>
-            Seems like you have lost your way. Let's bring you back home.
+            Belli ki yolunuzu kaybettiniz. Hadi beraber anasayfaya dönelim.
           </Typography>
         </Grid>
         <Grid container className={classes.Body} justify="center" spacing={2}>
@@ -47,7 +47,7 @@ export default function NotFoundPage(props) {
             variant="body1"
             color="secondary"
           >
-            Return to the Home
+            Anasayfaya dön
           </Link>
         </Grid>
       </Container>

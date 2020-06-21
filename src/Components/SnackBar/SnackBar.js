@@ -139,7 +139,7 @@ export default function CustomizedSnackbars(props) {
           horizontal: "left",
         }}
         open={props.isActive}
-        autoHideDuration={3000}
+        autoHideDuration={6000}
         onClose={props.closeSnack}
       >
         {snackWrapperContent(props.type, props.message)}
