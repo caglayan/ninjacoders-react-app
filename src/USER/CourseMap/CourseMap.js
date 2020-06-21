@@ -6,10 +6,10 @@ import {
   Grid,
   Button,
   List,
-  ListItemAvatar,
+  Typography,
   ListItem,
   ListItemText,
-  ListSubheader,
+  Box,
   Avatar,
 } from "@material-ui/core";
 import CourseCard from "../../Components/CourseCard/CourseCard";
@@ -54,13 +54,13 @@ const CourseMap = (props) => {
   const history = useHistory();
 
   React.useEffect(() => {
-    if (props.applicationCourseGroups) {
+    if (props.premiumCourseGroups.length > 0) {
       props.dispatch(startRemoveCourse());
-      props.applicationCourseGroups.map((courseGroupId, index) => {
-        findCourseGroupIn(courseGroupId);
+      props.premiumCourseGroups.map((premiumCourse, index) => {
+        findCourseGroupIn(premiumCourse.courseGroup_id);
       });
     }
-  }, [props.applicationCourseGroups]);
+  }, [props.premiumCourseGroups]);
 
   const findCourseGroupIn = (courseGroupId) => {
     findCourseGroup(courseGroupId) // skip limit
@@ -74,8 +74,8 @@ const CourseMap = (props) => {
   };
 
   React.useEffect(() => {
-    if (props.applicationCourseGroups.length > 0) {
-      if (courseGroups.length === props.applicationCourseGroups.length) {
+    if (props.premiumCourseGroups.length > 0) {
+      if (courseGroups.length === props.premiumCourseGroups.length) {
         setIsWorking(false);
         console.log("ok", courseGroups);
       }
@@ -88,6 +88,9 @@ const CourseMap = (props) => {
 
         setOverallPer(sum / courseGroups[selectedItem].courses.length);
       }
+    } else {
+      setIsWorking(false);
+      console.log("Hiç ders satın alınmamış.");
     }
   }, [courseGroups]);
 
@@ -112,81 +115,122 @@ const CourseMap = (props) => {
           {/* <TextAreaStart
             premium={props._id != "" && props.premium}
           ></TextAreaStart> */}
-          <Grid item xs={12} md={4}>
-            <List className={classes.List}>
-              {courseGroups
-                ? courseGroups.map((courseGroup, index) => {
-                    return (
-                      <ListItem
-                        selected={index == selectedItem}
-                        activeClassName={classes.ListItemActive}
-                        button
-                        onClick={() => {
-                          console.log(selectedItem);
-                          console.log(index);
-                          selectItem(index);
-                        }}
-                        key={index}
-                      >
-                        <ListItemText primary={courseGroup.name} />
-                      </ListItem>
-                    );
-                  })
-                : null}
-            </List>
-            <TextAreaEnd
-              certificateOpen={() => {
-                props.certificateOpenId(courseGroups[selectedItem]._id);
-              }}
-              percentage={overallPer}
-            ></TextAreaEnd>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Timeline
-              height={courseGroups[selectedItem].courses.length * 500}
-              progress={overallPer * 100}
-            >
-              {courseGroups[selectedItem].courses.map((course_id, index) => {
-                const array = props.registeredCourses.filter(function (
-                  registeredCourse
-                ) {
-                  return registeredCourse._id == course_id;
-                });
+          {props.premiumCourseGroups.length == 0 ? (
+            <div style={{ marginTop: 60 }}>
+              <Typography
+                className={classes.text1}
+                variant="h5"
+                component="h5"
+                align="center"
+              >
+                Henüz başladığınız hiç bir ders yok.
+              </Typography>
+              <Typography
+                className={classes.text1}
+                variant="h6"
+                component="h6"
+                align="center"
+              >
+                Hadi dersleri izlemeye başla!
+              </Typography>
 
-                return (
-                  <Bookmark
-                    key={course_id}
-                    progress={
-                      (index * 100) / courseGroups[selectedItem].courses.length
+              <Box textAlign="center">
+                <Button
+                  style={{ marginTop: "10px" }}
+                  onClick={() => {
+                    history.push(`/`);
+                  }}
+                  variant="contained"
+                  color="primary"
+                >
+                  Bütün dersler
+                </Button>
+              </Box>
+            </div>
+          ) : (
+            <div>
+              <Grid item xs={12} md={4}>
+                <List className={classes.List}>
+                  {courseGroups
+                    ? courseGroups.map((courseGroup, index) => {
+                        return (
+                          <ListItem
+                            selected={index == selectedItem}
+                            activeClassName={classes.ListItemActive}
+                            button
+                            onClick={() => {
+                              console.log(selectedItem);
+                              console.log(index);
+                              selectItem(index);
+                            }}
+                            key={index}
+                          >
+                            <ListItemText primary={courseGroup.name} />
+                          </ListItem>
+                        );
+                      })
+                    : null}
+                </List>
+                <TextAreaEnd
+                  certificateOpen={() => {
+                    props.certificateOpenId(courseGroups[selectedItem]._id);
+                  }}
+                  percentage={overallPer}
+                ></TextAreaEnd>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Timeline
+                  height={courseGroups[selectedItem].courses.length * 500}
+                  progress={overallPer * 100}
+                >
+                  {courseGroups[selectedItem].courses.map(
+                    (course_id, index) => {
+                      const array = props.registeredCourses.filter(function (
+                        registeredCourse
+                      ) {
+                        return registeredCourse._id == course_id;
+                      });
+
+                      return (
+                        <Bookmark
+                          key={course_id}
+                          progress={
+                            (index * 100) /
+                            courseGroups[selectedItem].courses.length
+                          }
+                        >
+                          <div>
+                            <Button
+                              className={classes.PremiumButton}
+                              onClick={() => {
+                                history.push(`/course/` + course_id);
+                              }}
+                              variant="contained"
+                              color={
+                                !array.length > 0 ? "primary" : "secondary"
+                              }
+                            >
+                              {!array.length > 0
+                                ? "Derse Başlayın"
+                                : "Derse Devam edin"}
+                            </Button>
+                            <CourseCard
+                              mini
+                              percentage={
+                                array.length > 0 ? array[0].percentage : null
+                              }
+                              className={classes.courseCard}
+                              course_id={course_id}
+                            ></CourseCard>
+                          </div>
+                        </Bookmark>
+                      );
                     }
-                  >
-                    <div>
-                      <Button
-                        className={classes.PremiumButton}
-                        onClick={() => {
-                          history.push(`/course/` + course_id);
-                        }}
-                        variant="contained"
-                        color={!array.length > 0 ? "primary" : "secondary"}
-                      >
-                        {!array.length > 0
-                          ? "Derse Başlayın"
-                          : "Derse Devam edin"}
-                      </Button>
-                      <CourseCard
-                        mini
-                        percentage={
-                          array.length > 0 ? array[0].percentage : null
-                        }
-                        className={classes.courseCard}
-                        course_id={course_id}
-                      ></CourseCard>
-                    </div>
-                  </Bookmark>
-                );
-              })}
-            </Timeline>
-          </Grid>
+                  )}
+                </Timeline>
+              </Grid>
+            </div>
+          )}
         </Grid>
       )}
     </Container>
@@ -198,6 +242,7 @@ const CourseMapCon = connect((state) => ({
   premium: state.userReducer.premium,
   registeredCourses: state.userReducer.registeredCourses,
   applicationCourseGroups: state.applicationReducer.courseGroups,
+  premiumCourseGroups: state.userReducer.premiumCourseGroups,
 }))(CourseMap);
 
 export default CourseMapCon;

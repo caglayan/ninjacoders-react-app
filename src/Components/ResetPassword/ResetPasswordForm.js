@@ -8,11 +8,11 @@ const Basic = (props) => (
     validate={(values) => {
       const errors = {};
       if (!values.email) {
-        errors.email = "This is required.";
+        errors.email = "E-mail gereklidir.";
       } else if (
         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
       ) {
-        errors.email = "Incorrect email.";
+        errors.email = "Lütfen geçerli bir e-mail adresi yazın";
       }
       return errors;
     }}
@@ -37,14 +37,14 @@ const Basic = (props) => (
         <Grid container justify="center" item spacing={1}>
           <Grid item xs={10}>
             <Typography variant="body1" gutterBottom>
-              We'll send password reset instructions to the email address
-              associated with your account.
+              Size şifrenizi nasıl değiştirebileceğiniz ile ilgili bir mail
+              göndereceğiz.
             </Typography>
           </Grid>
           <Grid item xs={10}>
             <TextField
               error={errors.email != null && touched.email}
-              label="Email"
+              label="E-mail"
               fullWidth
               id="email"
               helperText={errors.email && touched.email && errors.email}
@@ -65,7 +65,7 @@ const Basic = (props) => (
                 type="submit"
                 disabled={isSubmitting}
               >
-                Reset Password
+                Şifremi Yenile
               </Button>
             </Box>
           </Grid>

@@ -132,6 +132,7 @@ const QuestionTab = (props) => {
                 <QuestionPanel
                   {...question}
                   fromUser={props._id === question.sender}
+                  fromInstructor={props.instructor.user_id === question.sender}
                   askQuestionOpen={() => {
                     props.dispatch(updatePersonalQuestion(question));
                     props.askQuestionOpen();
@@ -143,6 +144,9 @@ const QuestionTab = (props) => {
                     <AnswerPanel
                       {...answer}
                       fromUser={props._id === answer.sender}
+                      fromInstructor={
+                        props.instructor.user_id === question.sender
+                      }
                       question_id={question._id}
                       showMessages={props.showMessages}
                       token={props.token}
@@ -192,6 +196,7 @@ const QuestionTabCon = connect((state) => ({
   token: state.userReducer.token,
   avatarImage: state.userReducer.avatarImage,
   course_id: state.courseReducer._id,
+  instructor: state.courseReducer.instructor,
   isUpdating: state.questionReducer.isUpdating,
 }))(QuestionTab);
 

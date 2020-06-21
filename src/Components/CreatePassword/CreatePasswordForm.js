@@ -24,15 +24,15 @@ const Basic = (props) => (
       const errors = {};
 
       if (!values.pass1) {
-        errors.pass1 = "This is required.";
+        errors.pass1 = "Yeni bir şifre yazmak zorundasınız";
       } else if (values.pass1.length < 6) {
-        errors.pass1 = "This must be longer than 5 characters.";
+        errors.pass1 = "Yeni şifreniz 5 karakterden uzun olmalıdır.";
       }
 
       if (!values.pass2) {
-        errors.pass2 = "This is required.";
+        errors.pass2 = "Yeni bir şifre yazmak zorundasınız";
       } else if (values.pass2.localeCompare(values.pass1)) {
-        errors.pass2 = "Passwords are not equal.";
+        errors.pass2 = "Şifreler uyuşmuyor.";
       }
       return errors;
     }}
@@ -55,21 +55,22 @@ const Basic = (props) => (
     }) => (
       <Container maxWidth="sm">
         <form style={{ width: "100%" }} onSubmit={handleSubmit}>
-          <Typography variant="h5">Change Password</Typography>
+          <Typography variant="h5">Şifreyi yenile</Typography>
           <Typography variant="subtitle2">
             <List dense={true}>
-              In order to protect your account, make sure your password:
+              Hesabınızı güvende tutmak için, şifreniz:
               <ListItem>
                 <ListItemIcon>
                   <LensIcon style={{ fontSize: 10 }} />
                 </ListItemIcon>
-                Is longer than 5 characters.
+                5 karakterden uzun olmalıdır.
               </ListItem>
               <ListItem>
                 <ListItemIcon>
                   <LensIcon style={{ fontSize: 10 }} />
                 </ListItemIcon>
-                Does not match or significantly contain your username.
+                email adresinizle, isminizle ve soyisiminizle ilişkili
+                olmamalıdır.
               </ListItem>
             </List>
           </Typography>
@@ -84,7 +85,7 @@ const Basic = (props) => (
               <TextField
                 error={errors.pass1 != null && touched.pass1}
                 helperText={errors.pass1 && touched.pass1 && errors.pass1}
-                label="New Password"
+                label="Yeni Şifre"
                 fullWidth
                 name="pass1"
                 type="password"
@@ -100,7 +101,7 @@ const Basic = (props) => (
               <TextField
                 error={errors.pass2 != null && touched.pass2}
                 helperText={errors.pass2 && touched.pass2 && errors.pass2}
-                label="Re-enter Your New Password"
+                label="Yeni Şifrenizi Tekrar Yazın"
                 fullWidth
                 name="pass2"
                 id="pass12"
@@ -125,7 +126,7 @@ const Basic = (props) => (
                   errors.pass1 ? true : false || errors.pass2 ? true : false
                 }
               >
-                Change Password and Login
+                Şifreyi değiştir ve Giriş yap
               </Button>
             </Box>
           </Grid>

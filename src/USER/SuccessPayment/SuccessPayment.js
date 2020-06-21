@@ -158,7 +158,7 @@ const QuestionsCont = (props) => {
             </Typography>
             <Typography variant="body2" gutterBottom>
               Sertifkanızı derslerin %90'ını bitirdikten sonra lütfen yolculuk
-              syafasından isteyiniz..
+              sayfasından isteyiniz..
             </Typography>
           </Box>
           <Button

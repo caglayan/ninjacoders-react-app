@@ -15,6 +15,7 @@ import GiveAnswerPanel from "../../Components/QuestionHelpers/GiveAnswerPanel";
 import AnswerPanel from "../../Components/QuestionHelpers/AnswerPanel";
 import { pullUserQuestions } from "../../Api/questionApi";
 import { updatePersonalQuestion } from "../../Redux/Selectors/questionSelector";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   containerDesktop: {
@@ -53,6 +54,7 @@ const QuestionsCont = (props) => {
   const [isWorking, setIsWorking] = React.useState(true);
   const [isMoreActive, setIsMoreActive] = React.useState(true);
   const classes = useStyles();
+  const history = useHistory();
 
   const pullQuestionsAdd = () => {
     pullUserQuestions(props.token, questions.length, 2) // skip limit
@@ -161,6 +163,39 @@ const QuestionsCont = (props) => {
                 Diğer Yorumlar
               </Button>
             </Box>
+          ) : null}
+
+          {questions.length == 0 ? (
+            <div style={{ marginTop: 100 }}>
+              <Typography
+                className={classes.text1}
+                variant="h5"
+                component="h5"
+                align="center"
+              >
+                Hiç soru sormamışsınız.
+              </Typography>
+              <Typography
+                className={classes.text1}
+                variant="h6"
+                component="h6"
+                align="center"
+              >
+                Hadi dersleri izlemeye başla!
+              </Typography>
+              <Box textAlign="center">
+                <Button
+                  style={{ marginTop: "10px" }}
+                  onClick={() => {
+                    history.push(`/`);
+                  }}
+                  variant="contained"
+                  color="primary"
+                >
+                  Bütün dersler
+                </Button>
+              </Box>
+            </div>
           ) : null}
         </div>
       )}

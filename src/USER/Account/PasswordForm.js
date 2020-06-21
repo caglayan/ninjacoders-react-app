@@ -75,7 +75,7 @@ const PasswordForm = (props) => {
             <Typography variant="h5">Şifreni Değiştir.</Typography>
             <Typography variant="subtitle2">
               <List dense={true}>
-                Hesabınızı güvende tutmak için, şifreniz
+                Hesabınızı güvende tutmak için, şifreniz:
                 <ListItem>
                   <ListItemIcon>
                     <LensIcon style={{ fontSize: 10 }} />

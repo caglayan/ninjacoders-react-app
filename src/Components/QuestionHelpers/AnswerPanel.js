@@ -96,6 +96,15 @@ const AnswerPanel = (props) => {
                 </Button>
               </Grid>
             ) : null}
+            {props.fromInstructor ? (
+              <Button
+                style={{ height: 30 }}
+                variant="outlined"
+                color="secondary"
+              >
+                Eğitmen
+              </Button>
+            ) : null}
           </Grid>
         </Grid>
       </Paper>

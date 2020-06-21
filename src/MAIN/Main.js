@@ -24,10 +24,10 @@ const Main = (props) => {
   const [isWorking, setIsWorking] = React.useState(true);
 
   React.useEffect(() => {
-    if (props.applicationComments) {
+    if (props.applicationId != "") {
       setIsWorking(false);
     }
-  }, [props.applicationComments]);
+  }, [props.applicationId]);
 
   return (
     <Container
@@ -67,6 +67,7 @@ const Main = (props) => {
 
 const MainCon = connect((state) => ({
   _id: state.userReducer._id,
+  applicationId: state.applicationReducer._id,
   applicationComments: state.applicationReducer.comments,
   applicationCourseGroups: state.applicationReducer.courseGroups,
 }))(Main);

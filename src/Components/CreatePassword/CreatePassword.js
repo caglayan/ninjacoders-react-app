@@ -55,11 +55,17 @@ function CreatePassword(props) {
 
   return (
     <div>
-      <img style={{ width: "100%" }} src="/login_art.jpg"></img>
+      <img style={{ width: "100%" }} src="/ninjacoders_banner_art.jpg"></img>
       {progressVisible ? (
         <LinearProgress variant="query" color="secondary" />
       ) : null}
-      <Grid container direction="row" justify="center" alignItems="center">
+      <Grid
+        container
+        style={{ marginTop: 30 }}
+        direction="row"
+        justify="center"
+        alignItems="center"
+      >
         <CreatePasswordForm onSubmit={onSubmit} />
       </Grid>
     </div>
