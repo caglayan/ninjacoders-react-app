@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CommentDialogComp(props) {
   const classes = useStyles();
   const { isActive, closeDialog, ...propsChild } = props;
-  console.log("Comment Dialog is Active");
+
   return (
     <div>
       <Dialog

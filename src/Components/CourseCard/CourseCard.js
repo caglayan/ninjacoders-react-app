@@ -40,6 +40,18 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
+  sectionDesktop: {
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+    },
+  },
+  sectionMobile: {
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
+  },
 }));
 
 const Star = ({ willBeActive, isActive, style }) => {
@@ -75,7 +87,6 @@ export default function CourseReviewCard(props) {
   };
 
   const downloadAtomicCourse = () => {
-    console.log("downloadable: ", props.course_id);
     if (props.course_id) {
       findAtomicCourse(props.course_id)
         .then((courseIn) => {
@@ -150,11 +161,22 @@ export default function CourseReviewCard(props) {
               alignItems="center"
             >
               <Grid item xs={12}>
-                <Box height="70px">
-                  <Typography variant="h6" color="textPrimary">
+                <Typography variant="h6" color="textPrimary">
+                  <Box
+                    className={classes.sectionDesktop}
+                    textOverflow="ellipsis"
+                    height="80px"
+                  >
                     {course.title}
-                  </Typography>
-                </Box>
+                  </Box>
+                  <Box
+                    className={classes.sectionMobile}
+                    textOverflow="ellipsis"
+                    height="100px"
+                  >
+                    {course.title}
+                  </Box>
+                </Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="body2" color="textSecondary">

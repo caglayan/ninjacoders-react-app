@@ -86,8 +86,7 @@ const GiveAnswerPanel = (props) => {
             setSubmitting(false);
           })
           .catch((err) => {
-            console.log(err);
-            props.showMessages(2, err.Message);
+            props.showMessages(2, err);
             setSubmitting(false);
           });
       }}

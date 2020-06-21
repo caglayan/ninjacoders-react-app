@@ -29,19 +29,19 @@ const AccountForm = (props) => {
       validate={(values) => {
         const errors = {};
         if (!values.email) {
-          errors.email = "Email is required.";
+          errors.email = "E-mail gereklidir";
         } else if (
           !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
         ) {
-          errors.email = "Incorrect email.";
+          errors.email = "Geçersiz bir email adresi";
         }
 
         if (!values.givenName) {
-          errors.givenName = "First Name is required.";
+          errors.givenName = "İsim gereklidir.";
         }
 
         if (!values.familyName) {
-          errors.familyName = "Last Name is required.";
+          errors.familyName = "Soyisim gereklidir";
         }
         return errors;
       }}
@@ -55,7 +55,7 @@ const AccountForm = (props) => {
           .dispatch(updateUserWebApi(updateData, props.token))
           .then((message) => {
             setSubmitting(false);
-            props.showMessages(1, "Your profile is updated.");
+            props.showMessages(1, "Profiliniz Güncellendi.");
           })
           .catch((err) => {
             setSubmitting(false);

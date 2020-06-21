@@ -1,8 +1,23 @@
 import axios from "axios";
 import ls from "local-storage";
 
-//const url = "http://localhost:4000";
-const url = "https://ninjaoders-backend.herokuapp.com";
+const url = "http://localhost:4000";
+//const url = "https://ninjaoders-backend.herokuapp.com";
+
+const manageError = (reject, err) => {
+  err.response
+    ? reject({
+        message: err.response.data.Message,
+        code: err.response.data.Code,
+      })
+    : reject({
+        code: "MAK101",
+        message: "Ana makinemiz ile bağlantınız kesildi.",
+      });
+  err.response
+    ? console.log("Error Code:", err.response.data.Code)
+    : console.log("Ana makinemiz ile bağlantınız kesildi.");
+};
 
 export const findApplication = (application_id) => {
   console.log("Find Public Application Api");
@@ -16,7 +31,7 @@ export const findApplication = (application_id) => {
         resolve(res.data.application);
       })
       .catch((err) => {
-        reject(err);
+        manageError(reject, err);
       });
   });
 };
@@ -33,7 +48,7 @@ export const findCourseGroup = (group_id) => {
         resolve(res.data.courseGroup);
       })
       .catch((err) => {
-        reject(err);
+        manageError(reject, err);
       });
   });
 };
@@ -52,7 +67,7 @@ export const findSaleCode = (group_id, type, name) => {
         resolve(res.data.code);
       })
       .catch((err) => {
-        reject(err);
+        manageError(reject, err);
       });
   });
 };

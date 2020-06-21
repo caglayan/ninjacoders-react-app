@@ -38,7 +38,7 @@ const Basic = (props) => {
             style={{ marginTop: "10px" }}
             spacing={2}
           >
-            <Grid item xs={4}>
+            <Grid item xs={6}>
               <TextField
                 error={errors.coupon != null && touched.coupon}
                 label="Kupon Kodu"

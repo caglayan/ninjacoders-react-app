@@ -1,8 +1,8 @@
 import axios from "axios";
 import ls from "local-storage";
 
-//const url = "http://localhost:4000";
-const url = "https://ninjaoders-backend.herokuapp.com";
+const url = "http://localhost:4000";
+//const url = "https://ninjaoders-backend.herokuapp.com";
 
 export const courseFetchLocal = () => {
   return ls.get("course");
@@ -14,6 +14,21 @@ export const courseSaveLocal = (course) => {
 
 export const courseRemoveLocal = (course) => {
   return ls.remove("course");
+};
+
+const manageError = (reject, err) => {
+  err.response
+    ? reject({
+        message: err.response.data.Message,
+        code: err.response.data.Code,
+      })
+    : reject({
+        code: "MAK101",
+        message: "Ana makinemiz ile bağlantınız kesildi.",
+      });
+  err.response
+    ? console.log("Error Code:", err.response.data.Code)
+    : console.log("Ana makinemiz ile bağlantınız kesildi.");
 };
 
 export const findUserCourseWithId = (token, course_id, user_id) => {
@@ -36,7 +51,7 @@ export const findUserCourseWithId = (token, course_id, user_id) => {
         resolve(res.data.course);
       })
       .catch((err) => {
-        reject(err);
+        manageError(reject, err);
       });
   });
 };
@@ -54,7 +69,7 @@ export const findPublicCourseWithId = (course_id) => {
         resolve(res.data.course);
       })
       .catch((err) => {
-        reject(err);
+        manageError(reject, err);
       });
   });
 };
@@ -71,7 +86,7 @@ export const findAtomicCourse = (course_id) => {
         resolve(res.data.course);
       })
       .catch((err) => {
-        reject(err);
+        manageError(reject, err);
       });
   });
 };

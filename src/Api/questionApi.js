@@ -1,7 +1,22 @@
 import axios from "axios";
 
-//const url = "http://localhost:4000";
-const url = "https://ninjaoders-backend.herokuapp.com";
+const url = "http://localhost:4000";
+//const url = "https://ninjaoders-backend.herokuapp.com";
+
+const manageError = (reject, err) => {
+  err.response
+    ? reject({
+        message: err.response.data.Message,
+        code: err.response.data.Code,
+      })
+    : reject({
+        code: "MAK101",
+        message: "Ana makinemiz ile bağlantınız kesildi.",
+      });
+  err.response
+    ? console.log("Error Code:", err.response.data.Code)
+    : console.log("Ana makinemiz ile bağlantınız kesildi.");
+};
 
 export const pullQuestions = (skip, limit, courseId) => {
   console.log("Pull Questions Api");
@@ -17,7 +32,7 @@ export const pullQuestions = (skip, limit, courseId) => {
         resolve(res.data.questions);
       })
       .catch((err) => {
-        reject(err.response.data);
+        manageError(reject, err);
       });
   });
 };
@@ -41,7 +56,7 @@ export const pullUserQuestions = (token, skip, limit) => {
         resolve(res.data.questions);
       })
       .catch((err) => {
-        reject(err.response.data);
+        manageError(reject, err);
       });
   });
 };
@@ -62,7 +77,7 @@ export const findQuestion = (token) => {
         resolve(res.data.question);
       })
       .catch((err) => {
-        reject(err.response.data);
+        manageError(reject, err);
       });
   });
 };
@@ -83,7 +98,7 @@ export const askQuestion = (token, course, title, body, courseName) => {
         resolve(res.data.question);
       })
       .catch((err) => {
-        reject(err.response.data);
+        manageError(reject, err);
       });
   });
 };
@@ -104,7 +119,7 @@ export const updateQuestion = (token, question, title, body) => {
         resolve(res.data.question);
       })
       .catch((err) => {
-        reject(err.response.data);
+        manageError(reject, err);
       });
   });
 };
@@ -125,7 +140,7 @@ export const removeQuestion = (token, question) => {
         resolve(res.data.question);
       })
       .catch((err) => {
-        reject(err.response.data);
+        manageError(reject, err);
       });
   });
 };
@@ -146,7 +161,7 @@ export const answerQuestion = (token, question, title, body) => {
         resolve(res.data.question);
       })
       .catch((err) => {
-        reject(err.response.data);
+        manageError(reject, err);
       });
   });
 };
@@ -167,7 +182,7 @@ export const updateAnswer = (token, question, answer, title, body) => {
         resolve(res.data.question);
       })
       .catch((err) => {
-        reject(err.response.data);
+        manageError(reject, err);
       });
   });
 };
@@ -188,7 +203,7 @@ export const removeAnswer = (token, question, answer) => {
         resolve(res.data.question);
       })
       .catch((err) => {
-        reject(err.response.data);
+        manageError(reject, err);
       });
   });
 };

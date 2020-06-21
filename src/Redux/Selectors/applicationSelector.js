@@ -14,7 +14,6 @@ export const startCreateApplication = (application_id) => {
           resolve(application);
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });

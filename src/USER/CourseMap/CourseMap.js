@@ -123,7 +123,7 @@ const CourseMap = (props) => {
                 component="h5"
                 align="center"
               >
-                Henüz başladığınız hiç bir ders yok.
+                Şu an kayıtlı olduğunuz bir sertifika grubu yok.
               </Typography>
               <Typography
                 className={classes.text1}

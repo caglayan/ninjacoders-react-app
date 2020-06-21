@@ -1,8 +1,8 @@
 import axios from "axios";
 import ls from "local-storage";
 
-//const url = "http://localhost:4000";
-const url = "https://ninjaoders-backend.herokuapp.com";
+const url = "http://localhost:4000";
+//const url = "https://ninjaoders-backend.herokuapp.com";
 
 export const userFetchLocal = () => {
   return ls.get("user");
@@ -14,6 +14,21 @@ export const userSaveLocal = (user) => {
 
 export const userRemoveLocal = (user) => {
   return ls.remove("user");
+};
+
+const manageError = (reject, err) => {
+  err.response
+    ? reject({
+        message: err.response.data.Message,
+        code: err.response.data.Code,
+      })
+    : reject({
+        code: "MAK101",
+        message: "Ana makinemiz ile bağlantınız kesildi.",
+      });
+  err.response
+    ? console.log("Error Code:", err.response.data.Code)
+    : console.log("Ana makinemiz ile bağlantınız kesildi.");
 };
 
 export const checkTokenApi = (token) => {
@@ -33,12 +48,7 @@ export const checkTokenApi = (token) => {
         resolve(res.data);
       })
       .catch((err) => {
-        err.response
-          ? reject(err.response.data.Message)
-          : reject("No connection to our machines");
-        err.response
-          ? console.log("Error Code:", err.response.data.Code)
-          : console.log("No internet connection or database problem");
+        manageError(reject, err);
       });
   });
 };
@@ -56,12 +66,7 @@ export const signupGoogleApi = (googleIdToken) => {
         resolve(res.data.user);
       })
       .catch((err) => {
-        err.response
-          ? reject(err.response.data.Message)
-          : reject("No connection to our machines");
-        err.response
-          ? console.log("Error Code:", err.response.data.Code)
-          : console.log("No internet connection or database problem");
+        manageError(reject, err);
       });
   });
 };
@@ -82,12 +87,7 @@ export const signupApi = (user) => {
         resolve(res.data.user);
       })
       .catch((err) => {
-        err.response
-          ? reject(err.response.data.Message)
-          : reject("No connection to our machines");
-        err.response
-          ? console.log("Error Code:", err.response.data.Code)
-          : console.log("No internet connection or database problem");
+        manageError(reject, err);
       });
   });
 };
@@ -106,12 +106,7 @@ export const LoginApi = (user) => {
         resolve(res.data.user);
       })
       .catch((err) => {
-        err.response
-          ? reject(err.response.data.Message)
-          : reject("No connection to our machines");
-        err.response
-          ? console.log("Error Code:", err.response.data.Code)
-          : console.log("No internet connection or database problem");
+        manageError(reject, err);
       });
   });
 };
@@ -129,12 +124,7 @@ export const LoginGoogleApi = (googleIdToken) => {
         resolve(res.data.user);
       })
       .catch((err) => {
-        err.response
-          ? reject(err.response.data.Message)
-          : reject("No connection to our machines");
-        err.response
-          ? console.log("Error Code:", err.response.data.Code)
-          : console.log("No internet connection or database problem");
+        manageError(reject, err);
       });
   });
 };
@@ -151,12 +141,7 @@ export const UpdateUserApi = (user, token) => {
         resolve(res.data);
       })
       .catch((err) => {
-        err.response
-          ? reject(err.response.data.Message)
-          : reject("No connection to our machines");
-        err.response
-          ? console.log("Error Code:", err.response.data.Code)
-          : console.log("No internet connection or database problem");
+        manageError(reject, err);
       });
   });
 };
@@ -177,12 +162,7 @@ export const UpdateUserImageApi = (imagefile, token) => {
         resolve(res.data.user);
       })
       .catch((err) => {
-        err.response
-          ? reject(err.response.data.Message)
-          : reject("No connection to our machines");
-        err.response
-          ? console.log("Error Code:", err.response.data.Code)
-          : console.log("No internet connection or database problem");
+        manageError(reject, err);
       });
   });
 };
@@ -200,12 +180,7 @@ export const UpdateUserPasswordApi = (password, token) => {
         resolve(res.data.user);
       })
       .catch((err) => {
-        err.response
-          ? reject(err.response.data.Message)
-          : reject("No connection to our machines");
-        err.response
-          ? console.log("Error Code:", err.response.data.Code)
-          : console.log("No internet connection or database problem");
+        manageError(reject, err);
       });
   });
 };
@@ -221,12 +196,7 @@ export const SendPasswordMailApi = (email) => {
         resolve(res.data.Message);
       })
       .catch((err) => {
-        err.response
-          ? reject(err.response.data.Message)
-          : reject("No connection to our machines");
-        err.response
-          ? console.log("Error Code:", err.response.data.Code)
-          : console.log("No internet connection or database problem");
+        manageError(reject, err);
       });
   });
 };
@@ -251,12 +221,7 @@ export const finishWatchVideoApi = (token, course_id, video_id) => {
         resolve(res.data.user);
       })
       .catch((err) => {
-        err.response
-          ? reject(err.response.data.Message)
-          : reject("No connection to our machines");
-        err.response
-          ? console.log("Error Code:", err.response.data.Code)
-          : console.log("No internet connection or database problem");
+        manageError(reject, err);
       });
   });
 };
@@ -281,12 +246,7 @@ export const requestCertificateApi = (token, email, group_id) => {
         resolve(res.data.status);
       })
       .catch((err) => {
-        err.response
-          ? reject(err.response.data.Message)
-          : reject("No connection to our machines");
-        err.response
-          ? console.log("Error Code:", err.response.data.Code)
-          : console.log("No internet connection or database problem");
+        manageError(reject, err);
       });
   });
 };

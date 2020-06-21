@@ -33,7 +33,6 @@ const BuyButton = (props) => {
 
   React.useEffect(() => {
     if (props.premiumCourseGroups) {
-      console.log("hey");
       props.premiumCourseGroups.map((premiumCourseGroup) => {
         if (premiumCourseGroup.courseGroup_id == props.courseGroup._id)
           setIsPremium(true);

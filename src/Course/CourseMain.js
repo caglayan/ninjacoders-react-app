@@ -36,9 +36,8 @@ const CourseContainer = (props) => {
   };
 
   React.useEffect(() => {
-    if (!courseGroup) {
+    if (props.courseGroup_id) {
       findCourseGroupIn();
-      console.log("enter");
     }
   }, [props.courseGroup_id]);
 
@@ -55,7 +54,7 @@ const CourseContainer = (props) => {
       )
       .then((course) => {})
       .catch((err) => {
-        props.showMessages(2, "Bir problem var.");
+        props.showMessages(2, err);
       });
   };
 
@@ -66,12 +65,11 @@ const CourseContainer = (props) => {
       "user_id ",
       props.user_id
     );
-
     props
       .dispatch(startCreatePublicCourse(props.match.params.id))
       .then((course) => {})
       .catch((err) => {
-        props.showMessages(2, "Bir problem var.");
+        props.showMessages(2, err);
       });
   };
 
@@ -81,7 +79,7 @@ const CourseContainer = (props) => {
       downloadPrivateCourse();
     } else {
       props.dispatch(removeCourseUserComment());
-      downloadPublicCourse();
+      //downloadPublicCourse();
     }
   }, [props.user_id]);
 

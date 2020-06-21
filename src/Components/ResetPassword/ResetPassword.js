@@ -33,7 +33,6 @@ function ResetPassword(props) {
       })
       .catch((err) => {
         setProgressVisible(false);
-        console.log(err);
         props.showMessages(2, err);
       });
   };

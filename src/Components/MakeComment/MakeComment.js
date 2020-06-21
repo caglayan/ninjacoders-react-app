@@ -67,9 +67,8 @@ function MakeCommentContent(props) {
         }
       })
       .catch((err) => {
-        console.log(err);
         setProgressVisible(false);
-        props.showMessages(2, err.Message);
+        props.showMessages(2, err);
       });
   };
 
@@ -94,9 +93,8 @@ function MakeCommentContent(props) {
         }
       })
       .catch((err) => {
-        console.log(err);
         setProgressVisible(false);
-        props.showMessages(2, err.Message);
+        props.showMessages(2, err);
       });
   };
 

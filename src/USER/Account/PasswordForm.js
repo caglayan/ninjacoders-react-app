@@ -52,7 +52,7 @@ const PasswordForm = (props) => {
           .dispatch(updateUserPasswordWebApi(password, props.token))
           .then((user) => {
             setSubmitting(false);
-            props.showMessages(1, "Your password is updated.");
+            props.showMessages(1, "Şifreniz Güncellendi");
           })
           .catch((err) => {
             setSubmitting(false);

@@ -63,7 +63,7 @@ function AskQuestionContent(props) {
       })
       .catch((err) => {
         setProgressVisible(false);
-        props.showMessages(2, err.Message);
+        props.showMessages(2, err);
       });
   };
 
@@ -87,7 +87,7 @@ function AskQuestionContent(props) {
       })
       .catch((err) => {
         setProgressVisible(false);
-        props.showMessages(2, err.Message);
+        props.showMessages(2, err);
       });
   };
 
@@ -104,7 +104,7 @@ function AskQuestionContent(props) {
       })
       .catch((err) => {
         setProgressVisible(false);
-        props.showMessages(2, err.Message);
+        props.showMessages(2, err);
       });
   };
 

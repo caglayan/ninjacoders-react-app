@@ -1,7 +1,22 @@
 import axios from "axios";
 
-//const url = "http://localhost:4000";
-const url = "https://ninjaoders-backend.herokuapp.com";
+const url = "http://localhost:4000";
+//const url = "https://ninjaoders-backend.herokuapp.com";
+
+const manageError = (reject, err) => {
+  err.response
+    ? reject({
+        message: err.response.data.Message,
+        code: err.response.data.Code,
+      })
+    : reject({
+        code: "MAK101",
+        message: "Ana makinemiz ile bağlantınız kesildi.",
+      });
+  err.response
+    ? console.log("Error Code:", err.response.data.Code)
+    : console.log("Ana makinemiz ile bağlantınız kesildi.");
+};
 
 export const pullComments = (skip, limit, courseId) => {
   console.log("Pull Comments Api");
@@ -17,7 +32,7 @@ export const pullComments = (skip, limit, courseId) => {
         resolve(res.data.comments);
       })
       .catch((err) => {
-        reject(err);
+        manageError(reject, err);
       });
   });
 };
@@ -59,7 +74,7 @@ export const makeComment = (token, course, title, body, star) => {
         resolve(res.data.comment);
       })
       .catch((err) => {
-        reject(err);
+        manageError(reject, err);
       });
   });
 };
@@ -80,7 +95,7 @@ export const updateComment = (token, comment, title, body, star) => {
         resolve(res.data.comment);
       })
       .catch((err) => {
-        reject(err);
+        manageError(reject, err);
       });
   });
 };

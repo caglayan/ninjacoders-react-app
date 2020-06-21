@@ -100,7 +100,7 @@ export default function Comment(props) {
             >
               <Star />
             </Rater>
-            {props.star}.0
+            {props.star ? parseInt(props.star, 10).toFixed(1) : null}
           </Box>
         </Grid>
         <Grid container className={classes.commentBody} spacing={1}>

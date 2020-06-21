@@ -35,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
   Container: {
     background: "#fff",
     borderRadius: "10px",
+    maxWidth: "100%",
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: "80%",
+    },
   },
   payout: {},
   paperNews: {
@@ -71,10 +75,6 @@ const CheckoutPage = (props) => {
   const [progressVisible, setProgressVisible] = React.useState(false);
 
   const findCourseGroupIn = () => {
-    console.log(
-      "group_id ",
-      queryString.parse(props.location.search).courseGroup
-    );
     findCourseGroup(queryString.parse(props.location.search).courseGroup) // skip limit
       .then((courseGroup) => {
         setCourseGroup(courseGroup);
@@ -97,7 +97,10 @@ const CheckoutPage = (props) => {
       findCourseGroupIn();
     } else {
       if (queryString.parse(props.location.search).error) {
-        props.showMessages(2, queryString.parse(props.location.search).error);
+        props.showMessages(2, {
+          code: "ODEME101",
+          message: queryString.parse(props.location.search).error,
+        });
       }
       setIsWorking(false);
       if (courseGroup.price.isSale) {
@@ -125,8 +128,7 @@ const CheckoutPage = (props) => {
         setExistCoupon(false);
       })
       .catch((err) => {
-        console.log(err);
-        props.showMessages(2, "Bu indirim kodu geçersizdir.");
+        props.showMessages(2, err);
         setProgressVisible(false);
       });
   };
@@ -145,12 +147,7 @@ const CheckoutPage = (props) => {
         </Grid>
       ) : (
         <Container className={classes.Container} maxWidth="lg">
-          <Grid
-            container
-            className={classes.Body}
-            justify="center"
-            spacing={10}
-          >
+          <Grid container className={classes.Body} justify="center" spacing={1}>
             <Grid item className={classes.payout} sm={6}>
               <Paper className={classes.summary} elevation={0}>
                 <Typography
@@ -361,10 +358,12 @@ const CheckoutPage = (props) => {
                 <IyzicoWithCode
                   codeName={saleCode.name}
                   courseGroupId={courseGroup._id}
+                  showMessages={props.showMessages}
                 ></IyzicoWithCode>
               ) : (
                 <IyzicoWithoutCode
                   courseGroupId={courseGroup._id}
+                  showMessages={props.showMessages}
                 ></IyzicoWithoutCode>
               )}
             </Grid>

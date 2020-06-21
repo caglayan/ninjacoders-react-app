@@ -71,17 +71,26 @@ const SideMenu = (props) => {
         />
       </ListItem>
       <ListItem component={NavLink} to="/user/account" button key="13">
-        <ListItemText primary="Your Account" />
+        <ListItemText primary="Hesap Ayarları" />
       </ListItem>
-      <ListItem component={NavLink} to="/user/avatar" button key="14">
-        <ListItemText primary="Your Avatar" />
+      <ListItem component={NavLink} to="/user/account/avatar" button key="14">
+        <ListItemText primary="Profil Resmi" />
       </ListItem>
-      <ListItem component={NavLink} to="/user/password" button key="15">
-        <ListItemText primary="Your Password" />
+      <ListItem component={NavLink} to="/user/account/password" button key="15">
+        <ListItemText primary="Şifre Değiştir" />
+      </ListItem>
+      <ListItem component={NavLink} to="/user/courses" button key="16">
+        <ListItemText primary="İzlediğim Dersler" />
+      </ListItem>
+      <ListItem component={NavLink} to="/user/questions" button key="17">
+        <ListItemText primary="Sorularım" />
+      </ListItem>
+      <ListItem component={NavLink} to="/user/coursemap" button key="18">
+        <ListItemText primary="Sertifikalar" />
       </ListItem>
       <Divider />
       <ListItem component={NavLink} to="/help" button key="16">
-        <ListItemText primary="Help" />
+        <ListItemText primary="Yardım" />
       </ListItem>
       <ListItem
         onClick={() => {
@@ -91,7 +100,7 @@ const SideMenu = (props) => {
         button
         key="17"
       >
-        <ListItemText primary="Sign out" />
+        <ListItemText primary="Çıkış" />
       </ListItem>
     </List>
   );

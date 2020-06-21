@@ -60,9 +60,8 @@ const AnswerPanel = (props) => {
         setIsRemoving(false);
       })
       .catch((err) => {
-        console.log(err);
         setIsRemoving(false);
-        props.showMessages(2, err.Message);
+        props.showMessages(2, err);
       });
   };
 
@@ -71,40 +70,48 @@ const AnswerPanel = (props) => {
       <Paper elevation={0} className={classes.paper}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={1}>
+            <Grid container direction="column" spacing={1}>
               <Grid item xs>
-                <Typography variant="subtitle1">
-                  {props.givenName} {props.familyName}
-                </Typography>
+                <Box display="flex">
+                  <Typography display="inline" variant="subtitle1">
+                    {props.givenName} {props.familyName}
+                  </Typography>
+                  <Box style={{ flexGrow: 1 }}></Box>
+                  {props.fromUser ? (
+                    <Button
+                      onClick={() => {
+                        setIsGiveAnswer(false);
+                      }}
+                      color="primary"
+                    >
+                      Düzenle
+                    </Button>
+                  ) : null}
+                  {props.fromInstructor ? (
+                    <Button
+                      style={{ height: 30 }}
+                      variant="outlined"
+                      color="secondary"
+                    >
+                      Eğitmen
+                    </Button>
+                  ) : null}
+                </Box>
+              </Grid>
+              <Grid item xs>
                 <Typography variant="body2" gutterBottom color="textSecondary">
                   <TimeAgo date={props.updatedAt} formatter={formatter} />
                 </Typography>
-                <Typography style={{ whiteSpace: "pre" }} variant="body2">
+              </Grid>
+              <Grid item noWrap xs>
+                <Typography variant="body2" gutterBottom>
                   {props.body}
                 </Typography>
+                {/* <Typography style={{ whiteSpace: "pre" }} variant="body2">
+                  {props.body}
+                </Typography> */}
               </Grid>
             </Grid>
-            {props.fromUser ? (
-              <Grid item>
-                <Button
-                  onClick={() => {
-                    setIsGiveAnswer(false);
-                  }}
-                  color="primary"
-                >
-                  Düzenle
-                </Button>
-              </Grid>
-            ) : null}
-            {props.fromInstructor ? (
-              <Button
-                style={{ height: 30 }}
-                variant="outlined"
-                color="secondary"
-              >
-                Eğitmen
-              </Button>
-            ) : null}
           </Grid>
         </Grid>
       </Paper>

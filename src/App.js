@@ -174,18 +174,23 @@ export default function App() {
 
   const [snackIsActive, setSnackIsActive] = React.useState(false);
   const [snackType, setSnackType] = React.useState(1);
-  const [snackMessage, setSnackMessage] = React.useState("");
+  const [snackMessage, setSnackMessage] = React.useState({});
 
-  const showMessages = (type, message) => {
+  const showMessages = (type, messageObj) => {
     if (type == 1) {
-      console.log("Success:", message);
+      console.log("Success:", messageObj);
       setSnackType(1);
-      setSnackMessage(message);
+      setSnackMessage(messageObj);
       setSnackIsActive(true);
     } else if (type == 2) {
-      console.log("Error:", message);
+      console.log("Error:", messageObj);
       setSnackType(2);
-      setSnackMessage(message);
+      if (messageObj.code) {
+        setSnackMessage(messageObj.code + ": " + messageObj.message);
+      } else {
+        setSnackMessage("Anlayamadığımız bir hata oluştu.");
+      }
+
       setSnackIsActive(true);
     }
   };
@@ -238,6 +243,7 @@ export default function App() {
               finishVideoOpen={openFinishVideoDialog}
               updateCommentOpen={openCommentDialog}
               showMessages={showMessages}
+              logoutUser={logoutUser}
             />
             <Footer />
             <SignInDialog

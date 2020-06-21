@@ -17,7 +17,6 @@ export const startCreateUserCourse = (token, course_id, user_id) => {
           resolve(course);
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });
@@ -33,7 +32,6 @@ export const startCreatePublicCourse = (course_id, user_id) => {
           resolve(course);
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });

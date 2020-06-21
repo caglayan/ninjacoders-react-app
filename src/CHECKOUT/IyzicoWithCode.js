@@ -37,7 +37,7 @@ const IyzicoForm = (props) => {
         setIsWorking(false);
       })
       .catch((err) => {
-        console.log(err);
+        props.showMessages(2, err);
       });
   };
 
@@ -83,6 +83,7 @@ const IyzicoForm = (props) => {
           onChange={() => {
             console.log("love");
           }}
+          style={{ width: "100%" }}
           className="responsive"
         ></div>
       )}

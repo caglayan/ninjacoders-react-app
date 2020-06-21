@@ -42,7 +42,7 @@ const AvatarForm = (props) => {
           .dispatch(updateUserImageWebApi(values.file, props.token))
           .then((user) => {
             setSubmitting(false);
-            props.showMessages(1, "Your avatar is updated.");
+            props.showMessages(1, "Profil resminiz güncellendi.");
           })
           .catch((err) => {
             setSubmitting(false);

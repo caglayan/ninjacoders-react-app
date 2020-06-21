@@ -17,18 +17,8 @@ import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: theme.spacing(8),
-    display: "none",
+
     background: "tarnsparent",
-    [theme.breakpoints.up("md")]: {
-      display: "flex",
-    },
-  },
-  containerMobile: {
-    marginTop: 50,
-    display: "flex",
-    [theme.breakpoints.up("md")]: {
-      display: "none",
-    },
   },
 
   Avatar: {

@@ -37,7 +37,7 @@ const IyzicoForm = (props) => {
         setIsWorking(false);
       })
       .catch((err) => {
-        console.log(err);
+        props.showMessages(2, err);
       });
   };
 
