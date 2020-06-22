@@ -69,11 +69,10 @@ function BodyArea(propsGeneral) {
     if (type == 2) {
       console.log("ERR: ", err);
     }
-
-    if (err.code == "SECURITY102") {
+    if (err.Code == "SECURITY102") {
       history.push(`/logout`);
     }
-    if (err.code == "SECURITY104") {
+    if (err.Code == "SECURITY104") {
       history.push(`/logout`);
     }
     propsGeneral.showMessages(type, err);
