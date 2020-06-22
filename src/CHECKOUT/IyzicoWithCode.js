@@ -21,7 +21,6 @@ const IyzicoForm = (props) => {
   const [checkoutFormContent, setCheckoutFormContent] = React.useState();
 
   const findApp = () => {
-    console.log("courseGoroupId", props.courseGroupId);
     pullPaymentForm(props.token, props.courseGroupId, props.codeName) // skip limit
       .then((result) => {
         // console.log(
@@ -46,12 +45,20 @@ const IyzicoForm = (props) => {
     if (!checkoutFormContent) {
       findApp();
     } else {
-      //console.log(checkoutFormContent);
-
       var arr = checkoutFormContent.split("buyerProtectionEnabled:true");
       var abc = arr[0];
       if (arr.length > 1)
         var abc = arr[0] + "buyerProtectionEnabled:false" + arr[1];
+
+      arr = abc.split("force3Ds:false");
+      //console.log(arr);
+      abc = arr[0];
+      if (arr.length > 1) var abc = arr[0] + "force3Ds:true" + arr[1];
+
+      arr = abc.split("hide3DS:true");
+      //console.log(arr);
+      abc = arr[0];
+      if (arr.length > 1) var abc = arr[0] + "hide3DS:false" + arr[1];
 
       arr = abc.split("if (typeof iyziInit == 'undefined') {")[1].slice(0, -1);
       //console.log(arr);

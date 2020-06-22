@@ -52,17 +52,17 @@ const IyzicoForm = (props) => {
         var abc = arr[0] + "buyerProtectionEnabled:false" + arr[1];
 
       arr = abc.split("force3Ds:false");
-      console.log(arr);
+      //console.log(arr);
       abc = arr[0];
       if (arr.length > 1) var abc = arr[0] + "force3Ds:true" + arr[1];
 
       arr = abc.split("hide3DS:true");
-      console.log(arr);
+      //console.log(arr);
       abc = arr[0];
       if (arr.length > 1) var abc = arr[0] + "hide3DS:false" + arr[1];
 
       arr = abc.split("if (typeof iyziInit == 'undefined') {")[1].slice(0, -1);
-      console.log(arr);
+      //console.log(arr);
 
       // abc = arr[0] + "bkmEnabled:true" + arr[1];
 

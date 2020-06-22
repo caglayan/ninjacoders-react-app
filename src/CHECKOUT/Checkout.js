@@ -19,6 +19,7 @@ import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import CouponForm from "./CouponForm";
 import IyzicoWithoutCode from "./IyzicoWithoutCode";
 import IyzicoWithCode from "./IyzicoWithCode";
+import FreeCourse from "./FreeCourse";
 import queryString from "query-string";
 import { useHistory } from "react-router-dom";
 import { findCourseGroup } from "../Api/applicationApi";
@@ -98,8 +99,8 @@ const CheckoutPage = (props) => {
     } else {
       if (queryString.parse(props.location.search).error) {
         props.showMessages(2, {
-          code: "ODEME101",
-          message: queryString.parse(props.location.search).error,
+          Code: "ODEME101",
+          Message: queryString.parse(props.location.search).error,
         });
       }
       setIsWorking(false);
@@ -120,12 +121,12 @@ const CheckoutPage = (props) => {
     findSaleCode(courseGroup._id, "sale", formValues.coupon)
       .then((code) => {
         //console.log(code);
-        setSaleCode(code);
         setTotalPrice(
           courseGroup.price.base - courseGroup.price.base * code.sale
         );
         setProgressVisible(false);
         setExistCoupon(false);
+        setSaleCode(code);
       })
       .catch((err) => {
         props.showMessages(2, err);
@@ -355,11 +356,21 @@ const CheckoutPage = (props) => {
                 </Box>
               </Paper>
               {saleCode ? (
-                <IyzicoWithCode
-                  codeName={saleCode.name}
-                  courseGroupId={courseGroup._id}
-                  showMessages={props.showMessages}
-                ></IyzicoWithCode>
+                <div>
+                  {totalPrice == 0 ? (
+                    <FreeCourse
+                      codeName={saleCode.name}
+                      courseGroupId={courseGroup._id}
+                      showMessages={props.showMessages}
+                    ></FreeCourse>
+                  ) : (
+                    <IyzicoWithCode
+                      codeName={saleCode.name}
+                      courseGroupId={courseGroup._id}
+                      showMessages={props.showMessages}
+                    ></IyzicoWithCode>
+                  )}
+                </div>
               ) : (
                 <IyzicoWithoutCode
                   courseGroupId={courseGroup._id}

@@ -61,16 +61,20 @@ const CourseMap = (props) => {
   React.useEffect(() => {
     if (props.premiumCourseGroups.length > 0) {
       props.dispatch(startRemoveCourse());
-      props.premiumCourseGroups.map((premiumCourse, index) => {
-        findCourseGroupIn(premiumCourse.courseGroup_id);
-      });
+      console.log("iki defa");
+      if (props.premiumCourseGroups.length > 0) {
+        findCourseGroupIn(props.premiumCourseGroups[0].courseGroup_id);
+      }
+      // props.premiumCourseGroups.map((premiumCourse, index) => {
+      //   findCourseGroupIn(premiumCourse.courseGroup_id);
+      // });
     }
   }, [props.premiumCourseGroups]);
 
   const findCourseGroupIn = (courseGroupId) => {
     findCourseGroup(courseGroupId) // skip limit
       .then((courseGroupIn) => {
-        console.log(courseGroupIn);
+        console.log("doluyor", [...courseGroups, courseGroupIn]);
         setCourseGroups([...courseGroups, courseGroupIn]);
       })
       .catch((err) => {
@@ -80,6 +84,17 @@ const CourseMap = (props) => {
 
   React.useEffect(() => {
     if (props.premiumCourseGroups.length > 0) {
+      if (courseGroups.length < props.premiumCourseGroups.length) {
+        console.log(
+          "lalala",
+          props.premiumCourseGroups[courseGroups.length].courseGroup_id
+        );
+
+        findCourseGroupIn(
+          props.premiumCourseGroups[courseGroups.length].courseGroup_id
+        );
+      }
+
       if (courseGroups.length === props.premiumCourseGroups.length) {
         setIsWorking(false);
         console.log("ok", courseGroups);
@@ -89,8 +104,6 @@ const CourseMap = (props) => {
         props.registeredCourses.filter(function (registeredCourse) {
           sum = sum + registeredCourse.percentage;
         });
-        console.log("deneme:", sum / courseGroups[selectedItem].courses.length);
-
         setOverallPer(sum / courseGroups[selectedItem].courses.length);
       }
     } else {
@@ -101,6 +114,12 @@ const CourseMap = (props) => {
 
   const selectItem = (index) => {
     setSelectedItem(index);
+    var sum = 0;
+    props.registeredCourses.filter(function (registeredCourse) {
+      sum = sum + registeredCourse.percentage;
+    });
+    console.log("calculated:", sum / courseGroups[index].courses.length);
+    setOverallPer(sum / courseGroups[index].courses.length);
   };
 
   return (
@@ -164,8 +183,6 @@ const CourseMap = (props) => {
                             activeClassName={classes.ListItemActive}
                             button
                             onClick={() => {
-                              console.log(selectedItem);
-                              console.log(index);
                               selectItem(index);
                             }}
                             key={index}

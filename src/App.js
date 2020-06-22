@@ -185,8 +185,8 @@ export default function App() {
     } else if (type == 2) {
       console.log("Error:", messageObj);
       setSnackType(2);
-      if (messageObj.code) {
-        setSnackMessage(messageObj.code + ": " + messageObj.message);
+      if (messageObj.Code) {
+        setSnackMessage(messageObj.Code + ": " + messageObj.Message);
       } else {
         setSnackMessage("Anlayamadığımız bir hata oluştu.");
       }

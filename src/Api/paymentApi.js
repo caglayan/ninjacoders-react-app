@@ -1,14 +1,14 @@
 import axios from "axios";
 import ls from "local-storage";
 
-//const url = "http://localhost:4000";
-const url = "https://ninjaoders-backend.herokuapp.com";
+const url = "http://localhost:4000";
+//const url = "https://ninjaoders-backend.herokuapp.com";
 
 const manageError = (reject, err) => {
   err.response
     ? reject({
-        message: err.response.data.Message,
-        code: err.response.data.Code,
+        Message: err.response.data.Message,
+        Code: err.response.data.Code,
       })
     : reject({
         code: "MAK101",
