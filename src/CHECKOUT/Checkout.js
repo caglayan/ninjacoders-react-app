@@ -88,7 +88,7 @@ const CheckoutPage = (props) => {
       })
       .catch((err) => {
         console.log(err);
-        history.push("/");
+        //history.push("/");
       });
   };
 
