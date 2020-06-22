@@ -43,6 +43,11 @@ const useStyles = makeStyles((theme) => ({
   ListItemActive: {
     backgroundColor: theme.palette.action.selected,
   },
+  sectionMobile: {
+    [theme.breakpoints.down("md")]: {
+      marginTop: 80,
+    },
+  },
 }));
 
 const CourseMap = (props) => {
@@ -148,7 +153,7 @@ const CourseMap = (props) => {
               </Box>
             </div>
           ) : (
-            <div>
+            <Grid container direction="row" justify="center">
               <Grid item xs={12} md={4}>
                 <List className={classes.List}>
                   {courseGroups
@@ -178,7 +183,7 @@ const CourseMap = (props) => {
                   percentage={overallPer}
                 ></TextAreaEnd>
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item className={classes.sectionMobile} xs={12} md={4}>
                 <Timeline
                   height={courseGroups[selectedItem].courses.length * 500}
                   progress={overallPer * 100}
@@ -229,7 +234,7 @@ const CourseMap = (props) => {
                   )}
                 </Timeline>
               </Grid>
-            </div>
+            </Grid>
           )}
         </Grid>
       )}
